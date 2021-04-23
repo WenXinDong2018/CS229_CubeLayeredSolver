@@ -17,6 +17,7 @@ from torch.multiprocessing import Process
 
 
 def main():
+    #time how long it takes to come up with heuristic for 1000 states
     device, devices, on_gpu = nnet_utils.get_device()
     model_dir = "saved_models/cube3/current"
     args_states = "data/cube3/test/data_0.pkl"
