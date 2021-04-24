@@ -25,7 +25,7 @@ class Cube3State(State):
         return np.array_equal(self.colors, other.colors)
 
 
-class Cube3Layer1(Environment):
+class Cube3Layer3(Environment):
     moves: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
     moves_rev: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [1, -1]]
     # print("moves", moves)
