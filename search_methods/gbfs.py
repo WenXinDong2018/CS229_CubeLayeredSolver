@@ -3,7 +3,7 @@ from environments.environment_abstract import Environment, State
 import numpy as np
 from utils import search_utils, env_utils, nnet_utils, misc_utils
 from argparse import ArgumentParser
-import pickle
+
 import torch
 
 
@@ -125,25 +125,23 @@ class GBFS:
 
 
 def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Callable,
-              args, max_solve_steps: Optional[int] = None):
+              max_solve_steps: Optional[int] = None):
     # get data
-    # back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
-    # num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
-    input_data = pickle.load(open(args.data_dir, "rb"))
-    states: List[State] = input_data['states'][0:10]
+    back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
+    num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
 
-    # states: List[State] = []
-    # state_back_steps_l: List[int] = []
+    states: List[State] = []
+    state_back_steps_l: List[int] = []
 
-    # for back_step, num_states_i in zip(back_steps, num_states_per_back_step):
-    #     if num_states_i > 0:
-    #         states_i, back_steps_i = env.generate_states(num_states_i, (back_step, back_step))
-    #         states.extend(states_i)
-    #         state_back_steps_l.extend(back_steps_i)
+    for back_step, num_states_i in zip(back_steps, num_states_per_back_step):
+        if num_states_i > 0:
+            states_i, back_steps_i = env.generate_states(num_states_i, (back_step, back_step))
+            states.extend(states_i)
+            state_back_steps_l.extend(back_steps_i)
 
-    # state_back_steps: np.ndarray = np.array(state_back_steps_l)
-    # if max_solve_steps is None:
-    #     max_solve_steps = max(np.max(state_back_steps), 1)
+    state_back_steps: np.ndarray = np.array(state_back_steps_l)
+    if max_solve_steps is None:
+        max_solve_steps = max(np.max(state_back_steps), 1)
 
     # Do GBFS for each back step
     print("Solving %i states with GBFS with %i steps" % (len(states), max_solve_steps))
@@ -155,33 +153,32 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
 
     is_solved_all: np.ndarray = np.array(gbfs.get_is_solved())
     num_steps_all: np.ndarray = np.array(gbfs.get_num_steps())
-    print("num_steps_all", num_steps_all)
-    print("is_solved_all", is_solved_all)
-    # # Get state cost-to-go
-    # state_ctg_all: np.ndarray = heuristic_fn(states)
 
-    # for back_step_test in np.unique(state_back_steps):
-    #     # Get states
-    #     step_idxs = np.where(state_back_steps == back_step_test)[0]
-    #     if len(step_idxs) == 0:
-    #         continue
+    # Get state cost-to-go
+    state_ctg_all: np.ndarray = heuristic_fn(states)
 
-    #     is_solved: np.ndarray = is_solved_all[step_idxs]
-    #     num_steps: np.ndarray = num_steps_all[step_idxs]
-    #     state_ctg: np.ndarray = state_ctg_all[step_idxs]
+    for back_step_test in np.unique(state_back_steps):
+        # Get states
+        step_idxs = np.where(state_back_steps == back_step_test)[0]
+        if len(step_idxs) == 0:
+            continue
 
-    #     # Get stats
-    #     per_solved = 100 * float(sum(is_solved)) / float(len(is_solved))
-    #     avg_solve_steps = 0.0
-    #     if per_solved > 0.0:
-    #         avg_solve_steps = np.mean(num_steps[is_solved])
+        is_solved: np.ndarray = is_solved_all[step_idxs]
+        num_steps: np.ndarray = num_steps_all[step_idxs]
+        state_ctg: np.ndarray = state_ctg_all[step_idxs]
 
-    #     # Print results
-    #     print("Back Steps: %i, %%Solved: %.2f, avgSolveSteps: %.2f, CTG Mean(Std/Min/Max): %.2f("
-    #           "%.2f/%.2f/%.2f)" % (
-    #               back_step_test, per_solved, avg_solve_steps, float(np.mean(state_ctg)),
-    #               float(np.std(state_ctg)), np.min(state_ctg),
-    #               np.max(state_ctg)))
+        # Get stats
+        per_solved = 100 * float(sum(is_solved)) / float(len(is_solved))
+        avg_solve_steps = 0.0
+        if per_solved > 0.0:
+            avg_solve_steps = np.mean(num_steps[is_solved])
+
+        # Print results
+        print("Back Steps: %i, %%Solved: %.2f, avgSolveSteps: %.2f, CTG Mean(Std/Min/Max): %.2f("
+              "%.2f/%.2f/%.2f)" % (
+                  back_step_test, per_solved, avg_solve_steps, float(np.mean(state_ctg)),
+                  float(np.std(state_ctg)), np.min(state_ctg),
+                  np.max(state_ctg)))
 
 
 def main():
@@ -211,7 +208,7 @@ def main():
     heuristic_fn = nnet_utils.load_heuristic_fn(args.model_dir, device, on_gpu, env.get_nnet_model(),
                                                 env, clip_zero=False)
 
-    gbfs_test(1,300, env, heuristic_fn, args, max_solve_steps=args.max_steps)
+    gbfs_test(args.data_dir, env, heuristic_fn, max_solve_steps=args.max_steps)
 
 
 if __name__ == "__main__":
