@@ -35,7 +35,7 @@ def parse_arguments(parser: ArgumentParser) -> Dict[str, Any]:
     parser.add_argument('--max_itrs', type=int, default=1000000, help="Maxmimum number of iterations")
     parser.add_argument('--batch_size', type=int, default=1000, help="Batch size")
     parser.add_argument('--single_gpu_training', action='store_true',
-                        default=False, help="If set, train only on one GPU. Update step will still use "
+                        default=True, help="If set, train only on one GPU. Update step will still use "
                                             "all GPUs given by CUDA_VISIBLE_DEVICES")
 
     # Update
