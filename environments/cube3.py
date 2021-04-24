@@ -13,6 +13,7 @@ class Cube3State(State):
     def __init__(self, colors: np.ndarray):
         self.colors: np.ndarray = colors
         self.hash = None
+        # print("colors", len(colors), colors)
 
     def __hash__(self):
         if self.hash is None:
@@ -27,7 +28,8 @@ class Cube3State(State):
 class Cube3(Environment):
     moves: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
     moves_rev: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [1, -1]]
-
+    # print("moves", moves)
+    # print("moves_rev", moves_rev)
     def __init__(self):
         super().__init__()
         self.dtype = np.uint8
@@ -35,7 +37,7 @@ class Cube3(Environment):
 
         # solved state
         self.goal_colors: np.ndarray = np.arange(0, (self.cube_len ** 2) * 6, 1, dtype=self.dtype)
-
+        # print("goal_colors", self.goal_colors)
         # get idxs changed for moves
         self.rotate_idxs_new: Dict[str, np.ndarray]
         self.rotate_idxs_old: Dict[str, np.ndarray]
@@ -47,6 +49,7 @@ class Cube3(Environment):
 
     def next_state(self, states: List[Cube3State], action: int) -> Tuple[List[Cube3State], List[float]]:
         states_np = np.stack([x.colors for x in states], axis=0)
+        # print("states_np", states_np)
         states_next_np, transition_costs = self._move_np(states_np, action)
 
         states_next: List[Cube3State] = [Cube3State(x) for x in list(states_next_np)]
@@ -65,7 +68,6 @@ class Cube3(Environment):
             solved_states: np.ndarray = np.repeat(goal_np, num_states, axis=0)
         else:
             solved_states: List[Cube3State] = [Cube3State(self.goal_colors.copy()) for _ in range(num_states)]
-
         return solved_states
 
     def is_solved(self, states: List[Cube3State]) -> np.ndarray:
@@ -101,10 +103,10 @@ class Cube3(Environment):
         # Initialize
         scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
-
+        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
         # Get goal states
         states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
-
+        # print("states_np", states_np)
         # Scrambles
         scramble_nums: np.array = np.random.choice(scrambs, num_states)
         num_back_moves: np.array = np.zeros(num_states)
@@ -118,7 +120,7 @@ class Cube3(Environment):
 
             move: int = randrange(num_env_moves)
             states_np[idxs], _ = self._move_np(states_np[idxs], move)
-
+            # print("move states_np", states_np[idxs])
             num_back_moves[idxs] = num_back_moves[idxs] + 1
             moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
 
@@ -162,10 +164,14 @@ class Cube3(Environment):
 
     def _move_np(self, states_np: np.ndarray, action: int):
         action_str: str = self.moves[action]
-
+        # print("action_str", action_str)
+        # print("states_np before move", states_np)
         states_next_np: np.ndarray = states_np.copy()
         states_next_np[:, self.rotate_idxs_new[action_str]] = states_np[:, self.rotate_idxs_old[action_str]]
+        # print("self.rotate_idxs_new[action_str]", self.rotate_idxs_new[action_str])
+        # print("self.rotate_idxs_old[action_str]", self.rotate_idxs_old[action_str])
 
+        # print("states_next_np after move", states_next_np)
         transition_costs: List[float] = [1.0 for _ in range(states_np.shape[0])]
 
         return states_next_np, transition_costs
@@ -252,5 +258,24 @@ class Cube3(Environment):
                     flat_idx_old = np.ravel_multi_index((face_from, idxOld[0], idxOld[1]), colors.shape)
                     rotate_idxs_new[move] = np.concatenate((rotate_idxs_new[move], [flat_idx_new]))
                     rotate_idxs_old[move] = np.concatenate((rotate_idxs_old[move], [flat_idx_old]))
+
+
+        print("rotate_idxs_new[U1]", rotate_idxs_new["U1"])
+        print("rotate_idxs_old[U1]", rotate_idxs_old["U1"])
+
+        print("rotate_idxs_new[F1]", rotate_idxs_new["F1"])
+        print("rotate_idxs_old[F1]", rotate_idxs_old["F1"])
+
+        print("rotate_idxs_new[B1]", rotate_idxs_new["B1"])
+        print("rotate_idxs_old[B1]", rotate_idxs_old["B1"])
+
+        print("rotate_idxs_new[L1]", rotate_idxs_new["L1"])
+        print("rotate_idxs_old[L1]", rotate_idxs_old["L1"])
+
+        print("rotate_idxs_new[R1]", rotate_idxs_new["R1"])
+        print("rotate_idxs_old[R1]", rotate_idxs_old["R1"])
+
+        print("rotate_idxs_new[D1]", rotate_idxs_new["D1"])
+        print("rotate_idxs_old[D1]", rotate_idxs_old["D1"])
 
         return rotate_idxs_new, rotate_idxs_old
