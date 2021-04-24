@@ -74,18 +74,8 @@ class Cube3Layer1(Environment):
         states_np = np.stack([state.colors for state in states], axis=0)
         is_equal = np.equal(states_np, np.expand_dims(self.goal_colors, 0))
 
-        #the stickers that we care about are the U cubies'
-        layer1_cubies_pos = np.array([ 0, 1, 2, 3, 5, 6,7, 8,20 ,23 ,26 ,47, 50 ,53 ,29 ,32 ,35 ,38 ,41, 44], dtype = np.int32)
-        layer1_cubies_one_hot = np.zeros((1, 54), dtype=bool)
-        #1 for the stickers we care, 0 for the stickers we don't care
-        layer1_cubies_one_hot[0, layer1_cubies_pos] = True
-        #there are 20 stickers that we care
-        goal_match = np.sum(layer1_cubies_one_hot)
-        #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
-        is_solved =  np.sum(is_equal, axis=1, where =layer1_cubies_one_hot) == goal_match
-        print("is_solved", is_solved )
+        return np.all(is_equal, axis=1)
 
-        return is_solved
 
 
     def state_to_nnet_input(self, states: List[Cube3State]) -> List[np.ndarray]:

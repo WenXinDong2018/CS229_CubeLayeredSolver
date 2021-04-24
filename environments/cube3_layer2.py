@@ -25,7 +25,7 @@ class Cube3State(State):
         return np.array_equal(self.colors, other.colors)
 
 
-class Cube3Layer1(Environment):
+class Cube3Layer2(Environment):
     moves: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
     moves_rev: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [1, -1]]
     # print("moves", moves)
@@ -75,14 +75,15 @@ class Cube3Layer1(Environment):
         is_equal = np.equal(states_np, np.expand_dims(self.goal_colors, 0))
 
         #the stickers that we care about are the U cubies'
-        layer1_cubies_pos = np.array([ 0, 1, 2, 3, 5, 6,7, 8,20 ,23 ,26 ,47, 50 ,53 ,29 ,32 ,35 ,38 ,41, 44], dtype = np.int32)
-        layer1_cubies_one_hot = np.zeros((1, 54), dtype=bool)
+        layer1_and2_cubies_pos = np.array([ 0, 1, 2, 3, 5, 6,7, 8,20 ,23 ,26 ,19,25,47, 50 ,53 , 46, 52,29 ,32 ,35 , 28, 34,38 ,41, 44, 37,43], dtype = np.int32)
+        layer1_and2_cubies_one_hot = np.zeros((1, 54), dtype=bool)
         #1 for the stickers we care, 0 for the stickers we don't care
-        layer1_cubies_one_hot[0, layer1_cubies_pos] = True
+        layer1_and2_cubies_one_hot[0, layer1_and2_cubies_pos] = True
         #there are 20 stickers that we care
-        goal_match = np.sum(layer1_cubies_one_hot)
+        goal_match = np.sum(layer1_and2_cubies_one_hot)
+        print("goal_match layers 1 & 2", goal_match)
         #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
-        is_solved =  np.sum(is_equal, axis=1, where =layer1_cubies_one_hot) == goal_match
+        is_solved =  np.sum(is_equal, axis=1, where =layer1_and2_cubies_one_hot) == goal_match
         print("is_solved", is_solved )
 
         return is_solved
