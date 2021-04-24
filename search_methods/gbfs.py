@@ -5,6 +5,7 @@ from utils import search_utils, env_utils, nnet_utils, misc_utils
 from argparse import ArgumentParser
 
 import torch
+import wandb
 
 
 class Instance:
@@ -179,7 +180,8 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
                   back_step_test, per_solved, avg_solve_steps, float(np.mean(state_ctg)),
                   float(np.std(state_ctg)), np.min(state_ctg),
                   np.max(state_ctg)))
-
+        wandb.log({"GBFS-Solved": per_solved})
+        wandb.log({"GBFS-avgSolveSteps": avg_solve_steps})
 
 def main():
     # parse arguments

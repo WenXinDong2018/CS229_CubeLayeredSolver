@@ -5,7 +5,7 @@ from environments.environment_abstract import Environment
 from updaters.updater import Updater
 from search_methods.gbfs import gbfs_test
 import torch
-
+import wandb
 import torch.nn as nn
 import os
 import pickle
@@ -155,7 +155,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     min_ctg = output_update[:, 0].min()
     max_ctg = output_update[:, 0].max()
     print("Cost-to-go (mean/min/max): %.2f/%.2f/%.2f" % (mean_ctg, min_ctg, max_ctg))
-
+    wandb.log({"mean_ctg", mean_ctg})
     return states_update_nnet, output_update
 
 
@@ -174,6 +174,7 @@ def load_nnet(nnet_dir: str, env: Environment) -> Tuple[nn.Module, int, int]:
 
 
 def main():
+
     # arguments
     parser: ArgumentParser = ArgumentParser()
     args_dict: Dict[str, Any] = parse_arguments(parser)
@@ -200,6 +201,11 @@ def main():
     nnet.to(device)
     if on_gpu and (not args_dict['single_gpu_training']):
         nnet = nn.DataParallel(nnet)
+
+    #initialize data visualizer
+    run_id = "{}-{}".format(args_dict["env"], args_dict["nnet_name"])
+    wandb.init(project='cs229deepcube',id = run_id, name = run_id, config = args_dict)
+
 
     # training
     while itr < args_dict['max_itrs']:
@@ -229,7 +235,7 @@ def main():
         last_loss = nnet_utils.train_nnet(nnet, states_nnet, outputs, device, args_dict['batch_size'], num_train_itrs,
                                           itr, args_dict['lr'], args_dict['lr_d'])
         itr += num_train_itrs
-
+        wandb.log({"loss": last_loss})
         # save nnet
         torch.save(nnet.state_dict(), "%s/model_state_dict.pt" % args_dict['curr_dir'])
         pickle.dump(itr, open("%s/train_itr.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
@@ -240,7 +246,7 @@ def main():
         heuristic_fn = nnet_utils.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
         gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps)
-
+        wandb.log({"max_solve_steps": max_solve_steps})
         print("Test time: %.2f" % (time.time() - start_time))
 
         # clear cuda memory
