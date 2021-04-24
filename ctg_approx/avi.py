@@ -155,7 +155,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     min_ctg = output_update[:, 0].min()
     max_ctg = output_update[:, 0].max()
     print("Cost-to-go (mean/min/max): %.2f/%.2f/%.2f" % (mean_ctg, min_ctg, max_ctg))
-    wandb.log({"mean_ctg", mean_ctg})
+    wandb.log({"mean_ctg": mean_ctg})
     return states_update_nnet, output_update
 
 
