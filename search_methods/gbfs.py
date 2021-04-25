@@ -181,11 +181,11 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
                   back_step_test, per_solved, avg_solve_steps, float(np.mean(state_ctg)),
                   float(np.std(state_ctg)), np.min(state_ctg),
                   np.max(state_ctg)))
-        wandb.log({"GBFS-Solved" + back_step_test : per_solved})
-        wandb.log({"GBFS-avgSolveSteps" + back_step_test: avg_solve_steps})
-        wandb.log({"GBFS-CTG-mean" + back_step_test: float(np.mean(state_ctg)) })
-        wandb.log({"GBFS-CTG-max" + back_step_test: float(np.max(state_ctg)) })
-        wandb.log({"GBFS-CTG-min" + back_step_test: float(np.min(state_ctg)) })
+        wandb.log({"GBFS-Solved" + str(back_step_test) : per_solved})
+        wandb.log({"GBFS-avgSolveSteps" + str(back_step_test): avg_solve_steps})
+        wandb.log({"GBFS-CTG-mean" + str(back_step_test): float(np.mean(state_ctg)) })
+        wandb.log({"GBFS-CTG-max" + str(back_step_test): float(np.max(state_ctg)) })
+        wandb.log({"GBFS-CTG-min" + str(back_step_test): float(np.min(state_ctg)) })
 
 def main():
     # parse arguments
