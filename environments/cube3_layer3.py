@@ -96,6 +96,126 @@ class Cube3Layer3(Environment):
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
 
         return nnet
+""" 
+This part is the added part that generates states that fix layer2 and 1. 
+"""
+    def get_fixed_moves(self) -> List[str]:
+        moves_with_top_two_layers_fixed = ['edge_perm, edge_twist, corner_perm, corner_twist']
+
+    def edge_permutation(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+        # edges in the last layers are 21, 30, 39, 48. We only can permutes three of them at a time
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute. 
+        # sign: given a set of edges that we want to permute, there's two ways to permute them. 
+        set_to_choose: Dict[int, np.ndarray] = {0: np.array([21, 30, 39]), 1: np.array([21, 39, 48]), 2: np.array([21, 30, 48]), 3: np.array([30, 39, 48])}
+        output_states_np = np.stack([state for state in states])
+        indices = set_to_choose[choice_of_edges]
+        values = output_states_np[:, indices]
+
+        # if sign == 1, we send the first element in perm_set to the second, second to last, then the last to first
+        # if sign == 0, we send the first element in perm_set to the last, second to the first, then the last to the second
+        perm_arr = np.array([1, 2, 0]) if sign == 1 else np.array([2, 0, 1])
+        output_states_np[:, indices[perm_arr]] = values
+        return output_states_np
+
+    def edge_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+        # edges in the last layers are 21, 30, 39, 48. We only can twist two of them at a time
+        # choice_of_edges can take either 0, 1, 2, 3, 4, 5. Each one represents a set of two edges that we will twist. 
+        set_to_choose: Dict[int, np.ndarray] = {0: np.array([21, 30]), 1: np.array([21, 39]), 2: np.array([21, 48]), 3: np.array([30, 39]), 4: np.array([30, 48]), 5: np.array([39, 48])}
+        correspondence: Dict[int, np.ndarray] = {21: np.array([10, 21]), 30: np.array([16, 30]), 39: np.array([12, 39]), 48: np.array([14, 48])}
+        output_states_np = np.stack([state for state in states])
+        perm_set = set_to_choose[choice_of_edges]
+        
+        edge_indices = np.concatenate((correspondence[perm_set[0]], correspondence[perm_set[1]]))
+        edge_values = output_states_np[:, edge_indices]
+        output_states_np[:, edge_indices[np.array([1, 0, 3, 2])]] = edge_values
+        return output_states_np
+    def corner_permutation(self, states: List[np.ndarray], choice_of_corners: int, sign: int) ->  np.ndarray: 
+        # edges in the last layers are 21, 30, 39, 48. We only can permutes three of them at a time
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute. 
+        # sign: given a set of edges that we want to permute, there's two ways to permute them. 
+        set_to_choose: Dict[int, np.ndarray] = {0: np.array([9, 11, 15]), 1: np.array([9, 15, 17]), 2: np.array([9, 11, 17]), 3: np.array([11, 15, 17])}
+        correspondence: Dict[int, np.ndarray] = {9: np.array([9, 42, 18]), 11: np.array([11, 24, 45]), 15: np.array([15, 33, 36]), 17: np.array([17, 51, 21])}
+        output_states_np = np.stack([state for state in states])
+        D_idx = set_to_choose[choice_of_corners]
+        indices = np.concatenate((D_idx, [correspondence[D_idx[0]][1], correspondence[D_idx[1]][1], correspondence[D_idx[2]][1]], [correspondence[D_idx[0]][2], correspondence[D_idx[1]][2], correspondence[D_idx[2]][2]]))
+        values = output_states_np[:, indices]
+        # if sign == 1, we send the first element in perm_set to the last, second to the first, then the last to the second with each corner twisted clockwise
+        # if sign == 0, we send the first element in perm_set to the second, second to last, then the last to first with each corner twisted counter-clockwise
+        perm_arr: np.ndarray = np.array([1, 2, 0, 4, 5, 3, 7, 8, 6]) if sign == 1 else np.array([2, 0, 1, 5, 3, 4, 8, 6, 7])
+        output_states_np[:, indices[perm_arr]] = values
+        return output_states_np
+
+    def corner_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+        # edges in the last layers are 21, 30, 39, 48. We only can twist two of them at a time
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of two on one edge. 
+        set_to_choose: Dict[int, np.ndarray] = {0: np.array([9, 11]), 1: np.array([9, 15]), 2: np.array([11, 17]), 3: np.array([15, 17])}
+        correspondence: Dict[int, np.ndarray] = {9: np.array([9, 42, 18]), 11: np.array([11, 24, 45]), 15: np.array([15, 33, 36]), 17: np.array([17, 51, 21])}
+        output_states_np = np.stack([state for state in states])
+        D_idx = set_to_choose[choice_of_edges]
+        corner_indices = np.concatenate((correspondence[D_idx[0]], correspondence[D_idx[1]]))
+        corner_values = output_states_np[:, corner_indices]
+        # if sign == 1, then we assume that we are doing a counter-clock wise twist on the (D_idx[0], D_idx[1], D_idx[2]) corner, and a clock wise twist on the other corner.
+        # if sign == 0, then the opposite twist applies
+        perm_arr = np.array([2, 0, 1, 4, 5, 0]) if sign == 1 else np.array([1, 2, 0, 5, 3, 4])
+        output_states_np[:, corner_indices[perm_arr]] = corner_values
+        return output_states_np
+
+    def get_all_possible_fixed_moves(self) -> List[str]:
+        output: List[str]
+        # edge_perm: total 8 choices
+        edge_perms = ['0 %i %i' % (c, s) for c in range(4) for s in range(2)]
+        # edge_twist
+        edge_twists = ['1 %i %i' % (c, 1) for c in range(6)]
+        # corner_perm
+        corner_perms = ['2 %i %i' % (c, s) for c in range(4) for s in range(2)]
+        # corner_twist
+        corner_twists = ['3 %i %i' % (c, s) for c in range(4) for s in range(2)]
+        return edge_perms + edge_twists + corner_perms + corner_twists
+
+    def fixed_move_dict(self):
+        d = {0: self.edge_permutation, 1: self.edge_twist, 2: self.corner_permutation, 3: self.corner_twist}
+        return d
+
+    def generate_states_using_fixed_moves(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
+        assert (num_states > 0)
+        assert (backwards_range[0] >= 0)
+        assert self.fixed_actions, "Environments without fixed actions must implement their own method"
+
+        # Initialize
+        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
+        fixed_moves: List[str] = self.get_all_possible_fixed_moves()
+        function_map = self.fixed_move_dict()
+        num_fixed_moves: int = len(fixed_moves)
+        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
+        # Get goal states
+        states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
+        # print("states_np", states_np)
+        # Scrambles
+        scramble_nums: np.array = np.random.choice(scrambs, num_states)
+        # print("scramble_nums: {}".format(scramble_nums))
+        num_back_moves: np.array = np.zeros(num_states)
+
+        # Go backward from goal state
+        moves_lt = num_back_moves < scramble_nums
+        # print('moves_lt: {}'.format(moves_lt))
+        while np.any(moves_lt):
+            idxs: np.ndarray = np.where(moves_lt)[0]
+            subset_size: int = int(max(len(idxs) / num_fixed_moves, 1))
+            idxs: np.ndarray = np.random.choice(idxs, subset_size)
+
+            move: int = randrange(num_fixed_moves)
+            fixed_move: List[str] = fixed_moves[move].split(' ')
+            states_np[idxs] = function_map[int(fixed_move[0])](states_np[idxs], int(fixed_move[1]), int(fixed_move[2]))
+            # print("move states_np", states_np[idxs])
+            num_back_moves[idxs] = num_back_moves[idxs] + 1
+            moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
+
+        states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
+        for i in range(num_states):
+            print(states[i].colors)
+        return states, scramble_nums.tolist()
+
+        
 
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
@@ -111,12 +231,15 @@ class Cube3Layer3(Environment):
         # print("states_np", states_np)
         # Scrambles
         scramble_nums: np.array = np.random.choice(scrambs, num_states)
+        # print("scramble_nums: {}".format(scramble_nums))
         num_back_moves: np.array = np.zeros(num_states)
 
         # Go backward from goal state
         moves_lt = num_back_moves < scramble_nums
+        # print('moves_lt: {}'.format(moves_lt))
         while np.any(moves_lt):
             idxs: np.ndarray = np.where(moves_lt)[0]
+            # print("idxs: {}".format(np.where(moves_lt)))
             subset_size: int = int(max(len(idxs) / num_env_moves, 1))
             idxs: np.ndarray = np.random.choice(idxs, subset_size)
 
