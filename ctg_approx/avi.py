@@ -83,6 +83,8 @@ def parse_arguments(parser: ArgumentParser) -> Dict[str, Any]:
 
     # data
     parser.add_argument('--back_max', type=int, required=True, help="Maximum number of backwards steps from goal")
+    parser.add_argument('--dynamic_back_max', action='store_true', default=False, help="Whether to dynamically increase the difficulty of the training exercises")
+    parser.add_argument('--dynamic_back_max_per', type = float,  default=25, help="Minimum required solve-percentage to level up difficulty of the training exercises.")
 
     # model
     parser.add_argument('--nnet_name', type=str, required=True, help="Name of neural network")
@@ -207,6 +209,7 @@ def main():
     run_id = "{}-{}".format(args_dict["env"], args_dict["nnet_name"])
     wandb.init(project='deepcubaa',entity = "cs229deepcubeteam", id = run_id, name = run_id, config = args_dict)
 
+
     dynamic_back_max = 1
     # training
     while itr < args_dict['max_itrs']:
@@ -223,7 +226,13 @@ def main():
 
         states_nnet: List[np.ndarray]
         outputs: np.ndarray
-        states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
+        if args_dict["dynamic_back_max"]:
+            states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
+                                            args_dict['max_update_steps'], args_dict['update_method'],
+                                            args_dict['states_per_update'], args_dict['eps_max'],
+                                            heur_fn_i_q, heur_fn_o_qs)
+        else:
+            states_nnet, outputs = do_update(args_dict["back_max"], update_num, env,
                                          args_dict['max_update_steps'], args_dict['update_method'],
                                          args_dict['states_per_update'], args_dict['eps_max'],
                                          heur_fn_i_q, heur_fn_o_qs)
@@ -246,13 +255,17 @@ def main():
         start_time = time.time()
         heuristic_fn = nnet_utils.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
-        per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
-        #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
-        if (per_solved>25): #Knob: if percentage solved pass 25% we increase the difficulty of the generated problems
-            dynamic_back_max+=1
+        if args_dict["dynamic_back_max"]:
+            per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
+            #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
+            if (per_solved>args_dict["dynamic_back_max_per"]): #Knob: if percentage solved pass this number we increase the difficulty of the generated problems
+                dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+            wandb.log({"dynamic_back_max": dynamic_back_max})
 
+        else:
+            gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps)
 
-        wandb.log({"max_solve_steps": max_solve_steps, "dynamic_back_max": dynamic_back_max})
+        wandb.log({"max_solve_steps": max_solve_steps})
         print("Test time: %.2f" % (time.time() - start_time))
 
         # clear cuda memory
