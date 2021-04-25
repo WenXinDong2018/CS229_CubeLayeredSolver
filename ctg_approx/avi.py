@@ -207,7 +207,7 @@ def main():
     run_id = "{}-{}".format(args_dict["env"], args_dict["nnet_name"])
     wandb.init(project='deepcubaa',entity = "cs229deepcubeteam", id = run_id, name = run_id, config = args_dict)
 
-    dynamic_back_max = args_dict["back_max"]
+    dynamic_back_max = 1
     # training
     while itr < args_dict['max_itrs']:
         # update
@@ -246,10 +246,13 @@ def main():
         start_time = time.time()
         heuristic_fn = nnet_utils.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
-        gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = False)
-        # gbfs_test(args_dict['num_test'], dynamic_back_max, env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = True)
+        per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
+        #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
+        if (per_solved>25): #Knob: if percentage solved pass 25% we increase the difficulty of the generated problems
+            dynamic_back_max+=1
 
-        wandb.log({"max_solve_steps": max_solve_steps})
+
+        wandb.log({"max_solve_steps": max_solve_steps, "dynamic_back_max": dynamic_back_max})
         print("Test time: %.2f" % (time.time() - start_time))
 
         # clear cuda memory

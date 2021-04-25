@@ -126,7 +126,7 @@ class GBFS:
 
 
 def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Callable,
-              max_solve_steps: Optional[int] = None, dynamic_back_max = False):
+              max_solve_steps: Optional[int] = None, dynamic_back_max = None):
     # get data
     back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
     num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
@@ -158,7 +158,7 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
 
     # Get state cost-to-go
     state_ctg_all: np.ndarray = heuristic_fn(states)
-
+    per_solved_record = None  #per_solved of problems generated with dynamic_back_max steps
     for back_step_test in np.unique(state_back_steps):
         # Get states
         step_idxs = np.where(state_back_steps == back_step_test)[0]
@@ -186,6 +186,10 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
         wandb.log({"GBFS-CTG-mean" + str(back_step_test): float(np.mean(state_ctg)) })
         wandb.log({"GBFS-CTG-max" + str(back_step_test): float(np.max(state_ctg)) })
         wandb.log({"GBFS-CTG-min" + str(back_step_test): float(np.min(state_ctg)) })
+        if dynamic_back_max == back_step_test:
+            per_solved_record = per_solved
+    return per_solved_record
+
 
 def main():
     # parse arguments
