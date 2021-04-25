@@ -205,7 +205,7 @@ def main():
 
     #initialize data visualizer
     run_id = "{}-{}".format(args_dict["env"], args_dict["nnet_name"])
-    wandb.init(project='cs229deepcube',id = run_id, name = run_id, config = args_dict)
+    wandb.init(project='deepcubaa',entity = "cs229deepcubeteam", id = run_id, name = run_id, config = args_dict)
 
     dynamic_back_max = args_dict["back_max"]
     # training
