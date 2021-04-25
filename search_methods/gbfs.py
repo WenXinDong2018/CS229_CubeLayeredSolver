@@ -126,11 +126,12 @@ class GBFS:
 
 
 def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Callable,
-              max_solve_steps: Optional[int] = None):
+              max_solve_steps: Optional[int] = None, dynamic_back_max = False):
     # get data
     back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
     num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
-
+    print("back_steps", back_steps)
+    print("num_states_per_back_step", num_states_per_back_step)
     states: List[State] = []
     state_back_steps_l: List[int] = []
 
@@ -180,8 +181,11 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
                   back_step_test, per_solved, avg_solve_steps, float(np.mean(state_ctg)),
                   float(np.std(state_ctg)), np.min(state_ctg),
                   np.max(state_ctg)))
-        wandb.log({"GBFS-Solved": per_solved})
-        wandb.log({"GBFS-avgSolveSteps": avg_solve_steps})
+        wandb.log({"GBFS-Solved" + str(back_step_test) : per_solved})
+        wandb.log({"GBFS-avgSolveSteps" + str(back_step_test): avg_solve_steps})
+        wandb.log({"GBFS-CTG-mean" + str(back_step_test): float(np.mean(state_ctg)) })
+        wandb.log({"GBFS-CTG-max" + str(back_step_test): float(np.max(state_ctg)) })
+        wandb.log({"GBFS-CTG-min" + str(back_step_test): float(np.min(state_ctg)) })
 
 def main():
     # parse arguments
