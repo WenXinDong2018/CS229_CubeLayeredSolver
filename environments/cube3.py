@@ -259,23 +259,22 @@ class Cube3(Environment):
                     rotate_idxs_new[move] = np.concatenate((rotate_idxs_new[move], [flat_idx_new]))
                     rotate_idxs_old[move] = np.concatenate((rotate_idxs_old[move], [flat_idx_old]))
 
+        # print("rotate_idxs_new[U1]", rotate_idxs_new["U1"])
+        # print("rotate_idxs_old[U1]", rotate_idxs_old["U1"])
 
-        print("rotate_idxs_new[U1]", rotate_idxs_new["U1"])
-        print("rotate_idxs_old[U1]", rotate_idxs_old["U1"])
+        # print("rotate_idxs_new[F1]", rotate_idxs_new["F1"])
+        # print("rotate_idxs_old[F1]", rotate_idxs_old["F1"])
 
-        print("rotate_idxs_new[F1]", rotate_idxs_new["F1"])
-        print("rotate_idxs_old[F1]", rotate_idxs_old["F1"])
+        # print("rotate_idxs_new[B1]", rotate_idxs_new["B1"])
+        # print("rotate_idxs_old[B1]", rotate_idxs_old["B1"])
 
-        print("rotate_idxs_new[B1]", rotate_idxs_new["B1"])
-        print("rotate_idxs_old[B1]", rotate_idxs_old["B1"])
+        # print("rotate_idxs_new[L1]", rotate_idxs_new["L1"])
+        # print("rotate_idxs_old[L1]", rotate_idxs_old["L1"])
 
-        print("rotate_idxs_new[L1]", rotate_idxs_new["L1"])
-        print("rotate_idxs_old[L1]", rotate_idxs_old["L1"])
+        # print("rotate_idxs_new[R1]", rotate_idxs_new["R1"])
+        # print("rotate_idxs_old[R1]", rotate_idxs_old["R1"])
 
-        print("rotate_idxs_new[R1]", rotate_idxs_new["R1"])
-        print("rotate_idxs_old[R1]", rotate_idxs_old["R1"])
-
-        print("rotate_idxs_new[D1]", rotate_idxs_new["D1"])
-        print("rotate_idxs_old[D1]", rotate_idxs_old["D1"])
+        # print("rotate_idxs_new[D1]", rotate_idxs_new["D1"])
+        # print("rotate_idxs_old[D1]", rotate_idxs_old["D1"])
 
         return rotate_idxs_new, rotate_idxs_old

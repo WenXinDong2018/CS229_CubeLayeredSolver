@@ -130,7 +130,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
               num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs) -> Tuple[List[np.ndarray], np.ndarray]:
     update_steps: int = min(update_num + 1, max_update_steps)
     num_states: int = int(np.ceil(num_states / update_steps))
-
+    print("do_update back_max", back_max)
     # Do updates
     output_time_start = time.time()
 
@@ -155,7 +155,8 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     min_ctg = output_update[:, 0].min()
     max_ctg = output_update[:, 0].max()
     print("Cost-to-go (mean/min/max): %.2f/%.2f/%.2f" % (mean_ctg, min_ctg, max_ctg))
-    wandb.log({"mean_ctg": mean_ctg})
+    wandb.log({"mean_ctg": mean_ctg, "is_solved": is_solved})
+
     return states_update_nnet, output_update
 
 
@@ -206,7 +207,7 @@ def main():
     run_id = "{}-{}".format(args_dict["env"], args_dict["nnet_name"])
     wandb.init(project='cs229deepcube',id = run_id, name = run_id, config = args_dict)
 
-
+    dynamic_back_max = args_dict["back_max"]
     # training
     while itr < args_dict['max_itrs']:
         # update
@@ -222,7 +223,7 @@ def main():
 
         states_nnet: List[np.ndarray]
         outputs: np.ndarray
-        states_nnet, outputs = do_update(args_dict["back_max"], update_num, env,
+        states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                          args_dict['max_update_steps'], args_dict['update_method'],
                                          args_dict['states_per_update'], args_dict['eps_max'],
                                          heur_fn_i_q, heur_fn_o_qs)
@@ -245,7 +246,9 @@ def main():
         start_time = time.time()
         heuristic_fn = nnet_utils.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
-        gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps)
+        gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = False)
+        # gbfs_test(args_dict['num_test'], dynamic_back_max, env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = True)
+
         wandb.log({"max_solve_steps": max_solve_steps})
         print("Test time: %.2f" % (time.time() - start_time))
 
@@ -259,7 +262,7 @@ def main():
             copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
             update_num = update_num + 1
             pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
-
+        wandb.log({"update_num": update_num})
     print("Done")
 
 
