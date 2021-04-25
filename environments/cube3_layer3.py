@@ -96,9 +96,9 @@ class Cube3Layer3(Environment):
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
 
         return nnet
-""" 
-This part is the added part that generates states that fix layer2 and 1. 
-"""
+    """ 
+    This part is the added part that generates states that fix layer2 and 1. 
+    """
     def get_fixed_moves(self) -> List[str]:
         moves_with_top_two_layers_fixed = ['edge_perm, edge_twist, corner_perm, corner_twist']
 
@@ -215,7 +215,7 @@ This part is the added part that generates states that fix layer2 and 1.
             print(states[i].colors)
         return states, scramble_nums.tolist()
 
-        
+
 
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
