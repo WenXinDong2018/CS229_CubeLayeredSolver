@@ -115,7 +115,7 @@ class Cube3Layer1(Environment):
         # Initialize
         scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
-        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
+        print("layer1 env backwards_range",backwards_range)
         # Get goal states
         states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
         # print("states_np", states_np)

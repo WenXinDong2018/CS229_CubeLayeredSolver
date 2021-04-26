@@ -102,10 +102,10 @@ class Environment(ABC):
         if fixed_difficulty:
             #generate examples with "backwards_range[1]" number of scrambles
             #if look at function calls, backwards_range[1] is the same as back_max
-            scrambs:  = list(range(backwards_range[1], backwards_range[1] + 1))
-            print("generating scrambles of fixed difficulty", scrambs)
+            scrambs = list(range(backwards_range[1], backwards_range[1] + 1))
+            print("env abstract generating scrambles of fixed difficulty", scrambs)
         else:
-            scrambs:  = list(range(backwards_range[0], backwards_range[1] + 1))
+            scrambs = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
 
         # Get goal states
