@@ -85,7 +85,7 @@ class Environment(ABC):
         """
         pass
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False) -> Tuple[List[State], List[int]]:
         """ Generate training states by starting from the goal and taking actions in reverse.
         If the number of actions are not fixed, then a custom implementation must be used.
 
@@ -98,7 +98,14 @@ class Environment(ABC):
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # Initialize
-        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
+        scrambs: List[int] = []
+        if fixed_difficulty:
+            #generate examples with "backwards_range[1]" number of scrambles
+            #if look at function calls, backwards_range[1] is the same as back_max
+            scrambs:  = list(range(backwards_range[1], backwards_range[1] + 1))
+            print("generating scrambles of fixed difficulty", scrambs)
+        else:
+            scrambs:  = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
 
         # Get goal states

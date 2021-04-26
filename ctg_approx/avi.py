@@ -85,7 +85,7 @@ def parse_arguments(parser: ArgumentParser) -> Dict[str, Any]:
     parser.add_argument('--back_max', type=int, required=True, help="Maximum number of backwards steps from goal")
     parser.add_argument('--dynamic_back_max', action='store_true', default=False, help="Whether to dynamically increase the difficulty of the training exercises")
     parser.add_argument('--dynamic_back_max_per', type = float,  default=25, help="Minimum required solve-percentage to level up difficulty of the training exercises.")
-
+    parser.add_argument("--fixed_difficulty", action='store_true', default=False, help = "fix difficulty of generated training examples during each lesson, to be used in combination with dynamic_back_max=True")
     # model
     parser.add_argument('--nnet_name', type=str, required=True, help="Name of neural network")
     parser.add_argument('--update_num', type=int, default=0, help="Update number")
@@ -129,10 +129,10 @@ def copy_files(src_dir: str, dest_dir: str):
 
 
 def do_update(back_max: int, update_num: int, env: Environment, max_update_steps: int, update_method: str,
-              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs) -> Tuple[List[np.ndarray], np.ndarray]:
+              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False) -> Tuple[List[np.ndarray], np.ndarray]:
     update_steps: int = min(update_num + 1, max_update_steps)
     num_states: int = int(np.ceil(num_states / update_steps))
-    print("do_update back_max", back_max)
+
     # Do updates
     output_time_start = time.time()
 
@@ -140,7 +140,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     if max_update_steps > 1:
         print("Using %s with %i step(s) to add extra states to training set" % (update_method.upper(), update_steps))
     updater: Updater = Updater(env, num_states, back_max, heur_fn_i_q, heur_fn_o_qs, update_steps, update_method,
-                               update_batch_size=10000, eps_max=eps_max)
+                               update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty)
 
     states_update_nnet: List[np.ndarray]
     output_update: np.ndarray
@@ -230,12 +230,12 @@ def main():
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
                                             args_dict['states_per_update'], args_dict['eps_max'],
-                                            heur_fn_i_q, heur_fn_o_qs)
+                                            heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"])
         else:
             states_nnet, outputs = do_update(args_dict["back_max"], update_num, env,
                                          args_dict['max_update_steps'], args_dict['update_method'],
                                          args_dict['states_per_update'], args_dict['eps_max'],
-                                         heur_fn_i_q, heur_fn_o_qs)
+                                         heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False)
 
         nnet_utils.stop_heuristic_fn_runners(heur_procs, heur_fn_i_q)
 

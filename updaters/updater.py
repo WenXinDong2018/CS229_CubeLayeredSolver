@@ -56,14 +56,14 @@ def astar_update(states: List[State], env: Environment, num_steps: int, heuristi
 
 def update_runner(num_states: int, back_max: int, update_batch_size: int, heur_fn_i_q, heur_fn_o_q,
                   proc_id: int, env: Environment, result_queue: Queue, num_steps: int, update_method: str,
-                  eps_max: float):
+                  eps_max: float, fixed_difficulty:bool):
     heuristic_fn = nnet_utils.heuristic_fn_queue(heur_fn_i_q, heur_fn_o_q, proc_id, env)
 
     start_idx: int = 0
     while start_idx < num_states:
         end_idx: int = min(start_idx + update_batch_size, num_states)
 
-        states_itr, _ = env.generate_states(end_idx - start_idx, (0, back_max))
+        states_itr, _ = env.generate_states(end_idx - start_idx, (0, back_max), fixed_difficulty)
 
         if update_method.upper() == "GBFS":
             states_update, cost_to_go_update, is_solved = gbfs_update(states_itr, env, num_steps, heuristic_fn, eps_max)
@@ -80,10 +80,9 @@ def update_runner(num_states: int, back_max: int, update_batch_size: int, heur_f
 
     result_queue.put(None)
 
-
 class Updater:
     def __init__(self, env: Environment, num_states: int, back_max: int, heur_fn_i_q, heur_fn_o_qs,
-                 num_steps: int, update_method: str, update_batch_size: int = 1000, eps_max: float = 0.0):
+                 num_steps: int, update_method: str, update_batch_size: int = 1000, eps_max: float = 0.0, fixed_difficulty = False):
         super().__init__()
         ctx = get_context("spawn")
         self.num_steps = num_steps
@@ -106,7 +105,7 @@ class Updater:
 
             proc = ctx.Process(target=update_runner, args=(num_states_proc, back_max, update_batch_size,
                                                            heur_fn_i_q, heur_fn_o_qs[proc_id], proc_id, env,
-                                                           self.result_queue, num_steps, update_method, eps_max))
+                                                           self.result_queue, num_steps, update_method, eps_max, fixed_difficulty))
             proc.daemon = True
             proc.start()
             self.procs.append(proc)
