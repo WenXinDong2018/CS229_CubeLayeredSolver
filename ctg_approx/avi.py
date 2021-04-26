@@ -210,7 +210,7 @@ def main():
     wandb.init(project='deepcubaa',entity = "cs229deepcubeteam", id = run_id, name = run_id, config = args_dict)
 
 
-    dynamic_back_max = 1
+    dynamic_back_max = 0
     # training
     while itr < args_dict['max_itrs']:
         # update
