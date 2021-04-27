@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple, Union
 import numpy as np
+from sympy.combinatorics.permutations import Permutation
 from torch import nn
 from random import randrange
 
@@ -61,6 +62,115 @@ class Cube3Layer2(Environment):
         move_rev_idx: int = np.where(np.array(self.moves_rev) == np.array(move))[0][0]
 
         return self.next_state(states, move_rev_idx)[0]
+
+        """
+    This part is the added part that generates states that fix layer 1.
+    """
+    def get_corners(self) -> np.ndarray:
+        # 8 corners oriented clockwise.
+        return np.array([[0, 47, 26], [2, 20, 44], [8, 38, 35], [6, 21, 53], [11, 24, 45], [9, 42, 18], [15, 33, 36], [17, 51, 27]])
+
+    def get_edges(self) -> np.ndarray:
+        # 12 oriented corners.
+        return np.array([[3, 50], [1, 23], [5, 41], [7, 32], [46, 25], [19, 43], [37, 34], [28, 52], [14, 48], [10, 21], [12, 31], [16, 30]])
+
+    def get_corner_perm_map(self) -> np.ndarray:
+        return np.array([[0, 1, 2], [2, 0, 1], [1, 2, 0]])
+
+    def get_edge_perm_map(self) -> Dict[int, np.ndarray]:
+        return np.array([[0, 1], [1, 0]])
+
+    def generate_config(self, states: List[np.ndarray], corners_perm: np.ndarray, edge_perm: np.ndarray, corner_signs: np.ndarray, edge_signs: np.ndarray) -> np.ndarray:
+        # corner_perm is a permutation of 0 to 7, with list[i] being that position that i-th corner will be sent to.
+        # edge_perm is a permutation of 0 to 11, with list[i] being that position that i-th edge will be sent to.
+        # corner_sign is a length 8 ordered list of number 0 to 2, with i-th number indicating a orientation of the i-th corner
+        # edge_sign is a length 12 ordered list of number 0 to 1, with i-th number indicating a orientation of the i-th edge
+        output_states_np = np.stack([state for state in states])
+        corners = self.get_corners()
+        edges = self.get_edges()
+        corner_perm_map = self.get_corner_perm_map()
+        edge_perm_map = self.get_edge_perm_map()
+        corner_values = np.stack([np.concatenate([state[corners[i]][corner_perm_map[corner_signs[i]]] for i in range(8)]) for state in states])
+        edge_values = np.stack([np.concatenate([state[edges[i]][edge_perm_map[edge_signs[i]]] for i in range(12)]) for state in states])
+        output_states_np[:, corners.flatten()] = corner_values
+        output_states_np[:, edges.flatten()] = edge_values
+        return output_states_np
+
+    def generate_random_config(self, fix: int) -> List[np.ndarray]:
+        corners_perm: np.ndarray
+        edges_perm: np.ndarray
+        corner_signs: np.ndarray
+        edge_signs: np.ndarray
+        while True:
+            if fix != 1:
+                corners_perm = np.concatenate((np.arange(4), np.random.permutation(4) + 4))
+                edges_perm = np.concatenate((np.arange(4), np.random.permutation(8) + 4)) if fix == 2 else np.concatenate((np.arange(8), np.random.permutation(4) + 8))
+            else:
+                # fixes nothing
+                corners_perm = np.random.permutation(8)
+                edges_perm = np.random.permutation(12)
+
+            c_perm = Permutation(corners_perm.tolist())
+            e_perm = Permutation(edges_perm.tolist())
+            if c_perm.signature() == e_perm.signature():
+                break
+        while True:
+            corner_signs = np.concatenate((np.zeros(4, dtype=int), np.random.randint(3, size=4))) if fix != 1 else   np.random.randint(3, size=8)
+            if np.sum(corner_signs) % 3 == 0:
+                break
+        while True:
+            if fix != 1:
+                edge_signs = np.concatenate((np.zeros(4, dtype=int), np.random.randint(2, size=8))) if fix == 2 else np.concatenate((np.zeros(8, dtype=int), np.random.randint(2, size=4)))
+            else:
+                edges_signs = np.random.randint(2, size=12)
+            if np.sum(edge_signs) % 2 == 0:
+                break
+        return [corners_perm, edges_perm, corner_signs, edge_signs]
+
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], random: bool) -> Tuple[List[Cube3State], List[int]]:
+        assert (num_states > 0)
+        assert (backwards_range[0] >= 0)
+        assert self.fixed_actions, "Environments without fixed actions must implement their own method"
+
+        if random:
+            # no random walk
+            states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
+            for i in range(num_states):
+                args = self.generate_random_config(fix=2)
+                states_np[i] = self.generate_config([states_np[i]], args[0], args[1], args[2], args[3])[0]
+            states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
+            return states, [0 for _ in range(num_states)]
+        # Initialize
+        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
+        fixed_moves: List[str] = self.get_all_possible_fixed_moves()
+        function_map = self.fixed_move_dict()
+        num_fixed_moves: int = len(fixed_moves)
+        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
+        # Get goal states
+        states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
+        # print("states_np", states_np)
+        # Scrambles
+        scramble_nums: np.array = np.random.choice(scrambs, num_states)
+        # print("scramble_nums: {}".format(scramble_nums))
+        num_back_moves: np.array = np.zeros(num_states)
+
+        # Go backward from goal state
+        moves_lt = num_back_moves < scramble_nums
+        # print('moves_lt: {}'.format(moves_lt))
+        while np.any(moves_lt):
+            idxs: np.ndarray = np.where(moves_lt)[0]
+            subset_size: int = int(max(len(idxs) / num_fixed_moves, 1))
+            idxs: np.ndarray = np.random.choice(idxs, subset_size)
+
+            move: int = randrange(num_fixed_moves)
+            fixed_move: List[str] = fixed_moves[move].split(' ')
+            states_np[idxs] = function_map[int(fixed_move[0])](states_np[idxs], int(fixed_move[1]), int(fixed_move[2]))
+            # print("move states_np", states_np[idxs])
+            num_back_moves[idxs] = num_back_moves[idxs] + 1
+            moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
+
+        states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
+        return states, scramble_nums.tolist()
 
     def generate_goal_states(self, num_states: int, np_format: bool = False) -> Union[List[Cube3State], np.ndarray]:
         if np_format:
