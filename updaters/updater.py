@@ -62,8 +62,7 @@ def update_runner(num_states: int, back_max: int, update_batch_size: int, heur_f
     start_idx: int = 0
     while start_idx < num_states:
         end_idx: int = min(start_idx + update_batch_size, num_states)
-
-        states_itr, _ = env.generate_states(end_idx - start_idx, (0, back_max), fixed_difficulty, random)
+        states_itr, _ = env.generate_states(end_idx - start_idx, (0, back_max), fixed_difficulty=fixed_difficulty, random=random)
 
         if update_method.upper() == "GBFS":
             states_update, cost_to_go_update, is_solved = gbfs_update(states_itr, env, num_steps, heuristic_fn, eps_max)

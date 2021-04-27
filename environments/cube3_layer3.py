@@ -176,7 +176,7 @@ class Cube3Layer3(Environment):
         d = {0: self.edge_permutation, 1: self.edge_twist, 2: self.corner_permutation, 3: self.corner_twist}
         return d
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool, random:bool) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"

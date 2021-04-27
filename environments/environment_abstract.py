@@ -85,21 +85,6 @@ class Environment(ABC):
         """
         pass
 
-    @abstractmethod
-    def generate_config(self, states: List[np.ndarray], corners_perm: np.ndarray, edge_perm: np.ndarray, corner_signs: np.ndarray, edge_signs: np.ndarray) -> np.ndarray:
-        """ Generate a configuration of cube using the given arguments. 
-
-        @return: list of cubes as np.ndarray
-        """
-        pass
-
-    @abstractmethod
-    def generate_random_config(self, fix: int) -> List[np.ndarray]:
-        """ Generate random configuration of a cube for fixed layer 1, 2, or 3
-        
-        @return: list of length four arguments for generate_config
-        """
-        pass
 
 
     def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random: bool = False) -> Tuple[List[State], List[int]]:

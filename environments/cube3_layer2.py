@@ -121,14 +121,13 @@ class Cube3Layer2(Environment):
                 break
         return [corners_perm, edges_perm, corner_signs, edge_signs]
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], random: bool) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty: bool = False, random: bool = False) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         if random:
             # no random walk
-            print("layer 2 generating samples randomly")
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):
                 args = self.generate_random_config(fix=2)
@@ -212,45 +211,6 @@ class Cube3Layer2(Environment):
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
 
         return nnet
-
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool) -> Tuple[List[Cube3State], List[int]]:
-        assert (num_states > 0)
-        assert (backwards_range[0] >= 0)
-        assert self.fixed_actions, "Environments without fixed actions must implement their own method"
-
-        # Initialize
-        if fixed_difficulty:
-            #generate examples with "backwards_range[1]" number of scrambles
-            #if look at function calls, backwards_range[1] is the same as back_max
-            scrambs = list(range(backwards_range[1], backwards_range[1] + 1))
-            print("layer2 generating scrambles of fixed difficulty", scrambs)
-        else:
-            scrambs = list(range(backwards_range[0], backwards_range[1] + 1))
-        num_env_moves: int = self.get_num_moves()
-        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
-        # Get goal states
-        states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
-        # print("states_np", states_np)
-        # Scrambles
-        scramble_nums: np.array = np.random.choice(scrambs, num_states)
-        num_back_moves: np.array = np.zeros(num_states)
-
-        # Go backward from goal state
-        moves_lt = num_back_moves < scramble_nums
-        while np.any(moves_lt):
-            idxs: np.ndarray = np.where(moves_lt)[0]
-            subset_size: int = int(max(len(idxs) / num_env_moves, 1))
-            idxs: np.ndarray = np.random.choice(idxs, subset_size)
-
-            move: int = randrange(num_env_moves)
-            states_np[idxs], _ = self._move_np(states_np[idxs], move)
-            # print("move states_np", states_np[idxs])
-            num_back_moves[idxs] = num_back_moves[idxs] + 1
-            moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
-
-        states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
-
-        return states, scramble_nums.tolist()
 
     def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"

@@ -1,0 +1,5 @@
+[default]
+entity = cs229deepcubeteam
+project = deepcubaa
+base_url = https://api.wandb.ai
+

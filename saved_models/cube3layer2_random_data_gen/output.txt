@@ -1,0 +1,24 @@
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
+device: cpu, devices: [], on_gpu: False
+
+Updating cost-to-go with value iteration
+
