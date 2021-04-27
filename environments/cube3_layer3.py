@@ -96,16 +96,16 @@ class Cube3Layer3(Environment):
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
 
         return nnet
-    """ 
-    This part is the added part that generates states that fix layer2 and 1. 
+    """
+    This part is the added part that generates states that fix layer2 and 1.
     """
     def get_fixed_moves(self) -> List[str]:
         moves_with_top_two_layers_fixed = ['edge_perm, edge_twist, corner_perm, corner_twist']
 
-    def edge_permutation(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+    def edge_permutation(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray:
         # edges in the last layers are 21, 30, 39, 48. We only can permutes three of them at a time
-        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute. 
-        # sign: given a set of edges that we want to permute, there's two ways to permute them. 
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute.
+        # sign: given a set of edges that we want to permute, there's two ways to permute them.
         set_to_choose: Dict[int, np.ndarray] = {0: np.array([21, 30, 39]), 1: np.array([21, 39, 48]), 2: np.array([21, 30, 48]), 3: np.array([30, 39, 48])}
         output_states_np = np.stack([state for state in states])
         indices = set_to_choose[choice_of_edges]
@@ -117,22 +117,22 @@ class Cube3Layer3(Environment):
         output_states_np[:, indices[perm_arr]] = values
         return output_states_np
 
-    def edge_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+    def edge_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray:
         # edges in the last layers are 21, 30, 39, 48. We only can twist two of them at a time
-        # choice_of_edges can take either 0, 1, 2, 3, 4, 5. Each one represents a set of two edges that we will twist. 
+        # choice_of_edges can take either 0, 1, 2, 3, 4, 5. Each one represents a set of two edges that we will twist.
         set_to_choose: Dict[int, np.ndarray] = {0: np.array([21, 30]), 1: np.array([21, 39]), 2: np.array([21, 48]), 3: np.array([30, 39]), 4: np.array([30, 48]), 5: np.array([39, 48])}
         correspondence: Dict[int, np.ndarray] = {21: np.array([10, 21]), 30: np.array([16, 30]), 39: np.array([12, 39]), 48: np.array([14, 48])}
         output_states_np = np.stack([state for state in states])
         perm_set = set_to_choose[choice_of_edges]
-        
+
         edge_indices = np.concatenate((correspondence[perm_set[0]], correspondence[perm_set[1]]))
         edge_values = output_states_np[:, edge_indices]
         output_states_np[:, edge_indices[np.array([1, 0, 3, 2])]] = edge_values
         return output_states_np
-    def corner_permutation(self, states: List[np.ndarray], choice_of_corners: int, sign: int) ->  np.ndarray: 
+    def corner_permutation(self, states: List[np.ndarray], choice_of_corners: int, sign: int) ->  np.ndarray:
         # edges in the last layers are 21, 30, 39, 48. We only can permutes three of them at a time
-        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute. 
-        # sign: given a set of edges that we want to permute, there's two ways to permute them. 
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of three edges that we will permute.
+        # sign: given a set of edges that we want to permute, there's two ways to permute them.
         set_to_choose: Dict[int, np.ndarray] = {0: np.array([9, 11, 15]), 1: np.array([9, 15, 17]), 2: np.array([9, 11, 17]), 3: np.array([11, 15, 17])}
         correspondence: Dict[int, np.ndarray] = {9: np.array([9, 42, 18]), 11: np.array([11, 24, 45]), 15: np.array([15, 33, 36]), 17: np.array([17, 51, 21])}
         output_states_np = np.stack([state for state in states])
@@ -145,9 +145,9 @@ class Cube3Layer3(Environment):
         output_states_np[:, indices[perm_arr]] = values
         return output_states_np
 
-    def corner_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray: 
+    def corner_twist(self, states: List[np.ndarray], choice_of_edges: int, sign: int) -> np.ndarray:
         # edges in the last layers are 21, 30, 39, 48. We only can twist two of them at a time
-        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of two on one edge. 
+        # choice_of_edges can take either 0, 1, 2, 3. Each one represents a set of two on one edge.
         set_to_choose: Dict[int, np.ndarray] = {0: np.array([9, 11]), 1: np.array([9, 15]), 2: np.array([11, 17]), 3: np.array([15, 17])}
         correspondence: Dict[int, np.ndarray] = {9: np.array([9, 42, 18]), 11: np.array([11, 24, 45]), 15: np.array([15, 33, 36]), 17: np.array([17, 51, 21])}
         output_states_np = np.stack([state for state in states])
@@ -176,13 +176,20 @@ class Cube3Layer3(Environment):
         d = {0: self.edge_permutation, 1: self.edge_twist, 2: self.corner_permutation, 3: self.corner_twist}
         return d
 
-    def generate_states_using_fixed_moves(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # Initialize
-        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
+        if fixed_difficulty:
+            #generate examples with "backwards_range[1]" number of scrambles
+            #if look at function calls, backwards_range[1] is the same as back_max
+            scrambs = list(range(backwards_range[1], backwards_range[1] + 1))
+            print("layer3 generating scrambles of fixed difficulty", scrambs)
+        else:
+            scrambs = list(range(backwards_range[0], backwards_range[1] + 1))
+        num_env_moves: int = self.get_num_moves()
         fixed_moves: List[str] = self.get_all_possible_fixed_moves()
         function_map = self.fixed_move_dict()
         num_fixed_moves: int = len(fixed_moves)
@@ -217,41 +224,6 @@ class Cube3Layer3(Environment):
 
 
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
-        assert (num_states > 0)
-        assert (backwards_range[0] >= 0)
-        assert self.fixed_actions, "Environments without fixed actions must implement their own method"
-
-        # Initialize
-        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
-        num_env_moves: int = self.get_num_moves()
-        # print("scrambs",scrambs, "num_env_moves", num_env_moves)
-        # Get goal states
-        states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
-        # print("states_np", states_np)
-        # Scrambles
-        scramble_nums: np.array = np.random.choice(scrambs, num_states)
-        # print("scramble_nums: {}".format(scramble_nums))
-        num_back_moves: np.array = np.zeros(num_states)
-
-        # Go backward from goal state
-        moves_lt = num_back_moves < scramble_nums
-        # print('moves_lt: {}'.format(moves_lt))
-        while np.any(moves_lt):
-            idxs: np.ndarray = np.where(moves_lt)[0]
-            # print("idxs: {}".format(np.where(moves_lt)))
-            subset_size: int = int(max(len(idxs) / num_env_moves, 1))
-            idxs: np.ndarray = np.random.choice(idxs, subset_size)
-
-            move: int = randrange(num_env_moves)
-            states_np[idxs], _ = self._move_np(states_np[idxs], move)
-            # print("move states_np", states_np[idxs])
-            num_back_moves[idxs] = num_back_moves[idxs] + 1
-            moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
-
-        states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
-
-        return states, scramble_nums.tolist()
 
     def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
