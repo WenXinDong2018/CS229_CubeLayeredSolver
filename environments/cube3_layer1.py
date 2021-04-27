@@ -84,7 +84,7 @@ class Cube3Layer1(Environment):
         #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
         is_solved =  np.sum(is_equal, axis=1, where =layer1_cubies_one_hot) == goal_match
         # print("is_solved", is_solved )
-
+        print(is_solved)
         return is_solved
 
 
