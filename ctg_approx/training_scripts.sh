@@ -16,4 +16,4 @@ python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_s
 
 #training layer 2 with random state training examples in each lesson
 
-python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --random
+python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen
