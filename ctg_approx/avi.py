@@ -130,7 +130,7 @@ def copy_files(src_dir: str, dest_dir: str):
 
 
 def do_update(back_max: int, update_num: int, env: Environment, max_update_steps: int, update_method: str,
-              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False) -> Tuple[List[np.ndarray], np.ndarray]:
+              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False) -> Tuple[List[np.ndarray], np.ndarray]:
     update_steps: int = min(update_num + 1, max_update_steps)
     num_states: int = int(np.ceil(num_states / update_steps))
 
@@ -231,12 +231,17 @@ def main():
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
                                             args_dict['states_per_update'], args_dict['eps_max'],
-                                            heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"])
+                                            heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"], random=False)
+        elif: args_dict["uniform_data_gen"]:
+            states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
+                                            args_dict['max_update_steps'], args_dict['update_method'],
+                                            args_dict['states_per_update'], args_dict['eps_max'],
+                                            heur_fn_i_q, heur_fn_o_qs, random=args_dict["uniform_data_gen"], fixed_difficulty=False)
         else:
             states_nnet, outputs = do_update(args_dict["back_max"], update_num, env,
                                          args_dict['max_update_steps'], args_dict['update_method'],
                                          args_dict['states_per_update'], args_dict['eps_max'],
-                                         heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False)
+                                         heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False)
 
         nnet_utils.stop_heuristic_fn_runners(heur_procs, heur_fn_i_q)
 
