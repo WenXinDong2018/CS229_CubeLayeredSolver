@@ -86,6 +86,7 @@ def parse_arguments(parser: ArgumentParser) -> Dict[str, Any]:
     parser.add_argument('--dynamic_back_max', action='store_true', default=False, help="Whether to dynamically increase the difficulty of the training exercises")
     parser.add_argument('--dynamic_back_max_per', type = float,  default=25, help="Minimum required solve-percentage to level up difficulty of the training exercises.")
     parser.add_argument("--fixed_difficulty", action='store_true', default=False, help = "fix difficulty of generated training examples during each lesson, to be used in combination with dynamic_back_max=True")
+    parser.add_argument("--uniform_data_gen", action='store_true', default=False, help = "toggle the random flag in generate_state method in layer 2. Right now only to be used for layer 2. If turned on, backwards steps from goal disabled. Data generated randomly")
     # model
     parser.add_argument('--nnet_name', type=str, required=True, help="Name of neural network")
     parser.add_argument('--update_num', type=int, default=0, help="Update number")
@@ -140,7 +141,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     if max_update_steps > 1:
         print("Using %s with %i step(s) to add extra states to training set" % (update_method.upper(), update_steps))
     updater: Updater = Updater(env, num_states, back_max, heur_fn_i_q, heur_fn_o_qs, update_steps, update_method,
-                               update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty)
+                               update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty, random=random)
 
     states_update_nnet: List[np.ndarray]
     output_update: np.ndarray

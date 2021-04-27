@@ -74,12 +74,6 @@ class Cube3Layer2(Environment):
         # 12 oriented corners.
         return np.array([[3, 50], [1, 23], [5, 41], [7, 32], [46, 25], [19, 43], [37, 34], [28, 52], [14, 48], [10, 21], [12, 31], [16, 30]])
 
-    def get_corner_perm_map(self) -> np.ndarray:
-        return np.array([[0, 1, 2], [2, 0, 1], [1, 2, 0]])
-
-    def get_edge_perm_map(self) -> Dict[int, np.ndarray]:
-        return np.array([[0, 1], [1, 0]])
-
     def generate_config(self, states: List[np.ndarray], corners_perm: np.ndarray, edge_perm: np.ndarray, corner_signs: np.ndarray, edge_signs: np.ndarray) -> np.ndarray:
         # corner_perm is a permutation of 0 to 7, with list[i] being that position that i-th corner will be sent to.
         # edge_perm is a permutation of 0 to 11, with list[i] being that position that i-th edge will be sent to.
@@ -88,8 +82,8 @@ class Cube3Layer2(Environment):
         output_states_np = np.stack([state for state in states])
         corners = self.get_corners()
         edges = self.get_edges()
-        corner_perm_map = self.get_corner_perm_map()
-        edge_perm_map = self.get_edge_perm_map()
+        corner_perm_map = np.array([[0, 1, 2], [2, 0, 1], [1, 2, 0]])
+        edge_perm_map = np.array([[0, 1], [1, 0]])
         corner_values = np.stack([np.concatenate([state[corners[i]][corner_perm_map[corner_signs[i]]] for i in range(8)]) for state in states])
         edge_values = np.stack([np.concatenate([state[edges[i]][edge_perm_map[edge_signs[i]]] for i in range(12)]) for state in states])
         output_states_np[:, corners.flatten()] = corner_values
@@ -134,6 +128,7 @@ class Cube3Layer2(Environment):
 
         if random:
             # no random walk
+            print("layer 2 generating samples randomly")
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):
                 args = self.generate_random_config(fix=2)

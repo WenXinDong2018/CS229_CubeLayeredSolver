@@ -85,7 +85,24 @@ class Environment(ABC):
         """
         pass
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False) -> Tuple[List[State], List[int]]:
+    @abstractmethod
+    def generate_config(self, states: List[np.ndarray], corners_perm: np.ndarray, edge_perm: np.ndarray, corner_signs: np.ndarray, edge_signs: np.ndarray) -> np.ndarray:
+        """ Generate a configuration of cube using the given arguments. 
+
+        @return: list of cubes as np.ndarray
+        """
+        pass
+
+    @abstractmethod
+    def generate_random_config(self, fix: int) -> List[np.ndarray]:
+        """ Generate random configuration of a cube for fixed layer 1, 2, or 3
+        
+        @return: list of length four arguments for generate_config
+        """
+        pass
+
+
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random: bool = False) -> Tuple[List[State], List[int]]:
         """ Generate training states by starting from the goal and taking actions in reverse.
         If the number of actions are not fixed, then a custom implementation must be used.
 
@@ -96,6 +113,16 @@ class Environment(ABC):
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
+
+        if random:
+            # no random walk
+            print("env abstract generating samples randomly")
+            states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
+            for i in range(num_states):
+                args = self.generate_random_config(fix=2)
+                states_np[i] = self.generate_config([states_np[i]], args[0], args[1], args[2], args[3])[0]
+            states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
+            return states, [0 for _ in range(num_states)]
 
         # Initialize
         scrambs: List[int] = []
