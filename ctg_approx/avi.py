@@ -232,7 +232,7 @@ def main():
                                             args_dict['max_update_steps'], args_dict['update_method'],
                                             args_dict['states_per_update'], args_dict['eps_max'],
                                             heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"], random=False)
-        elif: args_dict["uniform_data_gen"]:
+        elif args_dict["uniform_data_gen"]:
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
                                             args_dict['states_per_update'], args_dict['eps_max'],
