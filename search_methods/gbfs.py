@@ -126,7 +126,7 @@ class GBFS:
 
 
 def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Callable,
-              max_solve_steps: Optional[int] = None, dynamic_back_max = None):
+              max_solve_steps: Optional[int] = None, dynamic_back_max = None, random: bool=False):
     # get data
     back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
     num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
@@ -137,7 +137,7 @@ def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Ca
 
     for back_step, num_states_i in zip(back_steps, num_states_per_back_step):
         if num_states_i > 0:
-            states_i, back_steps_i = env.generate_states(num_states_i, (back_step, back_step))
+            states_i, back_steps_i = env.generate_states(num_states_i, (back_step, back_step), random=random)
             states.extend(states_i)
             state_back_steps_l.extend(back_steps_i)
 
