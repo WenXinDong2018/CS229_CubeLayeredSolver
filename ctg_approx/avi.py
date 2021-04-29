@@ -269,7 +269,7 @@ def main():
             wandb.log({"dynamic_back_max": dynamic_back_max})
 
         else:
-            gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps)
+            gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, random=args_dict["uniform_data_gen"])
 
         wandb.log({"max_solve_steps": max_solve_steps})
         print("Test time: %.2f" % (time.time() - start_time))
