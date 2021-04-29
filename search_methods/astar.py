@@ -374,7 +374,7 @@ def main():
     # get data
     input_data = pickle.load(open(args.states, "rb"))
     states: List[State] = input_data['states'][args.start_idx:]
-
+    print("solving #", len(states), "problems")
     # environment
     env: Environment = env_utils.get_environment(args.env)
 
