@@ -13,6 +13,9 @@ import sys
 import os
 import socket
 from torch.multiprocessing import Process
+from search_methods.options import human_options
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
 class Node:
@@ -110,7 +113,7 @@ def expand_nodes(instances: List[Instance], popped_nodes_all: List[List[Node]], 
     states_c_by_node: List[List[State]]
     tcs_np: List[np.ndarray]
 
-    states_c_by_node, tcs_np = env.expand(states)
+    states_c_by_node, tcs_np = env.expand(states, options = human_options)
 
     tcs_by_node: List[List[float]] = [list(x) for x in tcs_np]
 
@@ -374,7 +377,7 @@ def main():
     # get data
     input_data = pickle.load(open(args.states, "rb"))
     states: List[State] = input_data['states'][args.start_idx:]
-
+    print("solving #", len(states), "problems")
     # environment
     env: Environment = env_utils.get_environment(args.env)
 
@@ -455,7 +458,7 @@ def bwas_python(args, env: Environment, states: List[State]):
 
 
 def bwas_cpp(args, env: Environment, states: List[State], results_file: str):
-    assert (args.env.upper() in ['CUBE3', 'CUBE4', 'PUZZLE15', 'PUZZLE24', 'PUZZLE35', 'PUZZLE48', 'LIGHTSOUT7'])
+    assert (args.env.upper() in ['CUBE3', 'CUBE3_LAYER1','CUBE3_LAYER2', 'CUBE3_LAYER3', 'CUBE4', 'PUZZLE15', 'PUZZLE24', 'PUZZLE35', 'PUZZLE48', 'LIGHTSOUT7'])
 
     # Make c++ socket
     socket_name: str = "%s_cpp_socket" % results_file.split(".")[0]
@@ -470,7 +473,7 @@ def bwas_cpp(args, env: Environment, states: List[State], results_file: str):
     sock.bind(socket_name)
 
     # Get state dimension
-    if args.env.upper() == 'CUBE3':
+    if args.env.upper() == "CUBE3" or args.env.upper() == "CUBE3_LAYER1" or args.env.upper() == "CUBE3_LAYER2" or args.env.upper() == "CUBE3_LAYER3":
         state_dim: int = 54
     elif args.env.upper() == 'PUZZLE15':
         state_dim: int = 16
@@ -507,7 +510,7 @@ def bwas_cpp(args, env: Environment, states: List[State], results_file: str):
 
     for state_idx, state in enumerate(states):
         # Get string rep of state
-        if args.env.upper() == "CUBE3":
+        if args.env.upper() == "CUBE3" or args.env.upper() == "CUBE3_LAYER1" or args.env.upper() == "CUBE3_LAYER2" or args.env.upper() == "CUBE3_LAYER3":
             state_str: str = " ".join([str(x) for x in state.colors])
         elif args.env.upper() in ["PUZZLE15", "PUZZLE24", "PUZZLE35", "PUZZLE48"]:
             state_str: str = " ".join([str(x) for x in state.tiles])
@@ -596,7 +599,7 @@ def cpp_listener(sock, args, env: Environment, state_dim: int, heur_fn_i_q, heur
         states_np = states_np.reshape(int(len(states_np)/state_dim), state_dim)
 
         # Get nnet representation of state
-        if args.env.upper() == "CUBE3":
+        if args.env.upper() == "CUBE3" or args.env.upper() == "CUBE3_LAYER1" or args.env.upper() == "CUBE3_LAYER2" or args.env.upper() == "CUBE3_LAYER3":
             states_np = states_np/9
             states_np = states_np.astype(env.dtype)
             states_nnet: List[np.ndarray] = [states_np]
