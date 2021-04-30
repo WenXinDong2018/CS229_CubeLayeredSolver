@@ -1,0 +1,52 @@
+2021-04-30 05:47:07,500 INFO    MainThread:11071 [internal.py:wandb_internal():91] W&B internal server running at pid: 11071, started at: 2021-04-30 05:47:07.460107
+2021-04-30 05:47:07,505 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: check_version
+2021-04-30 05:47:07,505 INFO    WriterThread:11071 [datastore.py:open_for_write():77] open: /home/georgenakayama/CS229_DeepCubeA/wandb/run-20210430_054706-cube3_layer3-cube3layer3_random_data_gen/run-cube3_layer3-cube3layer3_random_data_gen.wandb
+2021-04-30 05:47:07,505 DEBUG   SenderThread:11071 [sender.py:send():160] send: header
+2021-04-30 05:47:07,505 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:47:07,505 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: check_version
+2021-04-30 05:47:07,685 DEBUG   SenderThread:11071 [sender.py:send():160] send: run
+2021-04-30 05:47:07,925 INFO    SenderThread:11071 [sender.py:_start_run_threads():654] run started: cube3_layer3-cube3layer3_random_data_gen with start time 1619761626
+2021-04-30 05:47:07,926 DEBUG   SenderThread:11071 [sender.py:send():160] send: summary
+2021-04-30 05:47:07,926 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: run_start
+2021-04-30 05:47:07,927 INFO    SenderThread:11071 [sender.py:_save_file():781] saving file wandb-summary.json with policy end
+2021-04-30 05:47:11,956 DEBUG   HandlerThread:11071 [meta.py:__init__():39] meta init
+2021-04-30 05:47:11,956 DEBUG   HandlerThread:11071 [meta.py:__init__():53] meta init done
+2021-04-30 05:47:11,956 DEBUG   HandlerThread:11071 [meta.py:probe():210] probe
+2021-04-30 05:47:11,963 DEBUG   HandlerThread:11071 [meta.py:_setup_git():200] setup git
+2021-04-30 05:47:11,988 DEBUG   HandlerThread:11071 [meta.py:_setup_git():207] setup git done
+2021-04-30 05:47:11,989 DEBUG   HandlerThread:11071 [meta.py:_save_pip():57] save pip
+2021-04-30 05:47:11,989 DEBUG   HandlerThread:11071 [meta.py:_save_pip():71] save pip done
+2021-04-30 05:47:11,989 DEBUG   HandlerThread:11071 [meta.py:_save_conda():78] save conda
+2021-04-30 05:47:28,240 WARNING MainThread:11071 [internal.py:wandb_internal():146] Internal process interrupt: 1
+2021-04-30 05:47:28,385 DEBUG   HandlerThread:11071 [meta.py:_save_conda():86] save conda done
+2021-04-30 05:47:28,385 DEBUG   HandlerThread:11071 [meta.py:probe():252] probe done
+2021-04-30 05:47:28,424 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:47:28,425 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:47:28,426 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:47:28,597 DEBUG   SenderThread:11071 [sender.py:send():160] send: files
+2021-04-30 05:47:28,599 INFO    SenderThread:11071 [sender.py:_save_file():781] saving file wandb-metadata.json with policy now
+2021-04-30 05:47:40,568 DEBUG   SenderThread:11071 [sender.py:send():160] send: stats
+2021-04-30 05:47:43,599 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:47:43,599 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:47:43,599 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:47:59,241 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:47:59,242 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:47:59,242 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:48:10,745 DEBUG   SenderThread:11071 [sender.py:send():160] send: stats
+2021-04-30 05:48:14,379 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:48:14,379 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:48:14,379 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:48:29,484 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:48:29,484 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:48:29,485 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:48:40,921 DEBUG   SenderThread:11071 [sender.py:send():160] send: stats
+2021-04-30 05:48:44,723 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:48:44,723 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:48:44,723 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:48:59,895 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:48:59,896 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:48:59,896 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
+2021-04-30 05:49:11,105 DEBUG   SenderThread:11071 [sender.py:send():160] send: stats
+2021-04-30 05:49:15,069 DEBUG   HandlerThread:11071 [handler.py:handle_request():120] handle_request: status
+2021-04-30 05:49:15,070 DEBUG   SenderThread:11071 [sender.py:send():160] send: request
+2021-04-30 05:49:15,070 DEBUG   SenderThread:11071 [sender.py:send_request():169] send_request: status
