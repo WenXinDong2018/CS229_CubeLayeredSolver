@@ -28,3 +28,7 @@ python search_methods/astarwOptions.py --states data/cube3/test/data_0.pkl --mod
 
 #A* search without options using saved checkpoint of the dynamic difficulty normal distribution model. solve 100 cubes
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25/current/ --env cube3_layer1 --weight 0.6 --batch_size 10000 --results_dir results/cube3layer1_dynamic_difficulty_25/ --language python --nnet_batch_size 10000 --start_idx 900
+
+
+#A* search without options using saved checkpoint of the cube3 env. solve 100 cubes
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3/current/ --env cube3 --weight 0.6 --batch_size 10000 --results_dir results/cube3_/ --language python --nnet_batch_size 1000 --start_idx 900
