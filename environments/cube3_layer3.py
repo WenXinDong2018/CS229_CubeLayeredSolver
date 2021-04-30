@@ -232,14 +232,14 @@ class Cube3Layer3(Environment):
                 break
         return [corners_perm, edges_perm, corner_signs, edge_signs]
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool, random:bool) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random:bool = False) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         if random:
             # no random walk
-            print("layer3 generating sambles randomly")
+            print("layer3 generating samples randomly")
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):
                 args = self.generate_random_config(fix=3)
