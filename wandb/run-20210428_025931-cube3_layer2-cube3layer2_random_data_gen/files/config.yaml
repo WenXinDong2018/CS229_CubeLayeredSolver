@@ -1,0 +1,98 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.10.27
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.7.10
+    t:
+      1:
+      - 1
+      4: 3.7.10
+      5: 0.10.27
+      8:
+      - 5
+back_max:
+  desc: null
+  value: 30
+batch_size:
+  desc: null
+  value: 1000
+curr_dir:
+  desc: null
+  value: saved_models/cube3layer2_random_data_gen//current/
+debug:
+  desc: null
+  value: false
+dynamic_back_max:
+  desc: null
+  value: false
+dynamic_back_max_per:
+  desc: null
+  value: 25
+env:
+  desc: null
+  value: cube3_layer2
+epochs_per_update:
+  desc: null
+  value: 1
+eps_max:
+  desc: null
+  value: 0
+fixed_difficulty:
+  desc: null
+  value: false
+loss_thresh:
+  desc: null
+  value: 0.2
+lr:
+  desc: null
+  value: 0.001
+lr_d:
+  desc: null
+  value: 0.9999993
+max_itrs:
+  desc: null
+  value: 1000000
+max_update_steps:
+  desc: null
+  value: 1
+nnet_name:
+  desc: null
+  value: cube3layer2_random_data_gen
+num_test:
+  desc: null
+  value: 10000
+num_update_procs:
+  desc: null
+  value: 30
+output_save_loc:
+  desc: null
+  value: saved_models/cube3layer2_random_data_gen//output.txt
+save_dir:
+  desc: null
+  value: saved_models
+single_gpu_training:
+  desc: null
+  value: true
+states_per_update:
+  desc: null
+  value: 500000
+targ_dir:
+  desc: null
+  value: saved_models/cube3layer2_random_data_gen//target/
+uniform_data_gen:
+  desc: null
+  value: true
+update_method:
+  desc: null
+  value: GBFS
+update_nnet_batch_size:
+  desc: null
+  value: 10000
+update_num:
+  desc: null
+  value: 0

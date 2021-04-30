@@ -1,0 +1,42 @@
+{
+    "os": "Linux-4.19.0-16-cloud-amd64-x86_64-with-debian-10.9",
+    "python": "3.7.10",
+    "heartbeatAt": "2021-04-28T02:37:46.311865",
+    "startedAt": "2021-04-28T02:37:43.189273",
+    "docker": null,
+    "gpu": "Tesla K80",
+    "gpu_count": 1,
+    "cpu_count": 2,
+    "cuda": "11.0.207",
+    "args": [
+        "--env",
+        "cube3_layer2",
+        "--states_per_update",
+        "500000",
+        "--batch_size",
+        "1000",
+        "--nnet_name",
+        "cube3layer2_random_data_gen",
+        "--max_itrs",
+        "1000000",
+        "--loss_thresh",
+        "0.2",
+        "--back_max",
+        "30",
+        "--num_update_procs",
+        "30",
+        "--uniform_data_gen"
+    ],
+    "state": "running",
+    "program": "ctg_approx/avi.py",
+    "codePath": "ctg_approx/avi.py",
+    "git": {
+        "remote": "https://github.com/WenXinDong2018/CS229_DeepCubeA.git",
+        "commit": "120b035ddbf0b3ae8dcfcf7ea43f86b11eb9aa60"
+    },
+    "email": null,
+    "root": "/home/georgenakayama/CS229_DeepCubeA",
+    "host": "cs229deepcube-vm",
+    "username": "georgenakayama",
+    "executable": "/opt/conda/bin/python"
+}
