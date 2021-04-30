@@ -1,0 +1,1 @@
+AttributeError: 'Cube3Layer2' object has no attribute 'get_all_possible_fixed_moves'
