@@ -18,6 +18,13 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
+
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+##### astar.py has an option flag
 class Node:
     __slots__ = ['state', 'path_cost', 'heuristic', 'cost', 'is_solved', 'parent_move', 'parent', 'transition_costs',
                  'children', 'bellman']
@@ -363,6 +370,7 @@ def main():
 
     parser.add_argument('--verbose', action='store_true', default=False, help="Set for verbose")
     parser.add_argument('--debug', action='store_true', default=False, help="Set when debugging")
+    parser.add_argument('--max_itrs', type=int, default=50, help="Set timeout for A* search.")
 
     args = parser.parse_args()
 
@@ -421,38 +429,42 @@ def bwas_python(args, env: Environment, states: List[State]):
 
         num_itrs: int = 0
         astar = AStar([state], env, heuristic_fn, [args.weight])
-        while not min(astar.has_found_goal()):
+        while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
             astar.step(heuristic_fn, args.batch_size, verbose=args.verbose)
             num_itrs += 1
+            print(state_idx, "astar itr", num_itrs)
+        #if not found solution
+        if not min(astar.has_found_goal()):
+            print("State: %i, Failed" % (state_idx))
+        else:
+            path: List[State]
+            soln: List[int]
+            path_cost: float
+            num_nodes_gen_idx: int
+            goal_node: Node = astar.get_goal_node_smallest_path_cost(0)
+            path, soln, path_cost = get_path(goal_node)
 
-        path: List[State]
-        soln: List[int]
-        path_cost: float
-        num_nodes_gen_idx: int
-        goal_node: Node = astar.get_goal_node_smallest_path_cost(0)
-        path, soln, path_cost = get_path(goal_node)
+            num_nodes_gen_idx: int = astar.get_num_nodes_generated(0)
 
-        num_nodes_gen_idx: int = astar.get_num_nodes_generated(0)
+            solve_time = time.time() - start_time
 
-        solve_time = time.time() - start_time
+            # record solution information
+            solns.append(soln)
+            paths.append(path)
+            times.append(solve_time)
+            num_nodes_gen.append(num_nodes_gen_idx)
 
-        # record solution information
-        solns.append(soln)
-        paths.append(path)
-        times.append(solve_time)
-        num_nodes_gen.append(num_nodes_gen_idx)
+            # check soln
+            assert search_utils.is_valid_soln(state, soln, env)
 
-        # check soln
-        assert search_utils.is_valid_soln(state, soln, env)
+            # print to screen
+            timing_str = ", ".join(["%s: %.2f" % (key, val) for key, val in astar.timings.items()])
+            print("Times - %s, num_itrs: %i" % (timing_str, num_itrs))
 
-        # print to screen
-        timing_str = ", ".join(["%s: %.2f" % (key, val) for key, val in astar.timings.items()])
-        print("Times - %s, num_itrs: %i" % (timing_str, num_itrs))
-
-        print("State: %i, SolnCost: %.2f, # Moves: %i, "
-              "# Nodes Gen: %s, Time: %.2f" % (state_idx, path_cost, len(soln),
-                                               format(num_nodes_gen_idx, ","),
-                                               solve_time))
+            print("State: %i, SolnCost: %.2f, # Moves: %i, "
+                "# Nodes Gen: %s, Time: %.2f" % (state_idx, path_cost, len(soln),
+                                                format(num_nodes_gen_idx, ","),
+                                                solve_time))
 
     return solns, paths, times, num_nodes_gen
 
