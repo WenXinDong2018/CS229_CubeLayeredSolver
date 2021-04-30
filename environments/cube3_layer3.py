@@ -225,16 +225,17 @@ class Cube3Layer3(Environment):
 
 
 
-    def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
+    def expand(self, states: List[State], options: List[List[str]]= []) -> Tuple[List[List[State]], List[np.ndarray]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # initialize
         num_states: int = len(states)
         num_env_moves: int = self.get_num_moves()
+        num_options = len(options)
 
         states_exp: List[List[State]] = [[] for _ in range(len(states))]
 
-        tc: np.ndarray = np.empty([num_states, num_env_moves])
+        tc: np.ndarray = np.empty([num_states, num_env_moves+ num_options])
 
         # numpy states
         states_np: np.ndarray = np.stack([state.colors for state in states])
@@ -254,6 +255,19 @@ class Cube3Layer3(Environment):
             for idx in range(len(states)):
                 states_exp[idx].append(Cube3State(states_next_np[idx]))
 
+        for move_idx in range(num_options):
+            # next state
+            states_next_np: np.ndarray
+            tc_move: List[float]
+            states_next_np, tc_move = self._move_np_option(states_np, options[move_idx])
+
+            # transition cost
+            tc[:, move_idx+num_env_moves] = np.array(tc_move)
+
+            for idx in range(len(states)):
+                states_exp[idx].append(Cube3State(states_next_np[idx]))
+
+
         # make lists
         tc_l: List[np.ndarray] = [tc[i] for i in range(num_states)]
 
@@ -272,6 +286,16 @@ class Cube3Layer3(Environment):
         transition_costs: List[float] = [1.0 for _ in range(states_np.shape[0])]
 
         return states_next_np, transition_costs
+    def _move_np_option(self, states_np: np.ndarray, option: List[str]):
+
+        states_next_np: np.ndarray = states_np.copy()
+        for action_str in option:
+            states_next_np[:, self.rotate_idxs_new[action_str]] = states_next_np[:, self.rotate_idxs_old[action_str]]
+        #transition cost = length of option
+        transition_costs: List[float] = [len(option) for _ in range(states_np.shape[0])]
+
+        return states_next_np, transition_costs
+
 
     def _get_adj(self) -> None:
         # WHITE:0, YELLOW:1, BLUE:2, GREEN:3, ORANGE: 4, RED: 5
