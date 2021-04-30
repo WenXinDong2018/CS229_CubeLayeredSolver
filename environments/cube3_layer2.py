@@ -116,7 +116,7 @@ class Cube3Layer2(Environment):
             if fix != 1:
                 edge_signs = np.concatenate((np.zeros(4, dtype=int), np.random.randint(2, size=8))) if fix == 2 else np.concatenate((np.zeros(8, dtype=int), np.random.randint(2, size=4)))
             else:
-                edges_signs = np.random.randint(2, size=12)
+                edge_signs = np.random.randint(2, size=12)
             if np.sum(edge_signs) % 2 == 0:
                 break
         return [corners_perm, edges_perm, corner_signs, edge_signs]
@@ -127,6 +127,7 @@ class Cube3Layer2(Environment):
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         if random:
+            print("layer2 generating sambles randomly")
             # no random walk
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):
