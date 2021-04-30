@@ -144,7 +144,7 @@ class Cube3Layer1(Environment):
 
         return states, scramble_nums.tolist()
 
-    def expand(self, states: List[State], options: List[List[str]]= [[]]) -> Tuple[List[List[State]], List[np.ndarray]]:
+    def expand(self, states: List[State], options: List[List[str]]= []) -> Tuple[List[List[State]], List[np.ndarray]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # initialize
@@ -185,8 +185,6 @@ class Cube3Layer1(Environment):
 
             for idx in range(len(states)):
                 states_exp[idx].append(Cube3State(states_next_np[idx]))
-
-
 
         # make lists
         tc_l: List[np.ndarray] = [tc[i] for i in range(num_states)]
