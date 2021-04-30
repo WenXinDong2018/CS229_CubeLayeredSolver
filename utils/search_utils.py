@@ -30,3 +30,25 @@ def bellman(states: List, heuristic_fn, env: Environment) -> Tuple[np.ndarray, L
     ctg_backup = np.array([np.min(x) for x in ctg_next_p_tc_l]) * np.logical_not(is_solved)
 
     return ctg_backup, ctg_next_p_tc_l, states_exp
+
+def create_options(strs: List[str]) -> List[List[str]]:
+    # parse moves in string to 
+    move_dict = {'u': 'D', 'd': 'U', 'r': 'L', 'l': 'R', 'f': 'B', 'b': 'F', 'D': 'D', 'U': 'U', 'L': 'L', 'R': 'R', 'B': 'B', 'F': 'F'}
+    output = []
+    for i in range(len(strs)):
+        moves = strs[i].split(' ')
+        new_moves = []
+        for move in moves:
+            if len(move) == 1:
+                new_moves.append(move_dict[move[0]] + '1')
+                continue
+            sign = '-1' if '\'' in move else '1'
+            if '2' in move:
+                new_moves.append(move_dict[move[0]] + sign)
+                new_moves.append(move_dict[move[0]] + sign)
+            else:
+                new_moves.append(move_dict[move[0]] + sign)
+
+        output.append(new_moves)
+    return output
+
