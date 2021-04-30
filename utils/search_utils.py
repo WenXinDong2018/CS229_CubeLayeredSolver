@@ -39,6 +39,22 @@ def create_options(strs: List[str]) -> List[List[str]]:
         moves = strs[i].split(' ')
         new_moves = []
         for move in moves:
+            if move[0] == 'M':
+                if len(move) == 1:
+                    new_moves.append('R' + '1')
+                    new_moves.append('L' + '-1')
+                    continue
+                sign1 = '-1' if '\'' in move[1] else '1'
+                sign2 = '1' if '\'' in move[1] else '-1'
+                if move[-1] == '2':
+                    new_moves.append('R' + sign1)
+                    new_moves.append('L' + sign2)
+                    new_moves.append('R' + sign1)
+                    new_moves.append('L' + sign2)
+                else:
+                    new_moves.append('R' + sign1)
+                    new_moves.append('L' + sign2)
+                continue
             if len(move) == 1:
                 new_moves.append(move_dict[move[0]] + '1')
                 continue
