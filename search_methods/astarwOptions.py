@@ -3,7 +3,6 @@ from environments.environment_abstract import Environment, State
 import numpy as np
 from heapq import heappush, heappop
 from subprocess import Popen, PIPE
-from search_methods.options import human_options
 
 from argparse import ArgumentParser
 import torch
@@ -14,8 +13,18 @@ import sys
 import os
 import socket
 from torch.multiprocessing import Process
+from search_methods.options import human_options
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
+
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+#####!!!!!!!!!!!!!!!!!!!!!!!!!!!!IGNORE THIS FILE!!!!!!!!!!!!!!!!!!!!!!######
+##### astar.py has an option flag
 class Node:
     __slots__ = ['state', 'path_cost', 'heuristic', 'cost', 'is_solved', 'parent_move', 'parent', 'transition_costs',
                  'children', 'bellman']
@@ -97,7 +106,7 @@ def pop_from_open(instances: List[Instance], batch_size: int) -> List[List[Node]
     return popped_nodes_all
 
 
-def expand_nodes(instances: List[Instance], popped_nodes_all: List[List[Node]], env: Environment, options:List[List[str]]):
+def expand_nodes(instances: List[Instance], popped_nodes_all: List[List[Node]], env: Environment):
     # Get children of all nodes at once (for speed)
     popped_nodes_flat: List[Node]
     split_idxs: List[int]
@@ -111,7 +120,7 @@ def expand_nodes(instances: List[Instance], popped_nodes_all: List[List[Node]], 
     states_c_by_node: List[List[State]]
     tcs_np: List[np.ndarray]
 
-    states_c_by_node, tcs_np = env.expand(states, options=options)
+    states_c_by_node, tcs_np = env.expand(states, options = human_options)
 
     tcs_by_node: List[List[float]] = [list(x) for x in tcs_np]
 
@@ -232,11 +241,11 @@ def get_path(node: Node) -> Tuple[List[State], List[int], float]:
 
 class AStar:
 
-    def __init__(self, states: List[State], env: Environment, heuristic_fn: Callable, weights: List[float], options:List[List[str]]= []):
+    def __init__(self, states: List[State], env: Environment, heuristic_fn: Callable, weights: List[float]):
         self.env: Environment = env
         self.weights: List[float] = weights
         self.step_num: int = 0
-        self.options = options
+
         self.timings: Dict[str, float] = {"pop": 0.0, "expand": 0.0, "check": 0.0, "heur": 0.0,
                                           "add": 0.0, "itr": 0.0}
 
@@ -269,7 +278,7 @@ class AStar:
 
         # Expand nodes
         start_time = time.time()
-        nodes_c_all: List[List[Node]] = expand_nodes(instances, popped_nodes_all, self.env, self.options)
+        nodes_c_all: List[List[Node]] = expand_nodes(instances, popped_nodes_all, self.env)
         expand_time = time.time() - start_time
 
         # Get heuristic of children, do heur before check so we can do backup
@@ -362,7 +371,6 @@ def main():
     parser.add_argument('--verbose', action='store_true', default=False, help="Set for verbose")
     parser.add_argument('--debug', action='store_true', default=False, help="Set when debugging")
     parser.add_argument('--max_itrs', type=int, default=50, help="Set timeout for A* search.")
-    parser.add_argument('--options', action='store_true', default=False, help="Use options when doing search")
 
     args = parser.parse_args()
 
@@ -418,13 +426,13 @@ def bwas_python(args, env: Environment, states: List[State]):
 
     for state_idx, state in enumerate(states):
         start_time = time.time()
-        options = human_options if args.options else []
+
         num_itrs: int = 0
-        astar = AStar([state], env, heuristic_fn, [args.weight], options=options)
+        astar = AStar([state], env, heuristic_fn, [args.weight])
         while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
             astar.step(heuristic_fn, args.batch_size, verbose=args.verbose)
             num_itrs += 1
-            # print(state_idx, "astar itr", num_itrs)
+            print(state_idx, "astar itr", num_itrs)
         #if not found solution
         if not min(astar.has_found_goal()):
             print("State: %i, Failed" % (state_idx))

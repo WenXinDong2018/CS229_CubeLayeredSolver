@@ -143,7 +143,7 @@ class Environment(ABC):
 
         return states, scramble_nums.tolist()
 
-    def expand(self, states: List[State]) -> Tuple[List[List[State]], List[np.ndarray]]:
+    def expand(self, states: List[State], options: List[List[str]]=[]) -> Tuple[List[List[State]], List[np.ndarray]]:
         """ Generate all children for the state
 
         @param states: List of states

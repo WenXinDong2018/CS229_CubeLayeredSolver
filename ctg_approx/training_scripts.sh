@@ -17,3 +17,18 @@ python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_s
 #training layer 2 with random state training examples in each lesson
 
 python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen
+
+
+#A* search without options using saved checkpoint of the baseline model. solve 100 cubes
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
+
+#A* search with options using saved checkpoint of the baseline model. solve 100 cubes
+python search_methods/astarwOptions.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline_options/ --language python --nnet_batch_size 10000 --start_idx 900
+
+
+#A* search without options using saved checkpoint of the dynamic difficulty normal distribution model. solve 100 cubes
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_dynamic_difficulty_25/ --language python --nnet_batch_size 10000 --start_idx 900
+
+
+#A* search without options using saved checkpoint of the cube3 env. solve 100 cubes
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3/current/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/cube3_full/ --language python --nnet_batch_size 10000 --start_idx 900
