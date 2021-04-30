@@ -424,7 +424,7 @@ def bwas_python(args, env: Environment, states: List[State]):
         while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
             astar.step(heuristic_fn, args.batch_size, verbose=args.verbose)
             num_itrs += 1
-            print(state_idx, "astar itr", num_itrs)
+            # print(state_idx, "astar itr", num_itrs)
         #if not found solution
         if not min(astar.has_found_goal()):
             print("State: %i, Failed" % (state_idx))
