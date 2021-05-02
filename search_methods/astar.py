@@ -3,7 +3,7 @@ from environments.environment_abstract import Environment, State
 import numpy as np
 from heapq import heappush, heappop
 from subprocess import Popen, PIPE
-from search_methods.options import human_options
+from search_methods.options import top_50_options_of_length_4
 
 from argparse import ArgumentParser
 import torch
@@ -418,7 +418,7 @@ def bwas_python(args, env: Environment, states: List[State]):
 
     for state_idx, state in enumerate(states):
         start_time = time.time()
-        options = human_options if args.options else []
+        options = top_50_options_of_length_4 if args.options else []
         num_itrs: int = 0
         astar = AStar([state], env, heuristic_fn, [args.weight], options=options)
         while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
