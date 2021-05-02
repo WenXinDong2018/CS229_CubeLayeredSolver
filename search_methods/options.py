@@ -2,6 +2,13 @@ from typing import List, Dict
 from utils.search_utils import create_options
 import pickle
 import os
+human_options_hand_moves = [["R-1", "B-1", "R1", "B1"], ["L1", "B1", "L-1", "B-1"], 
+                ["R1", "B1", "R-1", "B-1"], ["L-1", "B-1", "L1", "B1"], 
+                ["R-1", "U-1", "R1", "U1"], ["L1", "U1", "L-1", "U-1"], 
+                ["R1", "U1", "R-1", "U-1"], ["L-1", "U-1", "L1", "U1"], 
+                ["F1", "U1", "F-1", "U-1"], ["B-1", "U-1", "B1", "U1"], 
+                ["F-1", "U-1", "F1", "U"], ["B1", "U1", "B-1", "U-1"]
+                ] # left hand move and right hand move.
 # left hand move and right hand move.
 human_options = [["R1", "U1", "R-1", "U-1"], ["L-1", "U-1", "L1", "U1"]]
 # 2-look OLL algorithms (for matching the third layer)
