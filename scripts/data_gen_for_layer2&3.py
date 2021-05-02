@@ -8,7 +8,7 @@ from environments.cube3_layer2 import Cube3State
 
 def get_corners() -> np.ndarray:
     # 8 corners oriented clockwise.
-    return np.array([[0, 47, 26], [2, 20, 44], [8, 38, 35], [6, 21, 53], [11, 24, 45], [9, 42, 18], [15, 33, 36], [17, 51, 27]])
+    return np.array([[0, 47, 26], [2, 20, 44], [8, 38, 35], [6, 29, 53], [11, 24, 45], [9, 42, 18], [15, 33, 36], [17, 51, 27]])
 
 def get_edges() -> np.ndarray:
     # 12 oriented corners.
