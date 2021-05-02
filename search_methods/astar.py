@@ -8,7 +8,7 @@ from search_methods.options import top_50_options_of_length_4
 from argparse import ArgumentParser
 import torch
 from utils import env_utils, nnet_utils, search_utils, misc_utils, data_utils
-import pickle
+import pickle5 as pickle
 import time
 import sys
 import os
