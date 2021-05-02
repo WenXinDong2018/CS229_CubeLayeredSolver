@@ -184,13 +184,12 @@ class Cube3Layer2(Environment):
         layer1_and2_cubies_one_hot = np.zeros((1, 54), dtype=bool)
         #1 for the stickers we care, 0 for the stickers we don't care
         layer1_and2_cubies_one_hot[0, layer1_and2_cubies_pos] = True
-        #there are 20 stickers that we care
+        #there are 28 stickers that we care
         goal_match = np.sum(layer1_and2_cubies_one_hot)
 
         curr_match = np.sum(is_equal, axis=1, where =layer1_and2_cubies_one_hot)
         #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
         is_solved =  curr_match == goal_match
-        print("curr match", curr_match, "/", goal_match)
         return is_solved
 
 
