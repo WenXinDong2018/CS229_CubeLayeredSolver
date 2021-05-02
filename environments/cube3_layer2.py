@@ -127,7 +127,7 @@ class Cube3Layer2(Environment):
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         if random:
-            print("layer2 generating samples randomly")
+            # print("layer2 generating samples randomly")
             # no random walk
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):
@@ -184,13 +184,12 @@ class Cube3Layer2(Environment):
         layer1_and2_cubies_one_hot = np.zeros((1, 54), dtype=bool)
         #1 for the stickers we care, 0 for the stickers we don't care
         layer1_and2_cubies_one_hot[0, layer1_and2_cubies_pos] = True
-        #there are 20 stickers that we care
+        #there are 28 stickers that we care
         goal_match = np.sum(layer1_and2_cubies_one_hot)
-        print("goal_match layers 1 & 2", goal_match)
-        #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
-        is_solved =  np.sum(is_equal, axis=1, where =layer1_and2_cubies_one_hot) == goal_match
-        print("is_solved", is_solved )
 
+        curr_match = np.sum(is_equal, axis=1, where =layer1_and2_cubies_one_hot)
+        #a cube is solved (first layer solved) if all the stickers we care about are in the right positions
+        is_solved =  curr_match == goal_match
         return is_solved
 
 

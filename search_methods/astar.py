@@ -3,18 +3,25 @@ from environments.environment_abstract import Environment, State
 import numpy as np
 from heapq import heappush, heappop
 from subprocess import Popen, PIPE
-from search_methods.options import top_50_options_of_length_4
+from search_methods.options import human_options_hand_moves, layer3_human_options
 
 from argparse import ArgumentParser
 import torch
 from utils import env_utils, nnet_utils, search_utils, misc_utils, data_utils
-import pickle
+import pickle5 as pickle
 import time
 import sys
 import os
 import socket
 from torch.multiprocessing import Process
 
+def getOptions(option_name):
+    if option_name == "layer2":
+        return human_options_hand_moves
+    elif option_name == "layer3":
+        return layer3_human_options
+    else:
+        return human_options_hand_moves
 
 class Node:
     __slots__ = ['state', 'path_cost', 'heuristic', 'cost', 'is_solved', 'parent_move', 'parent', 'transition_costs',
@@ -363,6 +370,7 @@ def main():
     parser.add_argument('--debug', action='store_true', default=False, help="Set when debugging")
     parser.add_argument('--max_itrs', type=int, default=50, help="Set timeout for A* search.")
     parser.add_argument('--options', action='store_true', default=False, help="Use options when doing search")
+    parser.add_argument('--option_name', type = str, help="Which layer options when doing search: layer2, layer3")
 
     args = parser.parse_args()
 
@@ -418,7 +426,7 @@ def bwas_python(args, env: Environment, states: List[State]):
 
     for state_idx, state in enumerate(states):
         start_time = time.time()
-        options = top_50_options_of_length_4 if args.options else []
+        options = getOptions(args.option_name) if args.options else []
         num_itrs: int = 0
         astar = AStar([state], env, heuristic_fn, [args.weight], options=options)
         while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
