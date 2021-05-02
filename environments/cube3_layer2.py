@@ -127,7 +127,7 @@ class Cube3Layer2(Environment):
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         if random:
-            print("layer2 generating samples randomly")
+            # print("layer2 generating samples randomly")
             # no random walk
             states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
             for i in range(num_states):

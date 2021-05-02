@@ -128,10 +128,14 @@ class GBFS:
 def gbfs_test(num_states: int, back_max: int, env: Environment, heuristic_fn: Callable,
               max_solve_steps: Optional[int] = None, dynamic_back_max = None, random: bool=False):
     # get data
-    back_steps: List[int] = list(np.linspace(0, back_max, 30, dtype=np.int))
+    back_steps: List[int]
+    if random:
+        print("gbfs_test, random = True")
+        back_steps = [back_max]
+    else:
+        print("gbfs_test, random = False")
+        back_steps = list(np.linspace(0, back_max, 30, dtype=np.int))
     num_states_per_back_step: List[int] = misc_utils.split_evenly(num_states, len(back_steps))
-    print("back_steps", back_steps)
-    print("num_states_per_back_step", num_states_per_back_step)
     states: List[State] = []
     state_back_steps_l: List[int] = []
 
