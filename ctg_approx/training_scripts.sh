@@ -35,7 +35,7 @@ python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved
 
 ###Layer 2
 #1. A* search without options using saved checkpoint of the layer 2 model. solve 100 cubes
-python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900
+python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900
 ##With Options
 
 
