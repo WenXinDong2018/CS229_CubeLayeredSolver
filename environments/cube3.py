@@ -95,13 +95,20 @@ class Cube3(Environment):
 
         return nnet
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int]) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random:bool = False) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 
         # Initialize
-        scrambs: List[int] = list(range(backwards_range[0], backwards_range[1] + 1))
+        scrambs: List[int] = []
+        if fixed_difficulty:
+            #generate examples with "backwards_range[1]" number of scrambles
+            #if look at function calls, backwards_range[1] is the same as back_max
+            scrambs = list(range(backwards_range[1], backwards_range[1] + 1))
+            print("layer1 generating scrambles of fixed difficulty", scrambs)
+        else:
+            scrambs = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
         # print("scrambs",scrambs, "num_env_moves", num_env_moves)
         # Get goal states

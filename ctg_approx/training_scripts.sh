@@ -14,11 +14,11 @@ python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_s
 
 ###Layer 2
 #1.training layer 2 with random state training examples in each lesson
-python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen_2 --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen --num_test 100
+python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen_new --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen --num_test 100
 
 ###Layer 3
-#1.training layer 2 with random state training examples in each lesson
-python ctg_approx/avi.py --env cube3_layer3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_random_data_gen --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen
+#1.training layer 3 with with dynamic difficulty, fixing length of training examples
+python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
 
 ###--------------------------------------------Search Experiments -------------------------------------------###
@@ -38,7 +38,6 @@ python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved
 python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900
 ##With Options
 python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer2
-
 
 
 
