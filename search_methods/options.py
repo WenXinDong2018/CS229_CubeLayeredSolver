@@ -51,6 +51,14 @@ str_PLLs = ["D' L' R L' U L' D2 L U' L' D2 L2 R' L D",  # Aa
             "D2 R2 L2 U' L R' F2 R L' U' L2 R2 D2",  # Ub
             "D' R2 L2 U' L R' F2 R L' U' L2 R2 D R2 L2 U' L R' F2 R L' U' L2 R2"  # H
             ]
+middle_layer_options = ["D F D' F' D' R' D R", 
+                        "D R D' R' D' B' D B", 
+                        "D L D' L' D' F' D F", 
+                        "D B D' B' D' L' D L", 
+                        "D' L' D L D B D' B'", 
+                        "D' F' D F D L D' L'", 
+                        "D' R' D R D F D' F'", 
+                        "D' B' D B D R D' R'"]
 top_50_options_of_length_4 = [['F1', 'U1', 'F-1', 'U1'], ['L-1', 'U1', 'U1', 'L1'], ['U1', 'L-1', 'U1', 'U1'], ['U1', 'F-1', 'U1', 'U1'], ['F1', 'U1', 'F-1', 'U-1'], ['F1', 'U1', 'U1', 'F-1'], ['L1', 'U1', 'L-1', 'U1'], ['F-1', 'U1', 'U1', 'F1'], ['U1', 'F1', 'U1', 'F-1'], ['B-1', 'U1', 'U1', 'B1'], ['U1', 'U1', 'L1', 'U1'], ['U1', 'B-1', 'U1', 'U1'], ['U1', 'U1', 'F1', 'U1'], ['U1', 'L1', 'U1', 'L-1'], ['B1', 'U1', 'B-1', 'U1'], ['U1', 'F-1', 'U-1', 'F1'], ['F1', 'U-1', 'F-1', 'U1'], ['U1', 'F1', 'U-1', 'F-1'], ['U1', 'B1', 'U-1', 'B-1'], ['R-1', 'U1', 'U1', 'R1'], ['B-1', 'U-1', 'B1', 'U1'], ['U1', 'U1', 'B1', 'U1'], ['L1', 'U1', 'U1', 'L-1'], ['U1', 'B1', 'U1', 'B-1'], ['U-1', 'F1',
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           'U1', 'F-1'], ['U1', 'L1', 'U1', 'U1'], ['F-1', 'U-1', 'F1', 'U1'], ['U1', 'B-1', 'U-1', 'B1'], ['U1', 'L-1', 'U-1', 'L1'], ['U1', 'U1', 'F-1', 'U1'], ['U1', 'R1', 'U1', 'R-1'], ['U1', 'F1', 'U1', 'U1'], ['L-1', 'U-1', 'L1', 'U1'], ['U1', 'R-1', 'U1', 'U1'], ['U1', 'U1', 'R1', 'U1'], ['B1', 'U1', 'U1', 'B-1'], ['U1', 'L1', 'U-1', 'L-1'], ['U-1', 'L1', 'U1', 'L-1'], ['R1', 'U1', 'R-1', 'U1'], ['U-1', 'B1', 'U1', 'B-1'], ['U1', 'U1', 'L1', 'U-1'], ['L1', 'U-1', 'L-1', 'U1'], ['L1', 'U1', 'L-1', 'U-1'], ['U1', 'B1', 'U1', 'U1'], ['U1', 'R-1', 'U-1', 'R1'], ['L1', 'F1', 'U1', 'F-1'], ['B1', 'U-1', 'B-1', 'U1'], ['U1', 'U1', 'L-1', 'U1'], ['U1', 'U1', 'F-1', 'U-1'], ['B1', 'U1', 'B-1', 'U-1']]
 def get_OLLs():
@@ -62,6 +70,9 @@ def get_PLLs():
     # call this method to convert the PLL_str to options usable for search
     return create_options(str_PLLs)
 
+def get_middle_layer_moves():
+    # call this method to convert the PLL_str to options usable for search
+    return create_options(middle_layer_options)
 
 def get_expert_options(length: int, top: int):
     options = pickle.load(
@@ -75,7 +86,7 @@ def generate_options(human: bool, length: int = 4, top: int = 50) -> List[List[s
     # else it will return the top #top# experts options gathered from Kaggle data set of length #length#.
     options = human_options
     if human:
-        return human_options + get_OLLs() + get_PLLs()
+        return human_options + get_OLLs() + get_PLLs() + get_middle_layer_moves()
     else:
         return get_expert_options(length, top)
 
