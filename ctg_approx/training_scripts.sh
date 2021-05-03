@@ -13,13 +13,14 @@ python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_s
 python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer1_dynamic_difficulty_25_fixed --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
 ###Layer 2
-#1.training layer 2 with random state training examples in each lesson
-python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_random_data_gen_new --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --uniform_data_gen --num_test 100
+#1.training layer 2 with with dynamic difficulty, fixing length of training examples, use loss_threshold of 0.06
+python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer2_dynamic_difficulty_25_fixed --max_itrs 1000000 --loss_thresh 0.06 --back_max 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
 ###Layer 3
 #1.training layer 3 with with dynamic difficulty, fixing length of training examples
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
-
+#2.Same as above but use loss_threshold of 0.06
+python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_lt --max_itrs 1000000 --loss_thresh 0.06 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
 ###--------------------------------------------Search Experiments -------------------------------------------###
 
