@@ -38,11 +38,26 @@ python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_dynamic_difficulty_25_fixed_length/ --language python --nnet_batch_size 10000 --start_idx 900
 
 ###Layer 2
-#1. A* search without options using saved checkpoint of the layer 2 model. solve 100 cubes
-python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900
+#1. A* search without options using saved checkpoint of the layer 2 model. solve 100 cubes with first layer fixed 
+python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_dynamic_difficulty_25_fixed/fixed_layer_no_options --language python --nnet_batch_size 10000 --start_idx 900
 ##With Options
-python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_random_data_gen/ --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer2
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer2_random_data_gen/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_dynamic_difficulty_25_fixed/fixed_layer_and_options --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer2
 
+#2. A* search without options using saved checkpoint of the layer 2 model. solve 100 cubes with no fixed layers
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_dynamic_difficulty_25_fixed/no_fixed_layer_no_options --language python --nnet_batch_size 10000 --start_idx 900
+## With Options
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer2_dynamic_difficulty_25_fixed/no_fixed_layer_and_options --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer2
+
+###Layer 3
+#1. A* search without options using saved checkpoint of the layer 3 model. solve 100 cubes with first two layers fixed
+python search_methods/astar.py --states data/cube3_layer3/test/data_0.pkl --model saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --env cube3_layer3 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer3_dynamic_difficulty_25_fixed_lt_03/fixed_layer_no_options --language python --nnet_batch_size 10000 --start_idx 900
+#With Options
+python search_methods/astar.py --states data/cube3_layer3/test/data_0.pkl --model saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --env cube3_layer3 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer3_dynamic_difficulty_25_fixed_lt_03/fixed_layer_and_options --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer3
+
+#２. A* search without options using saved checkpoint of the layer 3 model. solve 100 cubes with no fixed layers
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --env cube3_layer3 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer3_dynamic_difficulty_25_fixed_lt_03/no_fixed_layer_no_options --language python --nnet_batch_size 10000 --start_idx 900
+#With Options
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --env cube3_layer3 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer3_dynamic_difficulty_25_fixed_lt_03/no_fixed_layer_and_options --language python --nnet_batch_size 10000 --start_idx 900 --options --option_name layer3
 
 
 ###DeepCubeA
