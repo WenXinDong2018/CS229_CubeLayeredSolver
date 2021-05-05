@@ -1,0 +1,8 @@
+Uses DeepCube original cube3 solver to solve completely random cubes
+
+- Did not use options when searching
+
+
+Stats:
+
+Solving rate: 7%
