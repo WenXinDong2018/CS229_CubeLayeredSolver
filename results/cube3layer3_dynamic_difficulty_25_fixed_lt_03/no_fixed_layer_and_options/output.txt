@@ -1,0 +1,25 @@
+solving # 100 problems
+device: cuda:0, devices: [0], on_gpu: True
+State: 0, Failed
+State: 1, Failed
+State: 2, Failed
+State: 3, Failed
+State: 4, Failed
+State: 5, Failed
+State: 6, Failed
+State: 7, Failed
+State: 8, Failed
+State: 9, Failed
+State: 10, Failed
+State: 11, Failed
+State: 12, Failed
+State: 13, Failed
+Times - pop: 0.12, expand: 19.39, check: 3.29, heur: 27.68, add: 1.64, itr: 52.12, num_itrs: 33
+State: 14, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 1,397,070, Time: 52.49
+State: 15, Failed
+State: 16, Failed
+State: 17, Failed
+State: 18, Failed
+State: 19, Failed
+State: 20, Failed
+State: 21, Failed
