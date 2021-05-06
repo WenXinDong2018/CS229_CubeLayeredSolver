@@ -1,0 +1,8 @@
+Uses DeepCube original cube3 solver to solve cubes with the first two layers fixed.
+
+- Did not use options when searching
+
+
+Stats:
+
+Solving rate: 22%
