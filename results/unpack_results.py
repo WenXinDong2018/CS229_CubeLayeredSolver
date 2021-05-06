@@ -1,17 +1,33 @@
 import pickle
 moves= ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
 
-results = pickle.load(open("results/cube3layer2_dynamic_difficulty_25_fixed/results.pkl", "rb"))
-count = {}
-for solution in results["solutions"]:
-    solution =[moves[i] for i in solution]
-    print(len(solution), solution)
-    for i in range(len(solution)-6):
-        key = "".join(solution[i:i+6])
-        count[key] = count.get(key, 0)+1
-for key in count:
-    if count[key]>5:
-        print( count[key], key)
+results = pickle.load(open("results/cube3layer2_dynamic_difficulty_25_fixed/no_fixed_layer_no_options/results.pkl", "rb"))
+solved = 0
+averageTime = 0
+averageSolLen = 0
+averageNodes = 0
+for solution, time, nodes in zip(results["solutions"], results["times"], results["num_nodes_generated"]):
+
+    if len(solution):
+        solved+=1
+        averageNodes+= nodes
+        averageSolLen += len(solution)
+        averageTime += time
+print("solved", solved, "problems")
+print("average time is", averageTime/solved, "s")
+print("average node generated is", averageNodes/solved)
+print("average solution length  is", averageSolLen/solved)
+
+
+# for solution in results["solutions"]:
+#     solution =[moves[i] for i in solution]
+#     print(len(solution), solution)
+#     for i in range(len(solution)-6):
+#         key = "".join(solution[i:i+6])
+#         count[key] = count.get(key, 0)+1
+# for key in count:
+#     if count[key]>5:
+#         print( count[key], key)
 
 # 11 ['F1', 'U-1', 'R-1', 'D1', 'R1', 'U1', 'F-1', 'D1', 'L-1', 'F1', 'L1']
 # 13 ['F-1', 'L-1', 'D-1', 'L-1', 'F-1', 'L1', 'L1', 'F-1', 'L-1', 'F-1', 'D1', 'L1', 'F-1']
