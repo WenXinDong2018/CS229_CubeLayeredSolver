@@ -437,6 +437,11 @@ def bwas_python(args, env: Environment, states: List[State]):
         #if not found solution
         if not min(astar.has_found_goal()):
             print("State: %i, Failed" % (state_idx))
+            # record solution information
+            solns.append(None)
+            paths.append(None)
+            times.append(None)
+            num_nodes_gen.append(None)
         else:
             path: List[State]
             soln: List[int]
