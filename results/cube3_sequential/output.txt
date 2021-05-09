@@ -1,0 +1,27 @@
+solving # 4 problems
+device: cuda:0, devices: [0], on_gpu: True
+Times - pop: 0.05, expand: 1.98, check: 0.70, heur: 4.18, add: 0.18, itr: 7.09, num_itrs: 23
+State: 0, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 241,536, Time: 7.10
+Times - pop: 0.08, expand: 3.73, check: 1.06, heur: 6.45, add: 0.99, itr: 12.31, num_itrs: 34
+State: 1, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 373,536, Time: 12.36
+Times - pop: 0.07, expand: 4.03, check: 0.89, heur: 5.45, add: 0.22, itr: 10.65, num_itrs: 29
+State: 2, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 313,536, Time: 10.71
+Times - pop: 0.03, expand: 2.76, check: 0.44, heur: 2.76, add: 0.80, itr: 6.79, num_itrs: 16
+State: 3, SolnCost: 15.00, # Moves: 15, # Nodes Gen: 157,536, Time: 6.84
+device: cuda:0, devices: [0], on_gpu: True
+Times - pop: 0.00, expand: 0.00, check: 0.00, heur: 0.00, add: 0.00, itr: 0.00, num_itrs: 1
+State: 0, SolnCost: 0.00, # Moves: 0, # Nodes Gen: 12, Time: 0.01
+Times - pop: 0.00, expand: 0.00, check: 0.00, heur: 0.00, add: 0.00, itr: 0.00, num_itrs: 1
+State: 1, SolnCost: 0.00, # Moves: 0, # Nodes Gen: 12, Time: 0.01
+Times - pop: 0.00, expand: 0.00, check: 0.00, heur: 0.00, add: 0.00, itr: 0.00, num_itrs: 1
+State: 2, SolnCost: 0.00, # Moves: 0, # Nodes Gen: 12, Time: 0.01
+Times - pop: 0.00, expand: 0.00, check: 0.00, heur: 0.00, add: 0.00, itr: 0.00, num_itrs: 1
+State: 3, SolnCost: 0.00, # Moves: 0, # Nodes Gen: 12, Time: 0.01
+device: cuda:0, devices: [0], on_gpu: True
+Times - pop: 0.03, expand: 2.69, check: 0.45, heur: 2.76, add: 0.10, itr: 6.03, num_itrs: 16
+State: 0, SolnCost: 12.00, # Moves: 12, # Nodes Gen: 157,536, Time: 6.03
+Times - pop: 0.00, expand: 0.00, check: 0.00, heur: 0.00, add: 0.00, itr: 0.00, num_itrs: 1
+State: 1, SolnCost: 0.00, # Moves: 0, # Nodes Gen: 12, Time: 0.03
+Times - pop: 0.03, expand: 1.83, check: 0.45, heur: 2.77, add: 0.10, itr: 5.18, num_itrs: 16
+State: 2, SolnCost: 14.00, # Moves: 14, # Nodes Gen: 157,536, Time: 5.19
+State: 3, Failed
