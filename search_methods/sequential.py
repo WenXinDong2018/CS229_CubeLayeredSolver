@@ -48,10 +48,10 @@ def main():
     env: Environment = env_utils.get_environment("cube3_layer1")
     args.model_dir = args.model_dir_layer1
     solns_l1, paths_l1, times_l1, num_nodes_gen_l1 = bwas_python(args, env, states)
-    times = filter(lambda x: x != None, times_l1)
-    paths = filter(lambda x: x != None, paths_l1)
-    num_nodes_gen = filter(lambda x: x != None, num_nodes_gen_l1)
-    solns = filter(lambda x: x != None, solns_l1)
+    times = list(filter(lambda x: x != None, times_l1))
+    paths = list(filter(lambda x: x != None, paths_l1))
+    num_nodes_gen = list(filter(lambda x: x != None, num_nodes_gen_l1))
+    solns = list(filter(lambda x: x != None, solns_l1))
     #update remaining
     states_l2 = []
     for path in paths_l1:
