@@ -369,6 +369,7 @@ def main():
     parser.add_argument('--verbose', action='store_true', default=False, help="Set for verbose")
     parser.add_argument('--debug', action='store_true', default=False, help="Set when debugging")
     parser.add_argument('--max_itrs', type=int, default=50, help="Set timeout for A* search.")
+    parser.add_argument('--max_nodes', type=int, default=600000, help="Set cap on number of nodes to explore.")
     parser.add_argument('--options', action='store_true', default=False, help="Use options when doing search")
     parser.add_argument('--option_name', type = str, help="Which layer options when doing search: layer2, layer3")
 
@@ -429,7 +430,7 @@ def bwas_python(args, env: Environment, states: List[State]):
         options = getOptions(args.option_name) if args.options else []
         num_itrs: int = 0
         astar = AStar([state], env, heuristic_fn, [args.weight], options=options)
-        while not min(astar.has_found_goal()) and num_itrs< args.max_itrs:
+        while not min(astar.has_found_goal()) and astar.get_num_nodes_generated(0) < args.max_nodes:
             astar.step(heuristic_fn, args.batch_size, verbose=args.verbose)
             num_itrs += 1
             # print(state_idx, "astar itr", num_itrs)
