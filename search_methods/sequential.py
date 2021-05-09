@@ -89,7 +89,7 @@ def main():
     for idx, path in enumerate(paths_l3):
         if path:
             new_sols.append(solns[idx] + solns_l3[idx])
-            new_time.append(times[idx] + times_l3[idx][1:])
+            new_times.append(times[idx] + times_l3[idx][1:])
             new_path.append(paths[idx] + paths_l3[idx][1:])
             new_num_nodes_gen.append(num_nodes_gen[idx] + num_nodes_gen_l3[idx])
     times = new_times

@@ -77,4 +77,4 @@ python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl  --mod
 
 ###Sequential model
 
-python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 990 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential/
+python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 996 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential/
