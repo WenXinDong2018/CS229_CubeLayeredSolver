@@ -61,6 +61,7 @@ def main():
     results["layer2_states"] = states_l2
     env = env_utils.get_environment("cube3_layer2")
     solns_l2, paths_l2, times_l2, num_nodes_gen_l2 = bwas_python(args, env, states_l2)
+    print("finished solving layer 2", [p!=None for p in paths_l2])
     new_times = []
     new_paths = []
     new_num_nodes_gen = []
@@ -71,7 +72,7 @@ def main():
             states_l3.append(path[-1])
             new_times.append(times[idx] + times_l2[idx])
             new_paths.append(paths[idx] + paths_l2[idx][1:])
-            new_sols.append(solns[idx] + solns_l2[idx][1:])
+            new_sols.append(solns[idx] + solns_l2[idx])
             new_num_nodes_gen.append(num_nodes_gen[idx] + num_nodes_gen_l2[idx])
     times = new_times
     paths = new_paths
@@ -88,7 +89,7 @@ def main():
     new_num_nodes_gen = []
     for idx, path in enumerate(paths_l3):
         if path:
-            new_sols.append(solns[idx] + solns_l3[idx][1:])
+            new_sols.append(solns[idx] + solns_l3[idx])
             new_times.append(times[idx] + times_l3[idx])
             new_paths.append(paths[idx] + paths_l3[idx][1:])
             new_num_nodes_gen.append(num_nodes_gen[idx] + num_nodes_gen_l3[idx])
