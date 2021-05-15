@@ -216,6 +216,7 @@ def main():
 
 
     dynamic_back_max = 0
+    can_increase_dynamic_back_max = False
     # training
     '''In every itr:
     1 we generate args_dict['states_per_update'] random cubes (training examples), and corresponding labels using
@@ -282,7 +283,8 @@ def main():
             per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
             #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
             if (per_solved>args_dict["dynamic_back_max_per"]): #Knob: if percentage solved pass this number we increase the difficulty of the generated problems
-                dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+                can_increase_dynamic_back_max = True
+                # dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
             wandb.log({"dynamic_back_max": dynamic_back_max})
 
         else:
@@ -301,6 +303,9 @@ def main():
             copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
             update_num = update_num + 1
             pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
+            if args_dict["dynamic_back_max"] and can_increase_dynamic_back_max:
+                dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+                can_increase_dynamic_back_max = False
         wandb.log({"update_num": update_num})
     print("Done")
 
