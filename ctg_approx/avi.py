@@ -87,6 +87,8 @@ def parse_arguments(parser: ArgumentParser) -> Dict[str, Any]:
     parser.add_argument('--dynamic_back_max_per', type = float,  default=25, help="Minimum required solve-percentage to level up difficulty of the training exercises.")
     parser.add_argument("--fixed_difficulty", action='store_true', default=False, help = "fix difficulty of generated training examples during each lesson, to be used in combination with dynamic_back_max=True")
     parser.add_argument("--uniform_data_gen", action='store_true', default=False, help = "toggle the random flag in generate_state method in layer 2. Right now only to be used for layer 2. If turned on, backwards steps from goal disabled. Data generated randomly")
+    parser.add_argument("--normal_dist", action='store_true', default=False, help = "Use a normal distirbution with mean = back_max and std = 3 to generate examples")
+
     # model
     parser.add_argument('--nnet_name', type=str, required=True, help="Name of neural network")
     parser.add_argument('--update_num', type=int, default=0, help="Update number")
@@ -130,8 +132,10 @@ def copy_files(src_dir: str, dest_dir: str):
 
 
 def do_update(back_max: int, update_num: int, env: Environment, max_update_steps: int, update_method: str,
-              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False) -> Tuple[List[np.ndarray], np.ndarray]:
-    update_steps: int = min(update_num + 1, max_update_steps)
+              num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False, normal_dist = False) -> Tuple[List[np.ndarray], np.ndarray]:
+    '''Generate randomly scrambled states as training examples, do one step look ahead to get training labels '''
+    '''Generate num_states training examples'''
+    update_steps: int = min(update_num + 1, max_update_steps) #1 in our case
     num_states: int = int(np.ceil(num_states / update_steps))
 
     # Do updates
@@ -141,12 +145,12 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     if max_update_steps > 1:
         print("Using %s with %i step(s) to add extra states to training set" % (update_method.upper(), update_steps))
     updater: Updater = Updater(env, num_states, back_max, heur_fn_i_q, heur_fn_o_qs, update_steps, update_method,
-                               update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty, random=random)
+                               update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty, random=random, normal_dist= normal_dist)
 
     states_update_nnet: List[np.ndarray]
     output_update: np.ndarray
     states_update_nnet, output_update, is_solved = updater.update()
-
+    print("states_update_nnet", states_update_nnet[0])
     # Print stats
     if max_update_steps > 1:
         print("%s produced %s states, %.2f%% solved (%.2f seconds)" % (update_method.upper(),
@@ -213,6 +217,19 @@ def main():
 
     dynamic_back_max = 0
     # training
+    '''In every itr:
+    1 we generate args_dict['states_per_update'] random cubes (training examples), and corresponding labels using
+    value iteration.
+    2. Train DNN on these examples (for 1 epoch), using a batch size of args_dict['batch_size']
+    3. Check if DNN's loss if below threshold, if yes, update target network with current network.
+    4. Test the DNN on random cubes (different from training cubes)
+    '''
+
+    '''Target vs Current model'''
+    '''Target model is the "teacher", it's responsible for generating training examples and labels
+        Current model is the "learner", it updates it's parameters by learning from the examples
+        Once the current model becomes good enough, it will become the new teacher
+    '''
     while itr < args_dict['max_itrs']:
         # update
         targ_file: str = "%s/model_state_dict.pt" % args_dict['targ_dir']
@@ -231,7 +248,7 @@ def main():
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
                                             args_dict['states_per_update'], args_dict['eps_max'],
-                                            heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"], random=False)
+                                            heur_fn_i_q, heur_fn_o_qs, fixed_difficulty=args_dict["fixed_difficulty"], random=False, normal_dist = args_dict["normal_dist"])
         elif args_dict["uniform_data_gen"]:
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],

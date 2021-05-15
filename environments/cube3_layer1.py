@@ -88,8 +88,9 @@ class Cube3Layer1(Environment):
 
     def state_to_nnet_input(self, states: List[Cube3State]) -> List[np.ndarray]:
         states_np = np.stack([state.colors for state in states], axis=0)
-
+        print("states_np", states_np[0])
         representation_np: np.ndarray = states_np / (self.cube_len ** 2)
+        print("representation_np", representation_np[0])
         representation_np: np.ndarray = representation_np.astype(self.dtype)
 
         representation: List[np.ndarray] = [representation_np]
@@ -105,7 +106,7 @@ class Cube3Layer1(Environment):
 
         return nnet
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random:bool = False) -> Tuple[List[Cube3State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random:bool = False, normal_dist: bool = False) -> Tuple[List[Cube3State], List[int]]:
         assert (num_states > 0)
         assert (backwards_range[0] >= 0)
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
@@ -124,7 +125,11 @@ class Cube3Layer1(Environment):
         states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
         # print("states_np", states_np)
         # Scrambles
-        scramble_nums: np.array = np.random.choice(scrambs, num_states)
+        scramble_nums: np.array
+        if normal_dist:
+            scramble_nums = np.maximum(0, np.random.normal(backwards_range[1], 3, size=(num_states,))).astype(int)
+        else:
+            scramble_nums= np.random.choice(scrambs, num_states)
         num_back_moves: np.array = np.zeros(num_states)
 
         # Go backward from goal state

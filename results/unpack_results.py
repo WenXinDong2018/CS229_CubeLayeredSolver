@@ -6,17 +6,18 @@ env3 = env_utils.get_environment("cube3_layer3")
 
 moves= ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
 
-results = pickle.load(open("results/cube3_sequential/results.pkl", "rb"))
+results = pickle.load(open("results/cube3_sequential_our_layer3/results.pkl", "rb"))
 solved = 0
 averageTime = 0
 averageSolLen = 0
 averageNodes = 0
 for solution, time, nodes, path in zip(results["solutions"], results["times"], results["num_nodes_generated"], results["paths"]):
 
-    if len(solution):
+    if solution and len(solution):
         assert(env1.is_solved([path[-1]])[0])
         assert(env2.is_solved([path[-1]])[0])
         assert(env3.is_solved([path[-1]])[0])
+        assert(search_utils.is_valid_soln(path[0], solution, env3))
         solved+=1
         averageNodes+= nodes
         averageSolLen += len(solution)

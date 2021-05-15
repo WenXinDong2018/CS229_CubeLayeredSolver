@@ -87,7 +87,7 @@ class Environment(ABC):
 
 
 
-    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random: bool = False) -> Tuple[List[State], List[int]]:
+    def generate_states(self, num_states: int, backwards_range: Tuple[int, int], fixed_difficulty:bool = False, random: bool = False, normal_dist:bool = False) -> Tuple[List[State], List[int]]:
         """ Generate training states by starting from the goal and taking actions in reverse.
         If the number of actions are not fixed, then a custom implementation must be used.
 
