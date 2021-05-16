@@ -242,7 +242,6 @@ def main():
                                                                                  clip_zero=True,
                                                                                  batch_size=args_dict[
                                                                                      "update_nnet_batch_size"])
-
         states_nnet: List[np.ndarray]
         outputs: np.ndarray
         if args_dict["dynamic_back_max"]:
