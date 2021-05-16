@@ -155,7 +155,7 @@ def load_nnet(model_file: str, nnet: nn.Module, device: torch.device = None) -> 
 
 # heuristic
 def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: list[Environment], clip_zero: bool = False,
-                     batch_size: Optional[int] = None):
+                     batch_size = None):
     nnet.eval()
 
     def heuristic_fn(states: List, is_nnet_format: bool = False) -> np.ndarray:
