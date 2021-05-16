@@ -189,7 +189,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
 def load_nnet(nnet_dir: str, env: Environment) -> Tuple[nn.Module, int, int]:
     nnet_file: str = "%s/model_state_dict.pt" % nnet_dir
     if os.path.isfile(nnet_file):
-        nnet = nnet_utils.load_nnet(nnet_file, env.get_nnet_model())
+        nnet = nnet_utils_multihead.load_nnet(nnet_file, env.get_nnet_model())
         itr: int = pickle.load(open("%s/train_itr.pkl" % nnet_dir, "rb"))
         update_num: int = pickle.load(open("%s/update_num.pkl" % nnet_dir, "rb"))
     else:
@@ -215,7 +215,7 @@ def main():
     # get device
     on_gpu: bool
     device: torch.device
-    device, devices, on_gpu = nnet_utils.get_device()
+    device, devices, on_gpu = nnet_utils_multihead.get_device()
 
     print("device: %s, devices: %s, on_gpu: %s" % (device, devices, on_gpu))
 
@@ -254,21 +254,17 @@ def main():
         # update
         targ_file: str = "%s/model_state_dict.pt" % args_dict['targ_dir']
         all_zeros: bool = not os.path.isfile(targ_file)
-        heur_fn_i_q, heur_fn_o_qs, heur_procs = nnet_utils.start_heur_fn_runners(args_dict['num_update_procs'],
+        heur_fn_i_q, heur_fn_o_qs, heur_procs = nnet_utils_multihead.start_heur_fn_runners(args_dict['num_update_procs'],
                                                                                  args_dict['targ_dir'],
                                                                                  device, on_gpu, env,
                                                                                  all_zeros=all_zeros,
                                                                                  clip_zero=True,
                                                                                  batch_size=args_dict[
                                                                                      "update_nnet_batch_size"])
-<<<<<<< HEAD
 
         states_nnet: List[List[np.ndarray]]
         outputs: List[np.ndarray]
-=======
-        states_nnet: List[np.ndarray]
-        outputs: np.ndarray
->>>>>>> 9cbc6ef978a05a6b80c1bfb6ad4f00148d1f30ad
+
         if args_dict["dynamic_back_max"]:
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
@@ -285,13 +281,13 @@ def main():
                                          args_dict['states_per_update'], args_dict['eps_max'],
                                          heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False)
 
-        nnet_utils.stop_heuristic_fn_runners(heur_procs, heur_fn_i_q)
+        nnet_utils_multihead.stop_heuristic_fn_runners(heur_procs, heur_fn_i_q)
 
         # train nnet
         num_train_itrs: int = args_dict['epochs_per_update'] * np.ceil(outputs.shape[0] / args_dict['batch_size'])
         print("Training model for update number %i for %i iterations" % (update_num, num_train_itrs))
         # needs change for train_nnet
-        last_loss = nnet_utils.train_nnet(nnet, states_nnet, outputs, device, args_dict['batch_size'], num_train_itrs,
+        last_loss = nnet_utils_multihead.train_nnet(nnet, states_nnet, outputs, device, args_dict['batch_size'], num_train_itrs,
                                           itr, args_dict['lr'], args_dict['lr_d'])
         itr += num_train_itrs
         wandb.log({"loss": last_loss})
@@ -302,7 +298,7 @@ def main():
 
         # test
         start_time = time.time()
-        heuristic_fn = nnet_utils.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
+        heuristic_fn = nnet_utils_multihead.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
         if args_dict["dynamic_back_max"]:
             per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
