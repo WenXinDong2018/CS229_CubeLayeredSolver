@@ -13,14 +13,18 @@ def is_valid_soln(state: State, soln: List[int], env: Environment) -> bool:
     return env.is_solved([soln_state])[0]
 
 
-def bellman(states: List, heuristic_fn, env: Environment) -> Tuple[np.ndarray, List[np.ndarray], List[List[State]]]:
+def bellman(states: List, heuristic_fn, env: Environment, idx:int = -1) -> Tuple[np.ndarray, List[np.ndarray], List[List[State]]]:
     # expand states
     states_exp, tc_l = env.expand(states)
     tc = np.concatenate(tc_l, axis=0)
 
     # get cost-to-go of expanded states
     states_exp_flat, split_idxs = misc_utils.flatten(states_exp)
-    ctg_next: np.ndarray = heuristic_fn(states_exp_flat)
+    ctg_next: np.ndarray
+    if idx>=0:
+        ctg_next = heuristic_fn(states_exp_flat)[idx]
+    else:
+        ctg_next = heuristic_fn(states_exp_flat)
 
     # backup cost-to-go
     ctg_next_p_tc = tc + ctg_next
@@ -32,7 +36,7 @@ def bellman(states: List, heuristic_fn, env: Environment) -> Tuple[np.ndarray, L
     return ctg_backup, ctg_next_p_tc_l, states_exp
 
 def create_options(strs: List[str]) -> List[List[str]]:
-    # parse moves in string to 
+    # parse moves in string to
     move_dict = {'u': 'D', 'd': 'U', 'r': 'L', 'l': 'R', 'f': 'B', 'b': 'F', 'D': 'D', 'U': 'U', 'L': 'L', 'R': 'R', 'B': 'B', 'F': 'F'}
     output = []
     for i in range(len(strs)):

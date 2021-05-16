@@ -87,9 +87,9 @@ def train_nnet(nnet: nn.Module, states_nnet: List[np.ndarray], outputs: np.ndarr
         nnet_outputs_batch: Tensor = nnet(*states_batch)
 
         # cost
-        nnet_cost_to_go = nnet_outputs_batch[:, 0]
-        target_cost_to_go = targets_batch[:, 0]
-
+        nnet_cost_to_go = nnet_outputs_batch
+        target_cost_to_go = targets_batch
+        assert(target_cost_to_go.shape[1] == 3)
         loss = criterion(nnet_cost_to_go, target_cost_to_go)
 
         # backwards
@@ -159,7 +159,7 @@ def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: Environment, cl
     nnet.eval()
 
     def heuristic_fn(states: List, is_nnet_format: bool = False) -> np.ndarray:
-        cost_to_go: np.ndarray = np.zeros(0)
+        cost_to_go: np.ndarray = np.zeros((0,3))
         if not is_nnet_format:
             num_states: int = len(states)
         else:
@@ -185,15 +185,15 @@ def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: Environment, cl
             states_nnet_batch_tensors = states_nnet_to_pytorch_input(states_nnet_batch, device)
             cost_to_go_batch: np.ndarray = nnet(*states_nnet_batch_tensors).cpu().data.numpy()
 
-            cost_to_go: np.ndarray = np.concatenate((cost_to_go, cost_to_go_batch[:, 0]), axis=0)
+            cost_to_go: np.ndarray = np.concatenate((cost_to_go, cost_to_go_batch), axis=0)
 
             start_idx: int = end_idx
 
         assert (cost_to_go.shape[0] == num_states)
-
+        assert (cost_to_go.shape[1] == 3)
         if clip_zero:
             cost_to_go = np.maximum(cost_to_go, 0.0)
-
+        print("heuristic_fn cost_to_go", cost_to_go.shape)
         return cost_to_go
 
     return heuristic_fn
@@ -273,7 +273,7 @@ def heuristic_fn_runner(heuristic_fn_input_queue: Queue, heuristic_fn_output_que
             break
 
         if all_zeros:
-            heuristics = np.zeros((states_nnet[0].shape[0],3), dtype=np.float)
+            heuristics = np.zeros(states_nnet[0].shape[0], dtype=np.float)
         else:
             heuristics = heuristic_fn(states_nnet, is_nnet_format=True)
 
