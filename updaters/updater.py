@@ -29,6 +29,9 @@ def gbfs_update(states: List[State], env: Environment, num_steps: int, heuristic
         cost_to_go_update_l.append(traj[1])
 
     cost_to_go_update = np.array(cost_to_go_update_l)
+    print("assert states = states_update")
+    assert(states==states_update)
+
     return states_update, cost_to_go_update, is_solved
 
 

@@ -2,7 +2,7 @@ from typing import List, Tuple
 import numpy as np
 from utils import nnet_utils, misc_utils, nnet_util_multihead
 from environments.environment_abstract import Environment, State
-from search_methods.gbfs import GBFS
+from search_methods.gbfs_multihead import GBFS
 from search_methods.astar import AStar, Node
 from torch.multiprocessing import Queue, get_context
 from environments.cube3_layer1 import Cube3Layer1
@@ -18,9 +18,9 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
     gbfs2 = GBFS(states, env[1], eps=eps)
     gbfs3 = GBFS(states, env[2], eps=eps)
     for _ in range(num_steps):
-        gbfs1.step(heuristic_fn[0])
-        gbfs2.step(heuristic_fn[1])
-        gbfs3.step(heuristic_fn[2])
+        gbfs1.step(heuristic_fn, idx = 0)
+        gbfs2.step(heuristic_fn, idx= 1)
+        gbfs3.step(heuristic_fn, idx=2)
 
     trajs1: List[List[Tuple[State, float]]] = gbfs1.get_trajs()
     trajs2: List[List[Tuple[State, float]]] = gbfs2.get_trajs()
@@ -56,9 +56,16 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
         cost_to_go_update_l3.append(traj[1])
 
     cost_to_go_update1 = np.array(cost_to_go_update_l1)
-    cost_to_go_update2 = np.array(cost_to_go_update_l1)
-    cost_to_go_update3 = np.array(cost_to_go_update_l1)
-    return [states_update1, states_update2, states_update3], [cost_to_go_update1, cost_to_go_update2, cost_to_go_update3], [is_solved1, is_solved2, is_solved3]
+    cost_to_go_update2 = np.array(cost_to_go_update_l2)
+    cost_to_go_update3 = np.array(cost_to_go_update_l3)
+
+    cost_to_go_update = np.stack([cost_to_go_update1, cost_to_go_update2, cost_to_go_update3])
+    print("cost_to_go_update.shape", cost_to_go_update.shape)
+    assert(cost_to_go_update.shape == (cost_to_go_update.shape[0], 3))
+    is_solved = np.stack([is_solved1, is_solved2, is_solved3])
+    assert(is_solved.shape == (is_solved1.shape[0], 3))
+
+    return states_update1, cost_to_go_update, is_solved
 
 
 def astar_update(states: List[State], env: List[Environment], num_steps: int, heuristic_fn):
