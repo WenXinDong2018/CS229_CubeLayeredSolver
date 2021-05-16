@@ -51,10 +51,10 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
     cost_to_go_update2 = np.array(cost_to_go_update_l2)
     cost_to_go_update3 = np.array(cost_to_go_update_l3)
 
-    cost_to_go_update = np.stack([cost_to_go_update1, cost_to_go_update2, cost_to_go_update3])
+    cost_to_go_update = np.stack([cost_to_go_update1, cost_to_go_update2, cost_to_go_update3]).T
     print("cost_to_go_update.shape", cost_to_go_update.shape)
     assert(cost_to_go_update.shape == (cost_to_go_update.shape[0], 3))
-    is_solved = np.stack([is_solved1, is_solved2, is_solved3])
+    is_solved = np.stack([is_solved1, is_solved2, is_solved3]).T
     assert(is_solved.shape == (is_solved1.shape[0], 3))
 
     return states_update, cost_to_go_update, is_solved

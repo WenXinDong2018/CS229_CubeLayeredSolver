@@ -22,7 +22,8 @@ def bellman(states: List, heuristic_fn, env: Environment, idx:int = -1) -> Tuple
     states_exp_flat, split_idxs = misc_utils.flatten(states_exp)
     ctg_next: np.ndarray
     if idx>=0:
-        ctg_next = heuristic_fn(states_exp_flat)[idx]
+        ctg_next = heuristic_fn(states_exp_flat)
+        ctg_next = ctg_next[:, idx]
     else:
         ctg_next = heuristic_fn(states_exp_flat)
 

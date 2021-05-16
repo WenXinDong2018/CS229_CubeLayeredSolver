@@ -88,9 +88,9 @@ class Cube3Layer1(Environment):
 
     def state_to_nnet_input(self, states: List[Cube3State]) -> List[np.ndarray]:
         states_np = np.stack([state.colors for state in states], axis=0)
-        print("states_np", states_np[0])
+        # print("states_np", states_np[0])
         representation_np: np.ndarray = states_np / (self.cube_len ** 2)
-        print("representation_np", representation_np[0])
+        # print("representation_np", representation_np[0])
         representation_np: np.ndarray = representation_np.astype(self.dtype)
 
         representation: List[np.ndarray] = [representation_np]
