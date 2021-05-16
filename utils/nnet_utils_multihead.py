@@ -154,7 +154,7 @@ def load_nnet(model_file: str, nnet: nn.Module, device: torch.device = None) -> 
 
 
 # heuristic
-def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: list[Environment], clip_zero: bool = False,
+def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: List[Environment], clip_zero: bool = False,
                      batch_size = None):
     nnet.eval()
 
@@ -207,7 +207,7 @@ def get_available_gpu_nums() -> List[int]:
     return gpu_nums
 
 
-def load_heuristic_fn(nnet_dir: str, device: torch.device, on_gpu: bool, nnet: nn.Module, env: list[Environment],
+def load_heuristic_fn(nnet_dir: str, device: torch.device, on_gpu: bool, nnet: nn.Module, env: List[Environment],
                       clip_zero: bool = False, gpu_num: int = -1, batch_size: Optional[int] = None):
     if (gpu_num >= 0) and on_gpu:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_num)
@@ -260,7 +260,7 @@ def heuristic_fn_queue(heuristic_fn_input_queue, heuristic_fn_output_queue, proc
 
 
 def heuristic_fn_runner(heuristic_fn_input_queue: Queue, heuristic_fn_output_queues, nnet_dir: str,
-                        device, on_gpu: bool, gpu_num: int, env: list[Environment], all_zeros: bool,
+                        device, on_gpu: bool, gpu_num: int, env: List[Environment], all_zeros: bool,
                         clip_zero: bool, batch_size: Optional[int]):
     heuristic_fn = None
     if not all_zeros:
@@ -284,7 +284,7 @@ def heuristic_fn_runner(heuristic_fn_input_queue: Queue, heuristic_fn_output_que
     return heuristic_fn
 
 
-def start_heur_fn_runners(num_procs: int, nnet_dir: str, device, on_gpu: bool, env: list[Environment],
+def start_heur_fn_runners(num_procs: int, nnet_dir: str, device, on_gpu: bool, env: List[Environment],
                           all_zeros: bool = False, clip_zero: bool = False, batch_size: Optional[int] = None):
     ctx = get_context("spawn")
 
