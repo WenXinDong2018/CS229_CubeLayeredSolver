@@ -37,23 +37,15 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
     is_solved2: np.ndarray = np.array(gbfs2.get_is_solved())
     is_solved3: np.ndarray = np.array(gbfs3.get_is_solved())
 
-    states_update1: List = []
-    states_update2: List = []
-    states_update3: List = []
+    states_update: List = []
     cost_to_go_update_l1: List[float] = []
     cost_to_go_update_l2: List[float] = []
     cost_to_go_update_l3: List[float] = []
-    for traj in trajs_flat1:
-        states_update1.append(traj[0])
-        cost_to_go_update_l1.append(traj[1])
-
-    for traj in trajs_flat2:
-        states_update2.append(traj[0])
-        cost_to_go_update_l2.append(traj[1])
-
-    for traj in trajs_flat3:
-        states_update3.append(traj[0])
-        cost_to_go_update_l3.append(traj[1])
+    for id, traj in enumerate(trajs_flat1):
+        states_update.append(traj[0])
+        cost_to_go_update_l1.append(trajs_flat1[id][1])
+        cost_to_go_update_l2.append(trajs_flat2[id][1])
+        cost_to_go_update_l3.append(trajs_flat3[id][1])
 
     cost_to_go_update1 = np.array(cost_to_go_update_l1)
     cost_to_go_update2 = np.array(cost_to_go_update_l2)
@@ -65,7 +57,7 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
     is_solved = np.stack([is_solved1, is_solved2, is_solved3])
     assert(is_solved.shape == (is_solved1.shape[0], 3))
 
-    return states_update1, cost_to_go_update, is_solved
+    return states_update, cost_to_go_update, is_solved
 
 
 def astar_update(states: List[State], env: List[Environment], num_steps: int, heuristic_fn):

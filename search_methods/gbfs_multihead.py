@@ -198,11 +198,11 @@ def gbfs_test(num_states: int, back_max: int, env1: Environment,env2: Environmen
         avg_solve_steps_layer3 = 0.0
 
         if per_solved_layer1 > 0.0:
-            avg_solve_steps_layer1 = np.mean(num_steps[is_solved_layer1])
+            avg_solve_steps_layer1 = np.mean(num_steps_layer1[is_solved_layer1])
         if per_solved_layer2 > 0.0:
-            avg_solve_steps_layer2 = np.mean(num_steps[is_solved_layer2])
+            avg_solve_steps_layer2 = np.mean(num_steps_layer2[is_solved_layer2])
         if per_solved_layer3 > 0.0:
-            avg_solve_steps_layer3 = np.mean(num_steps[is_solved_layer3])
+            avg_solve_steps_layer3 = np.mean(num_steps_layer3[is_solved_layer3])
 
         # Print results
         wandb.log({"GBFS-Solved-L1" + str(back_step_test) : per_solved_layer1})
@@ -213,8 +213,6 @@ def gbfs_test(num_states: int, back_max: int, env1: Environment,env2: Environmen
         wandb.log({"GBFS-avgSolveSteps-L2" + str(back_step_test): avg_solve_steps_layer2})
         wandb.log({"GBFS-avgSolveSteps-L3" + str(back_step_test): avg_solve_steps_layer3})
 
-        if dynamic_back_max == back_step_test:
-            per_solved_record = per_solved
     return per_solved_record
 
 
