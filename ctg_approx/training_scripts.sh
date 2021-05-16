@@ -23,15 +23,16 @@ python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 100
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_lt --max_itrs 1000000 --loss_thresh 0.06 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 #3.Same as above but use loss_threshold of 0.3
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_lt_03 --max_itrs 1000000 --loss_thresh 0.3 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
+#4.Same as above but use loss_threshold of 0.5
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_lt_05 --max_itrs 1000000 --loss_thresh 0.5 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 #5.Same as above but use loss_threshold of 0.2, states_per_update = 5000000
 python ctg_approx/avi.py --env cube3 --states_per_update 5000000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_spux10 --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 #6.training layer 3 with without dynamic curriculum
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_baseline --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
-#6.training layer 3 with with dynamic curriculum, uniform distribution
+#7.training layer 3 with with dynamic curriculum, uniform distribution
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_uniform --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25
-#6.training layer 3 with with dynamic curriculum, normal distribution
-python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_normal --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --normal_dist
+#8.training layer 3 with with dynamic curriculum, fixed length, only update dynamix_back when target model updates to current model
+python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_target_full --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
 ###--------------------------------------------Search Experiments -------------------------------------------###
 
