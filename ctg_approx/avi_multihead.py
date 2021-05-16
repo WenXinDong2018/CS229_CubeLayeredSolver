@@ -1,9 +1,9 @@
-from utils import data_utils, nnet_utils, env_utils
+from utils import data_utils, nnet_utils_multihead, env_utils
 from typing import Dict, List, Tuple, Any
 
 from environments.environment_abstract import Environment
-from updaters.updater import Updater
-from search_methods.gbfs import gbfs_test
+from updaters.updater_multihead import Updater
+from search_methods.gbfs_multihead import gbfs_test
 import torch
 import wandb
 import torch.nn as nn
