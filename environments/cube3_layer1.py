@@ -102,7 +102,8 @@ class Cube3Layer1(Environment):
 
     def get_nnet_model(self) -> nn.Module:
         state_dim: int = (self.cube_len ** 2) * 6
-        nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
+        out_dim = 3
+        nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, out_dim, True)
 
         return nnet
 

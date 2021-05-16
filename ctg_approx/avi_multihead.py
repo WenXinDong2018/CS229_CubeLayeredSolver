@@ -208,7 +208,7 @@ def main():
         sys.stdout = data_utils.Logger(args_dict["output_save_loc"], "a")
 
     # environment
-    env: List[Environment] = [env_utils.get_environment("cube3_layer1"), env_utils.get_environment("cube3_layer2"), env_utils.get_environment("cube3_layer3")]
+    env: List[Environment] = [env_utils.get_environment("cube3_layer1"), env_utils.get_environment("cube3_layer2"), env_utils.get_environment("cube3")]
 
     # get device
     on_gpu: bool
