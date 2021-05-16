@@ -161,5 +161,5 @@ class Updater:
 
         for proc in self.procs:
             proc.join()
-
+        print("_update", len(states_update_nnet), cost_to_go_update.shape)
         return states_update_nnet, cost_to_go_update, is_solved

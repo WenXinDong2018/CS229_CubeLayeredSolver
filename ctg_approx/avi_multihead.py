@@ -147,34 +147,33 @@ def do_update(back_max: int, update_num: int, env: List[Environment], max_update
     updater: Updater = Updater(env, num_states, back_max, heur_fn_i_q, heur_fn_o_qs, update_steps, update_method,
                                update_batch_size=10000, eps_max=eps_max, fixed_difficulty = fixed_difficulty, random=random, normal_dist= normal_dist)
 
-    states_update_nnet: List[List[np.ndarray]]
-    output_update: List[np.ndarray]
+    states_update_nnet: List[np.ndarray]
+    output_update: np.ndarray
     states_update_nnet, output_update, is_solved = updater.update()
-    print("updater.update: ", states_update_nnet.shape, output_update.shape, is_solved.shape)
-
+    print("output_update", output_update.shape)
     # Print stats
-    if max_update_steps > 1:
-        print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 1" % (update_method.upper(),
-                                                                       format(output_update[0].shape[0], ","),
-                                                                       100.0 * np.mean(is_solved[0]),
-                                                                       time.time() - output_time_start))
-        print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 2" % (update_method.upper(),
-                                                                       format(output_update[1].shape[0], ","),
-                                                                       100.0 * np.mean(is_solved[1]),
-                                                                       time.time() - output_time_start))
-        print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 3" % (update_method.upper(),
-                                                                       format(output_update[2].shape[0], ","),
-                                                                       100.0 * np.mean(is_solved[2]),
-                                                                       time.time() - output_time_start))
-    mean_ctg1 = output_update[0, :, 0].mean()
-    mean_ctg2 = output_update[1, :, 0].mean()
-    mean_ctg3 = output_update[2, :, 0].mean()
-    min_ctg1 = output_update[0, :, 0].min()
-    max_ctg1 = output_update[0, :, 0].max()
-    min_ctg2 = output_update[1, :, 0].min()
-    max_ctg2 = output_update[1, :, 0].max()
-    min_ctg3 = output_update[2, :, 0].min()
-    max_ctg3 = output_update[2, :, 0].max()
+    # if max_update_steps > 1:
+        # print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 1" % (update_method.upper(),
+        #                                                                format(output_update[0].shape[0], ","),
+        #                                                                100.0 * np.mean(is_solved[0]),
+        #                                                                time.time() - output_time_start))
+        # print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 2" % (update_method.upper(),
+        #                                                                format(output_update[1].shape[0], ","),
+        #                                                                100.0 * np.mean(is_solved[1]),
+        #                                                                time.time() - output_time_start))
+        # print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 3" % (update_method.upper(),
+        #                                                                format(output_update[2].shape[0], ","),
+        #                                                                100.0 * np.mean(is_solved[2]),
+        #                                                                time.time() - output_time_start))
+    mean_ctg1 = output_update[ :, 0].mean()
+    mean_ctg2 = output_update[:, 1].mean()
+    mean_ctg3 = output_update[:, 2].mean()
+    min_ctg1 = output_update[:, 0].min()
+    max_ctg1 = output_update[ :, 1].max()
+    min_ctg2 = output_update[ :, 2].min()
+    max_ctg2 = output_update[ :, 0].max()
+    min_ctg3 = output_update[ :, 1].min()
+    max_ctg3 = output_update[:, 2].max()
     print("Cost-to-go (mean/min/max) for layer 1: %.2f/%.2f/%.2f" % (mean_ctg1, min_ctg1, max_ctg1))
     print("Cost-to-go (mean/min/max) for layer 2: %.2f/%.2f/%.2f" % (mean_ctg2, min_ctg2, max_ctg2))
     print("Cost-to-go (mean/min/max) for layer 3: %.2f/%.2f/%.2f" % (mean_ctg3, min_ctg3, max_ctg3))

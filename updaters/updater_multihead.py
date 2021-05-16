@@ -52,7 +52,6 @@ def gbfs_update(states: List[State], env: List[Environment], num_steps: int, heu
     cost_to_go_update3 = np.array(cost_to_go_update_l3)
 
     cost_to_go_update = np.stack([cost_to_go_update1, cost_to_go_update2, cost_to_go_update3]).T
-    print("cost_to_go_update.shape", cost_to_go_update.shape)
     assert(cost_to_go_update.shape == (cost_to_go_update.shape[0], 3))
     is_solved = np.stack([is_solved1, is_solved2, is_solved3]).T
     assert(is_solved.shape == (is_solved1.shape[0], 3))
@@ -159,22 +158,13 @@ class Updater:
         is_solved: List[np.ndarray]
         states_update_nnet, cost_to_go_update, is_solved = self._update()
 
-        output_update1 = np.expand_dims(cost_to_go_update[0], 1)
-        output_update2 = np.expand_dims(cost_to_go_update[1], 1)
-        output_update3 = np.expand_dims(cost_to_go_update[2], 1)
-        return states_update_nnet, [output_update1, output_update2, output_update3], is_solved
+        return states_update_nnet, cost_to_go_update, is_solved
 
-    def _update(self) -> Tuple[List[List[np.ndarray]], List[np.ndarray], List[np.ndarray]]:
+    def _update(self) -> Tuple[List[np.ndarray], np.ndarray, np.ndarray]:
         # process results
-        states_update_nnet_l_layer1: List[List[np.ndarray]] = []
-        states_update_nnet_l_layer2: List[List[np.ndarray]] = []
-        states_update_nnet_l_layer3: List[List[np.ndarray]] = []
-        cost_to_go_update_l_layer1: List = []
-        cost_to_go_update_l_layer2: List = []
-        cost_to_go_update_l_layer3: List = []
-        is_solved_l_layer1: List = []
-        is_solved_l_layer2: List = []
-        is_solved_l_layer3: List = []
+        states_update_nnet_l: List[List[np.ndarray]] = []
+        cost_to_go_update_l: List = []
+        is_solved_l: List = []
 
         none_count: int = 0
         result_count: int = 0
@@ -191,45 +181,25 @@ class Updater:
 
             states_nnet_q: List[np.ndarray]
             states_nnet_q, cost_to_go_q, is_solved_q = result
-            states_update_nnet_l_layer1.append(states_nnet_q[0])
-            states_update_nnet_l_layer2.append(states_nnet_q[1])
-            states_update_nnet_l_layer3.append(states_nnet_q[2])
+            states_update_nnet_l.append(states_nnet_q)
 
-            cost_to_go_update_l_layer1.append(cost_to_go_q[0])
-            cost_to_go_update_l_layer2.append(cost_to_go_q[1])
-            cost_to_go_update_l_layer3.append(cost_to_go_q[2])
-
-            is_solved_l_layer1.append(is_solved_q[0])
-            is_solved_l_layer2.append(is_solved_q[1])
-            is_solved_l_layer3.append(is_solved_q[2])
+            cost_to_go_update_l.append(cost_to_go_q)
+            is_solved_l.append(is_solved_q)
 
             if result_count in display_counts:
                 print("%.2f%% (Total time: %.2f)" % (100 * result_count/self.num_batches, time.time() - start_time))
 
-        num_states_nnet_np_layer1: int = len(states_update_nnet_l_layer1[0])
-        num_states_nnet_np_layer2: int = len(states_update_nnet_l_layer2[0])
-        num_states_nnet_np_layer3: int = len(states_update_nnet_l_layer3[0])
-        states_update_nnet_layer1: List[np.ndarray] = []
-        states_update_nnet_layer2: List[np.ndarray] = []
-        states_update_nnet_layer3: List[np.ndarray] = []
-        for np_idx in range(num_states_nnet_np_layer1):
-            states_nnet_idx: np.ndarray = np.concatenate([x[np_idx] for x in states_update_nnet_l_layer1], axis=0)
-            states_update_nnet_layer1.append(states_nnet_idx)
-        for np_idx in range(num_states_nnet_np_layer2):
-            states_nnet_idx: np.ndarray = np.concatenate([x[np_idx] for x in states_update_nnet_l_layer2], axis=0)
-            states_update_nnet_layer2.append(states_nnet_idx)
-        for np_idx in range(num_states_nnet_np_layer3):
-            states_nnet_idx: np.ndarray = np.concatenate([x[np_idx] for x in states_update_nnet_l_layer3], axis=0)
-            states_update_nnet_layer3.append(states_nnet_idx)
+        num_states_nnet_np: int = len(states_update_nnet_l[0])
+        states_update_nnet: List[np.ndarray] = []
+        for np_idx in range(num_states_nnet_np):
+            states_nnet_idx: np.ndarray = np.concatenate([x[np_idx] for x in states_update_nnet_l], axis=0)
+            states_update_nnet.append(states_nnet_idx)
 
-        cost_to_go_update_l_layer1: np.ndarray = np.concatenate(cost_to_go_update_l_layer1, axis=0)
-        cost_to_go_update_l_layer2: np.ndarray = np.concatenate(cost_to_go_update_l_layer2, axis=0)
-        cost_to_go_update_l_layer3: np.ndarray = np.concatenate(cost_to_go_update_l_layer3, axis=0)
-        is_solved_l_layer1: np.ndarray = np.concatenate(is_solved_l_layer1, axis=0)
-        is_solved_l_layer2: np.ndarray = np.concatenate(is_solved_l_layer2, axis=0)
-        is_solved_l_layer3: np.ndarray = np.concatenate(is_solved_l_layer3, axis=0)
+        cost_to_go_update: np.ndarray = np.concatenate(cost_to_go_update_l, axis=0)
+        is_solved: np.ndarray = np.concatenate(is_solved_l, axis=0)
 
         for proc in self.procs:
             proc.join()
 
-        return [states_update_nnet_layer1, states_update_nnet_layer2, states_update_nnet_layer3], [cost_to_go_update_l_layer1, cost_to_go_update_l_layer2, cost_to_go_update_l_layer3], [is_solved_l_layer1, is_solved_l_layer2, is_solved_l_layer3]
+        print("_update", len(states_update_nnet), cost_to_go_update.shape)
+        return states_update_nnet, cost_to_go_update, is_solved
