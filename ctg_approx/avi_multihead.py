@@ -1,9 +1,9 @@
-from utils import data_utils, nnet_utils, env_utils
+from utils import data_utils, nnet_utils_multihead, env_utils
 from typing import Dict, List, Tuple, Any
 
 from environments.environment_abstract import Environment
-from updaters.updater import Updater
-from search_methods.gbfs import gbfs_test
+from updaters.updater_multihead import Updater
+from search_methods.gbfs_multihead import gbfs_test
 import torch
 import wandb
 import torch.nn as nn
@@ -261,9 +261,14 @@ def main():
                                                                                  clip_zero=True,
                                                                                  batch_size=args_dict[
                                                                                      "update_nnet_batch_size"])
+<<<<<<< HEAD
 
         states_nnet: List[List[np.ndarray]]
         outputs: List[np.ndarray]
+=======
+        states_nnet: List[np.ndarray]
+        outputs: np.ndarray
+>>>>>>> 9cbc6ef978a05a6b80c1bfb6ad4f00148d1f30ad
         if args_dict["dynamic_back_max"]:
             states_nnet, outputs = do_update(dynamic_back_max, update_num, env,
                                             args_dict['max_update_steps'], args_dict['update_method'],
