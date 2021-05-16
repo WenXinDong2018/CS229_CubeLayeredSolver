@@ -34,6 +34,11 @@ python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 100
 #8.training layer 3 with with dynamic curriculum, fixed length, only update dynamix_back when target model updates to current model
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer3_dynamic_difficulty_25_fixed_target_full --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 
+
+###Multi-head
+#1.train
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3multihead --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+
 ###--------------------------------------------Search Experiments -------------------------------------------###
 
 ###Layer 1

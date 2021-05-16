@@ -1,6 +1,6 @@
 from typing import List, Tuple
 import numpy as np
-from utils import nnet_utils, misc_utils, nnet_util_multihead
+from utils import nnet_utils, misc_utils, nnet_utils_multihead
 from environments.environment_abstract import Environment, State
 from search_methods.gbfs_multihead import GBFS
 from search_methods.astar import AStar, Node
@@ -109,32 +109,30 @@ def astar_update(states: List[State], env: List[Environment], num_steps: int, he
 def update_runner(num_states: int, back_max: int, update_batch_size: int, heur_fn_i_q, heur_fn_o_q,
                   proc_id: int, env: Environment, result_queue: Queue, num_steps: int, update_method: str,
                   eps_max: float, fixed_difficulty:bool, random: bool, normal_dist:bool):
-    heuristic_fn = nnet_util_multihead.heuristic_fn_queue(heur_fn_i_q, heur_fn_o_q, proc_id, env)
+    heuristic_fn = nnet_utils_multihead.heuristic_fn_queue(heur_fn_i_q, heur_fn_o_q, proc_id, env)
 
     start_idx: int = 0
     while start_idx < num_states:
         end_idx: int = min(start_idx + update_batch_size, num_states)
-        states_itr, _ = env.generate_states(end_idx - start_idx, (0, back_max), fixed_difficulty=fixed_difficulty, random=random, normal_dist = normal_dist)
+        states_itr, _ = env[0].generate_states(end_idx - start_idx, (0, back_max), fixed_difficulty=fixed_difficulty, random=random, normal_dist = normal_dist)
 
         if update_method.upper() == "GBFS":
-            states_update, cost_to_go_update, is_solved = gbfs_update(states_itr, [Cube3Layer1, Cube3Layer2, Cube3Layer3], num_steps, heuristic_fn, eps_max)
+            states_update, cost_to_go_update, is_solved = gbfs_update(states_itr, env, num_steps, heuristic_fn, eps_max)
         elif update_method.upper() == "ASTAR":
-            states_update, cost_to_go_update, is_solved = astar_update(states_itr, [Cube3Layer1, Cube3Layer2, Cube3Layer3], num_steps, heuristic_fn)
+            states_update, cost_to_go_update, is_solved = astar_update(states_itr, env, num_steps, heuristic_fn)
         else:
             raise ValueError("Unknown update method %s" % update_method)
 
-        states_update_nnet_layer1: List[np.ndaray] = Cube3Layer1.state_to_nnet_input(states_update[0])
-        states_update_nnet_layer2: List[np.ndaray] = Cube3Layer2.state_to_nnet_input(states_update[1])
-        states_update_nnet_layer3: List[np.ndaray] = Cube3Layer3.state_to_nnet_input(states_update[2])
+        states_update_nnet: List[np.ndaray] = env[0].state_to_nnet_input(states_update)
 
-        result_queue.put(([states_update_nnet_layer1, states_update_nnet_layer2, states_update_nnet_layer3], cost_to_go_update, is_solved))
+        result_queue.put((states_update_nnet, cost_to_go_update, is_solved))
 
         start_idx: int = end_idx
 
     result_queue.put(None)
 
-class Updater_Multihead:
-    def __init__(self, env: Environment, num_states: int, back_max: int, heur_fn_i_q, heur_fn_o_qs,
+class Updater:
+    def __init__(self, env: List[Environment], num_states: int, back_max: int, heur_fn_i_q, heur_fn_o_qs,
                  num_steps: int, update_method: str, update_batch_size: int = 1000, eps_max: float = 0.0, fixed_difficulty = False, random=False, normal_dist = False):
         super().__init__()
         ctx = get_context("spawn")

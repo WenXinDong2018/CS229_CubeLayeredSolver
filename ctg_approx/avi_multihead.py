@@ -131,7 +131,7 @@ def copy_files(src_dir: str, dest_dir: str):
             shutil.copy(full_file_name, dest_dir)
 
 
-def do_update(back_max: int, update_num: int, env: Environment, max_update_steps: int, update_method: str,
+def do_update(back_max: int, update_num: int, env: List[Environment], max_update_steps: int, update_method: str,
               num_states: int, eps_max: float, heur_fn_i_q, heur_fn_o_qs, fixed_difficulty = False, random=False, normal_dist = False) -> Tuple[List[np.ndarray], np.ndarray]:
     '''Generate randomly scrambled states as training examples, do one step look ahead to get training labels '''
     '''Generate num_states training examples'''
@@ -150,9 +150,8 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
     states_update_nnet: List[List[np.ndarray]]
     output_update: List[np.ndarray]
     states_update_nnet, output_update, is_solved = updater.update()
-    print("states_update_nnet for layer 1", states_update_nnet[0][0])
-    print("states_update_nnet for layer 2", states_update_nnet[0][1])
-    print("states_update_nnet for layer 3", states_update_nnet[0][2])
+    print("updater.update: ", states_update_nnet.shape, output_update.shape, is_solved.shape)
+
     # Print stats
     if max_update_steps > 1:
         print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 1" % (update_method.upper(),
@@ -162,7 +161,7 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
         print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 2" % (update_method.upper(),
                                                                        format(output_update[1].shape[0], ","),
                                                                        100.0 * np.mean(is_solved[1]),
-                                                                       time.time() - output_time_start))                                                               
+                                                                       time.time() - output_time_start))
         print("%s produced %s states, %.2f%% solved (%.2f seconds) for layer 3" % (update_method.upper(),
                                                                        format(output_update[2].shape[0], ","),
                                                                        100.0 * np.mean(is_solved[2]),
@@ -189,11 +188,11 @@ def do_update(back_max: int, update_num: int, env: Environment, max_update_steps
 def load_nnet(nnet_dir: str, env: Environment) -> Tuple[nn.Module, int, int]:
     nnet_file: str = "%s/model_state_dict.pt" % nnet_dir
     if os.path.isfile(nnet_file):
-        nnet = nnet_utils_multihead.load_nnet(nnet_file, env.get_nnet_model())
+        nnet = nnet_utils_multihead.load_nnet(nnet_file, env[0].get_nnet_model())
         itr: int = pickle.load(open("%s/train_itr.pkl" % nnet_dir, "rb"))
         update_num: int = pickle.load(open("%s/update_num.pkl" % nnet_dir, "rb"))
     else:
-        nnet: nn.Module = env.get_nnet_model()
+        nnet: nn.Module = env[0].get_nnet_model()
         itr: int = 0
         update_num: int = 0
 
@@ -210,7 +209,7 @@ def main():
         sys.stdout = data_utils.Logger(args_dict["output_save_loc"], "a")
 
     # environment
-    env: Environment = env_utils.get_environment(args_dict['env'])
+    env: List[Environment] = [env_utils.get_environment("cube3_layer1"), env_utils.get_environment("cube3_layer2"), env_utils.get_environment("cube3_layer3")]
 
     # get device
     on_gpu: bool
