@@ -1,0 +1,4 @@
+solving # 100 problems
+device: cpu, devices: [], on_gpu: False
+Times - pop: 0.05, expand: 1.74, check: 0.59, heur: 25.43, add: 0.24, itr: 28.05, num_itrs: 26
+State: 0, SolnCost: 17.00, # Moves: 17, # Nodes Gen: 277,536, Time: 28.06

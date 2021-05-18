@@ -97,4 +97,6 @@ python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight
 #3. Solves 100 cubes. Use our layer 3 instead of deepcubea as layer 3
 python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --results_dir results/cube3_sequential_our_layer3/
 
+# multihead model 
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/current --results_dir results/cube3_multihead_baseline/
 

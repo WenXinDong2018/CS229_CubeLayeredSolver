@@ -152,6 +152,50 @@ def load_nnet(model_file: str, nnet: nn.Module, device: torch.device = None) -> 
 
     return nnet
 
+def get_heuristic_fn_comp(layer: int, nnet: nn.Module, device: torch.device, env: List[Environment], clip_zero: bool = False,
+                     batch_size = None):
+    nnet.eval()
+
+    def heuristic_fn(states: List, is_nnet_format: bool = False) -> np.ndarray:
+        cost_to_go: np.ndarray = np.zeros((0,3))
+        if not is_nnet_format:
+            num_states: int = len(states)
+        else:
+            num_states: int = states[0].shape[0]
+
+        batch_size_inst: int = num_states
+        if batch_size is not None:
+            batch_size_inst = batch_size
+
+        start_idx: int = 0
+        while start_idx < num_states:
+            # get batch
+            end_idx: int = min(start_idx + batch_size_inst, num_states)
+
+            # convert to nnet input
+            if not is_nnet_format:
+                states_batch: List = states[start_idx:end_idx]
+                states_nnet_batch: List[np.ndarray] = env[0].state_to_nnet_input(states_batch)
+            else:
+                states_nnet_batch = [x[start_idx:end_idx] for x in states]
+
+            # get nnet output
+            states_nnet_batch_tensors = states_nnet_to_pytorch_input(states_nnet_batch, device)
+            cost_to_go_batch: np.ndarray = nnet(*states_nnet_batch_tensors).cpu().data.numpy()
+            #print("cost_to_go_batch", cost_to_go_batch.shape)
+            #print("cost_to_go", cost_to_go.shape)
+            cost_to_go: np.ndarray = np.concatenate((cost_to_go, cost_to_go_batch), axis=0)
+
+            start_idx: int = end_idx
+
+        assert (cost_to_go.shape[0] == num_states)
+        assert (cost_to_go.shape[1] == 3)
+        if clip_zero:
+            cost_to_go = np.maximum(cost_to_go, 0.0)
+        # print("heuristic_fn cost_to_go", cost_to_go.shape)
+        return cost_to_go[:, layer]
+
+    return heuristic_fn
 
 # heuristic
 def get_heuristic_fn(nnet: nn.Module, device: torch.device, env: List[Environment], clip_zero: bool = False,
@@ -207,6 +251,23 @@ def get_available_gpu_nums() -> List[int]:
 
     return gpu_nums
 
+
+def load_heuristic_fn_comp(layer: int, nnet_dir: str, device: torch.device, on_gpu: bool, nnet: nn.Module, env: List[Environment],
+                      clip_zero: bool = False, gpu_num: int = -1, batch_size: Optional[int] = None):
+    if (gpu_num >= 0) and on_gpu:
+        os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_num)
+
+    model_file = "%s/model_state_dict.pt" % nnet_dir
+
+    nnet = load_nnet(model_file, nnet, device=device)
+    nnet.eval()
+    nnet.to(device)
+    if on_gpu:
+        nnet = nn.DataParallel(nnet)
+
+    heuristic_fn = get_heuristic_fn_comp(layer, nnet, device, env, clip_zero=clip_zero, batch_size=batch_size)
+
+    return heuristic_fn
 
 def load_heuristic_fn(nnet_dir: str, device: torch.device, on_gpu: bool, nnet: nn.Module, env: List[Environment],
                       clip_zero: bool = False, gpu_num: int = -1, batch_size: Optional[int] = None):
