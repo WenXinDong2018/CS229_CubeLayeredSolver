@@ -37,7 +37,7 @@ python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 100
 
 ###Multi-head
 #1.train
-python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3multihead --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name cube3multihead_baseline --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 
 ###--------------------------------------------Search Experiments -------------------------------------------###
 

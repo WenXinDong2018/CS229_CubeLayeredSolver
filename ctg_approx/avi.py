@@ -232,6 +232,7 @@ def main():
         Once the current model becomes good enough, it will become the new teacher
     '''
     while itr < args_dict['max_itrs']:
+        network_updated = False
         # update
         targ_file: str = "%s/model_state_dict.pt" % args_dict['targ_dir']
         all_zeros: bool = not os.path.isfile(targ_file)
@@ -283,8 +284,13 @@ def main():
             per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
             #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
             if (per_solved>args_dict["dynamic_back_max_per"]): #Knob: if percentage solved pass this number we increase the difficulty of the generated problems
-                can_increase_dynamic_back_max = True
-                # dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+                # can_increase_dynamic_back_max = True
+                dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+                #update network
+                copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
+                update_num = update_num + 1
+                pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
+                network_updated = True
             wandb.log({"dynamic_back_max": dynamic_back_max})
 
         else:
@@ -297,15 +303,15 @@ def main():
         torch.cuda.empty_cache()
 
         print("Last loss was %f" % last_loss)
-        if last_loss < args_dict['loss_thresh']:
+        if not network_updated and last_loss < args_dict['loss_thresh']:
             # Update nnet
             print("Updating target network")
             copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
             update_num = update_num + 1
             pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
-            if args_dict["dynamic_back_max"] and can_increase_dynamic_back_max:
-                dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
-                can_increase_dynamic_back_max = False
+            # if args_dict["dynamic_back_max"] and can_increase_dynamic_back_max:
+            #     dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
+            #     can_increase_dynamic_back_max = False
         wandb.log({"update_num": update_num})
     print("Done")
 
