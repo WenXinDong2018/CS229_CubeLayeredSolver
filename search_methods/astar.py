@@ -13,7 +13,7 @@ import time
 import sys
 import os
 import socket
-from options.py import *
+from options import *
 from torch.multiprocessing import Process
 
 def getOptions(option_name):
