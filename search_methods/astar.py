@@ -13,13 +13,14 @@ import time
 import sys
 import os
 import socket
+from options import *
 from torch.multiprocessing import Process
 
 def getOptions(option_name):
     if option_name == "layer2":
-        return options.get_middle_layer_moves()
+        return get_middle_layer_moves()
     elif option_name == "layer3":
-        return options.get_PLLs()
+        return get_PLLs()
     else:
         return human_options_hand_moves
 
