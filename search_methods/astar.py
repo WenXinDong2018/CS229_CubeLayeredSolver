@@ -13,7 +13,7 @@ import time
 import sys
 import os
 import socket
-from options import *
+from search_methods.options import *
 from torch.multiprocessing import Process
 
 def getOptions(option_name):
@@ -21,6 +21,8 @@ def getOptions(option_name):
         return get_middle_layer_moves()
     elif option_name == "layer3":
         return get_PLLs()
+    elif option_name == "roll_out":
+        return get_roll_out(3, 10, "results/cube3_sequential_500/results.pkl")
     else:
         return human_options_hand_moves
 

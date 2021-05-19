@@ -1,6 +1,6 @@
 from typing import List, Dict
 from utils.search_utils import create_options
-#import pickle
+import pickle5 as pickle
 import os
 
 #options for layer 2
@@ -80,6 +80,30 @@ def get_expert_options(length: int, top: int):
     op_list = list(options.keys())[:top]
     return [op_list[i].split(' ') for i in range(len(op_list))]
 
+def compile_roll_out(paths):
+    moves: List[str] = ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
+    output = []
+    for id, path in enumerate(paths):
+        output.append([moves[path[i]] for i in range(len(path))])
+    return output
+
+def get_roll_out(length: int, top: int, file: str):
+    
+    results = pickle.load(
+        open(file, "rb")
+    )
+    compiled = compile_roll_out(results["solutions"])
+    top_moves = {}
+    for id, path in enumerate(compiled):
+        for i in range(len(path) - length + 1):
+            move_str = ' '.join(path[i: i + length])
+            if move_str not in top_moves:
+                top_moves[move_str] = 0
+            top_moves[move_str] += 1
+    top_moves = dict(sorted(top_moves.items(), key=lambda item: item[1], reverse=True))
+    keys = list(top_moves.keys())
+    return [key.split(' ') for key in keys][:top]
+
 
 def generate_options(human: bool, length: int = 4, top: int = 50) -> List[List[str]]:
     # call this method to combine the human options if human flag is set to True,
@@ -90,3 +114,10 @@ def generate_options(human: bool, length: int = 4, top: int = 50) -> List[List[s
     else:
         return get_expert_options(length, top)
 
+
+def main():
+    top_moves = get_roll_out(3, 10, "results/cube3_sequential_500/results.pkl")
+    print(top_moves)
+
+if __name__ == "__main__":
+    main()

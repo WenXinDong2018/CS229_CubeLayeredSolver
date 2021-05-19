@@ -258,9 +258,9 @@ class Cube3Layer3(Environment):
         else:
             scrambs = list(range(backwards_range[0], backwards_range[1] + 1))
         num_env_moves: int = self.get_num_moves()
-        fixed_moves: List[str] = self.get_all_possible_fixed_moves()
-        function_map = self.fixed_move_dict()
-        num_fixed_moves: int = len(fixed_moves)
+        #fixed_moves: List[str] = self.get_all_possible_fixed_moves()
+        #function_map = self.fixed_move_dict()
+        #num_fixed_moves: int = len(fixed_moves)
         # print("scrambs",scrambs, "num_env_moves", num_env_moves)
         # Get goal states
         states_np: np.ndarray = self.generate_goal_states(num_states, np_format=True)
@@ -274,20 +274,26 @@ class Cube3Layer3(Environment):
         moves_lt = num_back_moves < scramble_nums
         # print('moves_lt: {}'.format(moves_lt))
         while np.any(moves_lt):
+            
             idxs: np.ndarray = np.where(moves_lt)[0]
-            subset_size: int = int(max(len(idxs) / num_fixed_moves, 1))
+            subset_size: int = int(max(len(idxs) / num_env_moves, 1))
             idxs: np.ndarray = np.random.choice(idxs, subset_size)
-
+            """
             move: int = randrange(num_fixed_moves)
             fixed_move: List[str] = fixed_moves[move].split(' ')
             states_np[idxs] = function_map[int(fixed_move[0])](states_np[idxs], int(fixed_move[1]), int(fixed_move[2]))
             # print("move states_np", states_np[idxs])
             num_back_moves[idxs] = num_back_moves[idxs] + 1
             moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
+            """
+
+            move: int = randrange(num_env_moves)
+            states_np[idxs], _ = self._move_np(states_np[idxs], move)
+            # print("move states_np", states_np[idxs])
+            num_back_moves[idxs] = num_back_moves[idxs] + 1
+            moves_lt[idxs] = num_back_moves[idxs] < scramble_nums[idxs]
 
         states: List[Cube3State] = [Cube3State(x) for x in list(states_np)]
-        for i in range(num_states):
-            print(states[i].colors)
         return states, scramble_nums.tolist()
 
 
