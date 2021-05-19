@@ -97,11 +97,16 @@ python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl  --mod
 python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential/
 #2.Solve 500 cubes
 python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 500 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential_500/
+#3.Solve 1000 cubes
+python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 0 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential_1000/
 #3. Solves 100 cubes. Use our layer 3 instead of deepcubea as layer 3
 python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3layer3_dynamic_difficulty_25_fixed_lt_03/current/ --results_dir results/cube3_sequential_our_layer3/
 #4. sequential model with roll_out option on data_1 (data_1 has 2000 data)
 python search_methods/sequential.py --states data/cube3/test/data_1.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 1900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential_option_rollout/ --options --option_name roll_out
-
+#5. sequential model without option on data_1
+python search_methods/sequential.py --states data/cube3/test/data_1.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 1900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential_data1/
+#6. sequential model with roll_out option on data_0
+python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/ --model_dir_layer3 saved_models/cube3/current/ --results_dir results/cube3_sequential_option_rollout_data0/ --options --option_name roll_out
 
 
 # multihead model

@@ -1,0 +1,13 @@
+Solved 65/100 cubes
+
+Using data 0
+Sequential solver with 3 layer models + rollout options
+
+average time is 26.0836232148684 s
+average node generated is 685911.2615384615
+average solution length  is 31.553846153846155
+
+
+--model_dir_layer1 saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/
+--model_dir_layer2 saved_models/cube3layer2_dynamic_difficulty_25_fixed/current/
+--model_dir_layer3 saved_models/cube3/current/
