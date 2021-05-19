@@ -144,12 +144,15 @@ class Cube3Layer2(Environment):
     def get_num_moves(self) -> int:
         return len(self.moves)
 
-    def get_nnet_model(self) -> nn.Module:
+    def get_nnet_model(self, nnet_type: str = "baseline") -> nn.Module:
         state_dim: int = (self.cube_len ** 2) * 6
-        nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, 1, True)
-
+        out_dim = None
+        if nnet_type == "baseline":
+            out_dim = 1
+        elseif nnet_type == "multihead":
+            out_dim = 3
+        nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, out_dim, True)
         return nnet
-
     def expand(self, states: List[State], options: List[List[str]]= []) -> Tuple[List[List[State]], List[np.ndarray]]:
         assert self.fixed_actions, "Environments without fixed actions must implement their own method"
 

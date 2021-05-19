@@ -78,7 +78,7 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def get_nnet_model(self) -> nn.Module:
+    def get_nnet_model(self, nnet_type: str = "baseline") -> nn.Module:
         """ Get the neural network model for the environment
 
         @return: neural network model

@@ -412,7 +412,7 @@ def main():
     pickle.dump(results, open(results_file, "wb"), protocol=-1)
 
 
-def bwas_python(args, env: Environment, states: List[State]):
+def bwas_python(args, env: Environment, states: List[State], nnet_type: str = "baseline"):
     # get device
     on_gpu: bool
     device: torch.device
@@ -420,7 +420,7 @@ def bwas_python(args, env: Environment, states: List[State]):
 
     print("device: %s, devices: %s, on_gpu: %s" % (device, devices, on_gpu))
 
-    heuristic_fn = nnet_utils.load_heuristic_fn(args.model_dir, device, on_gpu, env.get_nnet_model(),
+    heuristic_fn = nnet_utils.load_heuristic_fn(args.model_dir, device, on_gpu, env.get_nnet_model(nnet_type = nnet_type),
                                                 env, clip_zero=True, batch_size=args.nnet_batch_size)
 
     solns: List[List[int]] = []
