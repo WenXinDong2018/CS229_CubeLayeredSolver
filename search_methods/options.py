@@ -51,13 +51,13 @@ str_PLLs = ["D' L' R L' U L' D2 L U' L' D2 L2 R' L D",  # Aa
             "D2 R2 L2 U' L R' F2 R L' U' L2 R2 D2",  # Ub
             "D' R2 L2 U' L R' F2 R L' U' L2 R2 D R2 L2 U' L R' F2 R L' U' L2 R2"  # H
             ]
-middle_layer_options = ["D F D' F' D' R' D R", 
-                        "D R D' R' D' B' D B", 
-                        "D L D' L' D' F' D F", 
-                        "D B D' B' D' L' D L", 
-                        "D' L' D L D B D' B'", 
-                        "D' F' D F D L D' L'", 
-                        "D' R' D R D F D' F'", 
+middle_layer_options = ["D F D' F' D' R' D R",
+                        "D R D' R' D' B' D B",
+                        "D L D' L' D' F' D F",
+                        "D B D' B' D' L' D L",
+                        "D' L' D L D B D' B'",
+                        "D' F' D F D L D' L'",
+                        "D' R' D R D F D' F'",
                         "D' B' D B D R D' R'"]
 top_50_options_of_length_4 = [['F1', 'U1', 'F-1', 'U1'], ['L-1', 'U1', 'U1', 'L1'], ['U1', 'L-1', 'U1', 'U1'], ['U1', 'F-1', 'U1', 'U1'], ['F1', 'U1', 'F-1', 'U-1'], ['F1', 'U1', 'U1', 'F-1'], ['L1', 'U1', 'L-1', 'U1'], ['F-1', 'U1', 'U1', 'F1'], ['U1', 'F1', 'U1', 'F-1'], ['B-1', 'U1', 'U1', 'B1'], ['U1', 'U1', 'L1', 'U1'], ['U1', 'B-1', 'U1', 'U1'], ['U1', 'U1', 'F1', 'U1'], ['U1', 'L1', 'U1', 'L-1'], ['B1', 'U1', 'B-1', 'U1'], ['U1', 'F-1', 'U-1', 'F1'], ['F1', 'U-1', 'F-1', 'U1'], ['U1', 'F1', 'U-1', 'F-1'], ['U1', 'B1', 'U-1', 'B-1'], ['R-1', 'U1', 'U1', 'R1'], ['B-1', 'U-1', 'B1', 'U1'], ['U1', 'U1', 'B1', 'U1'], ['L1', 'U1', 'U1', 'L-1'], ['U1', 'B1', 'U1', 'B-1'], ['U-1', 'F1',
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           'U1', 'F-1'], ['U1', 'L1', 'U1', 'U1'], ['F-1', 'U-1', 'F1', 'U1'], ['U1', 'B-1', 'U-1', 'B1'], ['U1', 'L-1', 'U-1', 'L1'], ['U1', 'U1', 'F-1', 'U1'], ['U1', 'R1', 'U1', 'R-1'], ['U1', 'F1', 'U1', 'U1'], ['L-1', 'U-1', 'L1', 'U1'], ['U1', 'R-1', 'U1', 'U1'], ['U1', 'U1', 'R1', 'U1'], ['B1', 'U1', 'U1', 'B-1'], ['U1', 'L1', 'U-1', 'L-1'], ['U-1', 'L1', 'U1', 'L-1'], ['R1', 'U1', 'R-1', 'U1'], ['U-1', 'B1', 'U1', 'B-1'], ['U1', 'U1', 'L1', 'U-1'], ['L1', 'U-1', 'L-1', 'U1'], ['L1', 'U1', 'L-1', 'U-1'], ['U1', 'B1', 'U1', 'U1'], ['U1', 'R-1', 'U-1', 'R1'], ['L1', 'F1', 'U1', 'F-1'], ['B1', 'U-1', 'B-1', 'U1'], ['U1', 'U1', 'L-1', 'U1'], ['U1', 'U1', 'F-1', 'U-1'], ['B1', 'U1', 'B-1', 'U-1']]
@@ -88,7 +88,7 @@ def compile_roll_out(paths):
     return output
 
 def get_roll_out(length: int, top: int, file: str):
-    
+
     results = pickle.load(
         open(file, "rb")
     )

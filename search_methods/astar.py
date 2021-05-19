@@ -464,7 +464,7 @@ def bwas_python(args, env: Environment, states: List[State], nnet_type: str = "b
             num_nodes_gen.append(num_nodes_gen_idx)
 
             # check soln
-            assert search_utils.is_valid_soln(state, soln, env)
+            # assert search_utils.is_valid_soln(state, soln, env)
 
             # print to screen
             timing_str = ", ".join(["%s: %.2f" % (key, val) for key, val in astar.timings.items()])
@@ -577,7 +577,7 @@ def bwas_cpp(args, env: Environment, states: List[State], results_file: str):
         path_cost: float = sum(transition_costs)
 
         # check soln
-        assert search_utils.is_valid_soln(state, soln, env)
+        # assert search_utils.is_valid_soln(state, soln, env)
 
         # print to screen
         print("State: %i, SolnCost: %.2f, # Moves: %i, "

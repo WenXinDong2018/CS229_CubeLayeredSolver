@@ -149,7 +149,7 @@ class Cube3Layer2(Environment):
         out_dim = None
         if nnet_type == "baseline":
             out_dim = 1
-        elifnnet_type == "multihead":
+        elif nnet_type == "multihead":
             out_dim = 3
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, out_dim, True)
         return nnet

@@ -105,7 +105,7 @@ class Cube3Layer1(Environment):
         out_dim = None
         if nnet_type == "baseline":
             out_dim = 1
-        elifnnet_type == "multihead":
+        elif nnet_type == "multihead":
             out_dim = 3
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, out_dim, True)
 
@@ -173,6 +173,7 @@ class Cube3Layer1(Environment):
         move_idx: int
         move: int
         for move_idx in range(num_env_moves):
+
             # next state
             states_next_np: np.ndarray
             tc_move: List[float]
@@ -202,6 +203,7 @@ class Cube3Layer1(Environment):
         return states_exp, tc_l
 
     def _move_np(self, states_np: np.ndarray, action: int):
+
         action_str: str = self.moves[action]
         states_next_np: np.ndarray = states_np.copy()
         states_next_np[:, self.rotate_idxs_new[action_str]] = states_np[:, self.rotate_idxs_old[action_str]]
