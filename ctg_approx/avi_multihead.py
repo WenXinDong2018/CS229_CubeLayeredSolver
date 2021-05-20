@@ -296,9 +296,9 @@ def main():
 
         # test
         start_time = time.time()
-        heuristic_fn1 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=0)
-        heuristic_fn2 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=1)
-        heuristic_fn3 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=2)
+        heuristic_fn1 = nnet_utils_multihead.get_heuristic_fn_comp(0, nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
+        heuristic_fn2 = nnet_utils_multihead.get_heuristic_fn_comp(1, nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
+        heuristic_fn3 = nnet_utils_multihead.get_heuristic_fn_comp(2, nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
         if args_dict["dynamic_back_max"]:
             per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, [heuristic_fn1, heuristic_fn2, heuristic_fn3], max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
