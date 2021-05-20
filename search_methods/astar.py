@@ -20,7 +20,7 @@ def getOptions(option_name):
     if option_name == "layer2":
         return get_middle_layer_moves()
     elif option_name == "layer3":
-        return get_PLLs()
+        return get_OLLs()
     elif option_name == "roll_out":
         return get_roll_out(3, 10, "results/cube3_sequential_500/results.pkl")
     else:
