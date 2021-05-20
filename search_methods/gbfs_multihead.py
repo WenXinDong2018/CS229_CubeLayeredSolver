@@ -126,7 +126,7 @@ class GBFS:
 
 
 ###heuristic_fn is function that return an array
-def gbfs_test(num_states: int, back_max: int, env: List[Environment], heuristic_fn: Callable,
+def gbfs_test(num_states: int, back_max: int, env: List[Environment], heuristic_fn: List[Callable],
               max_solve_steps: Optional[int] = None, dynamic_back_max = None, random: bool=False):
 
     env1 = env[0]
@@ -164,9 +164,9 @@ def gbfs_test(num_states: int, back_max: int, env: List[Environment], heuristic_
 
 
     for _ in range(max_solve_steps):
-        gbfs_layer1.step(heuristic_fn, idx = 0)
-        gbfs_layer2.step(heuristic_fn, idx = 1)
-        gbfs_layer3.step(heuristic_fn, idx = 2)
+        gbfs_layer1.step(heuristic_fn[0], idx = 0)
+        gbfs_layer2.step(heuristic_fn[1], idx = 1)
+        gbfs_layer3.step(heuristic_fn[2], idx = 2)
 
 
     is_solved_all_layer1: np.ndarray = np.array(gbfs_layer1.get_is_solved())

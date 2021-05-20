@@ -296,10 +296,12 @@ def main():
 
         # test
         start_time = time.time()
-        heuristic_fn = nnet_utils_multihead.get_heuristic_fn(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'])
+        heuristic_fn1 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=0)
+        heuristic_fn2 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=1)
+        heuristic_fn3 = nnet_utils_multihead.get_heuristic_fn_comp(nnet, device, env, batch_size=args_dict['update_nnet_batch_size'], layer=2)
         max_solve_steps: int = min(update_num + 1, args_dict['back_max'])
         if args_dict["dynamic_back_max"]:
-            per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
+            per_solved = gbfs_test(args_dict['num_test'], args_dict['back_max'], env, [heuristic_fn1, heuristic_fn2, heuristic_fn3], max_solve_steps=max_solve_steps, dynamic_back_max = dynamic_back_max)
             #if agents does decently well on problems generated dynamic_back_max steps, then increase dynamic_back_max
             if (per_solved>args_dict["dynamic_back_max_per"]): #Knob: if percentage solved pass this number we increase the difficulty of the generated problems
                 can_increase_dynamic_back_max = True
@@ -307,7 +309,7 @@ def main():
             wandb.log({"dynamic_back_max": dynamic_back_max})
 
         else:
-            gbfs_test(args_dict['num_test'], args_dict['back_max'], env, heuristic_fn, max_solve_steps=max_solve_steps, random=args_dict["uniform_data_gen"])
+            gbfs_test(args_dict['num_test'], args_dict['back_max'], env, [heuristic_fn1, heuristic_fn2, heuristic_fn3], max_solve_steps=max_solve_steps, random=args_dict["uniform_data_gen"])
 
         wandb.log({"max_solve_steps": max_solve_steps})
         print("Test time: %.2f" % (time.time() - start_time))
