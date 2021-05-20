@@ -116,7 +116,9 @@ def main():
     print("times_l1", times_l1)
     times = list(filter(lambda x: x != None, times_l1))
     print("times", times)
+    print("paths_l1", paths_l1)
     paths = list(filter(lambda x: x != None, paths_l1))
+    print("paths", paths)
     num_nodes_gen = list(filter(lambda x: x != None, num_nodes_gen_l1))
     solns = list(filter(lambda x: x != None, solns_l1))
     #update remaining
