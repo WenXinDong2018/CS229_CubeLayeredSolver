@@ -123,9 +123,10 @@ def main():
     solns = list(filter(lambda x: x != None, solns_l1))
     #update remaining
     states_l2 = []
-    for path in paths_l1:
+    for path in paths:
         if path: states_l2.append(path[-1])
     #solve layer 2
+    print("states_l2", states_l2)
     results["layer2_states"] = states_l2
     env = env_utils.get_environment("cube3_layer2")
     solns_l2, paths_l2, times_l2, num_nodes_gen_l2 = bwas_python_multi_head(args, env, states, layer=1)
