@@ -113,7 +113,9 @@ def main():
     # solve layer 1
     env: Environment = env_utils.get_environment("cube3_layer1")
     solns_l1, paths_l1, times_l1, num_nodes_gen_l1 = bwas_python_multi_head(args, env, states, layer=0)
+    print("times_l1", times_l1)
     times = list(filter(lambda x: x != None, times_l1))
+    print("times", times)
     paths = list(filter(lambda x: x != None, paths_l1))
     num_nodes_gen = list(filter(lambda x: x != None, num_nodes_gen_l1))
     solns = list(filter(lambda x: x != None, solns_l1))
@@ -127,7 +129,7 @@ def main():
     solns_l2, paths_l2, times_l2, num_nodes_gen_l2 = bwas_python_multi_head(args, env, states, layer=1)
     print("finished solving layer 2", [p!=None for p in paths_l2])
     print("times_l2", times_l2)
-    print("paths_l2", paths_l2)
+    print("paths_l2", len(paths_l2))
     new_times = []
     new_paths = []
     new_num_nodes_gen = []
