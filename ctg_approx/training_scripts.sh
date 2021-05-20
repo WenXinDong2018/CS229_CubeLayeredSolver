@@ -1,5 +1,41 @@
+###-------------------------------------------- Final Report -------------------------------------------###
 ###-------------------------------------------- Training Experiments -------------------------------------------###
 
+### Layer 1
+#1. training layer 1 with the default settings [DONE]
+python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer1_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+#2. training layer 1 with dynamic difficulty, fixed length [TODO]
+python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer1_dynamic_difficulty_25_fixed --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
+### Layer 2
+#1. training layer 2 with the default settings [TODO]
+python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer2_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+#2. training layer 2 with dynamic difficulty, fixed length [TODO]
+python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer2_dynamic_difficulty_25_fixed --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
+### Layer 3
+#1. training layer 3 with the default settings [TODO]
+python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer3_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+### Multihead Model Baseline [TODO]
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+
+
+
+###--------------------------------------------Search Experiments (100 cubes, no options)-------------------------------------------###
+#1. A* search, layer 1 baseline model.[DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
+#2. A* search, layer 1 dynamic curriculum model.[TODO]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer1_dynamic_difficulty_25_fixed/ --language python --nnet_batch_size 10000 --start_idx 900
+#3. A* search, layer 2 baseline model.[TODO]
+python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/final_cube3layer2_baseline/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer2_baseline --language python --nnet_batch_size 10000 --start_idx 900
+#4. A* search, layer 2 dynamic curriculum model.[TODO]
+python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/final_cube3layer2_dynamic_difficulty_25_fixed/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer2_dynamic_difficulty_25_fixed/ --language python --nnet_batch_size 10000 --start_idx 900
+
+##Sequential Model [TODO]
+
+##Multihead Model Baseline [TODO]
+
+
+###-------------------------------------------- Not Final Report  -------------------------------------------###
+###-------------------------------------------- Training Experiments -------------------------------------------###
 ###Layer 1
 #1. training layer 1 with the default settings
 python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_size 1000 --nnet_name cube3layer1_baseline --max_itrs 1000000 --loss_thresh 0.2 --back_max 30 --num_update_procs 30

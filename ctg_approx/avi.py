@@ -287,10 +287,10 @@ def main():
                 # can_increase_dynamic_back_max = True
                 dynamic_back_max = min(args_dict["back_max"], dynamic_back_max+1)
                 #update network
-                copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
-                update_num = update_num + 1
-                pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
-                network_updated = True
+                # copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
+                # update_num = update_num + 1
+                # pickle.dump(update_num, open("%s/update_num.pkl" % args_dict['curr_dir'], "wb"), protocol=-1)
+                # network_updated = True
             wandb.log({"dynamic_back_max": dynamic_back_max})
 
         else:
@@ -303,7 +303,7 @@ def main():
         torch.cuda.empty_cache()
 
         print("Last loss was %f" % last_loss)
-        if not network_updated and last_loss < args_dict['loss_thresh']:
+        if last_loss < args_dict['loss_thresh']:
             # Update nnet
             print("Updating target network")
             copy_files(args_dict['curr_dir'], args_dict['targ_dir'])
