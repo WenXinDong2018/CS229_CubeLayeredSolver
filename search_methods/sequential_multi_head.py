@@ -9,10 +9,10 @@ def bwas_python_multi_head(args, env: Environment, states: List[State], layer: i
     device, devices, on_gpu = nnet_utils.get_device()
 
     print("device: %s, devices: %s, on_gpu: %s" % (device, devices, on_gpu))
-    # we are using the model defined in first layer. 
+    # we are using the model defined in first layer.
     model_env = env_utils.get_environment("cube3_layer1")
-    heuristic_fn = nnet_utils_multihead.load_heuristic_fn_comp(layer, args.model_dir, device, on_gpu, model_env.get_nnet_model(),
-                                                [env], clip_zero=True, batch_size=args.nnet_batch_size)                                                                                    
+    heuristic_fn = nnet_utils_multihead.load_heuristic_fn_comp(layer, args.model_dir, device, on_gpu, model_env.get_nnet_model(nnet_type = "multihead"),
+                                                [env], clip_zero=True, batch_size=args.nnet_batch_size)
     solns: List[List[int]] = []
     paths: List[List[State]] = []
     times: List = []
@@ -143,7 +143,7 @@ def main():
     num_nodes_gen = new_num_nodes_gen
     solns = new_sols
     #solve layer 3
-    env = env_utils.get_environment("cube3_layer3")
+    env = env_utils.get_environment("cube3")
     results["layer3_states"] = states_l3
     solns_l3, paths_l3, times_l3, num_nodes_gen_l3 = bwas_python_multi_head(args, env, states, layer=2)
     new_sols = []
