@@ -184,4 +184,5 @@ class ResnetModel(nn.Module):
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)
         print("l1", l1)
-        return torch.tensor([l1[0], l2[0], l3[0]])
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        return torch.tensor([l1[0], l2[0], l3[0]], device=device)
