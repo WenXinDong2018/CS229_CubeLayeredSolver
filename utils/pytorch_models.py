@@ -184,4 +184,4 @@ class ResnetModel(nn.Module):
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)
 
-        return torch.tensor([l1, l2, l3])
+        return [l1, l2, l3]
