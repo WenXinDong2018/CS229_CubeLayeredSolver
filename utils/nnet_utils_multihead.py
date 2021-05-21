@@ -182,8 +182,8 @@ def get_heuristic_fn_comp(layer: int, nnet: nn.Module, device: torch.device, env
             # get nnet output
             states_nnet_batch_tensors = states_nnet_to_pytorch_input(states_nnet_batch, device)
             cost_to_go_batch: np.ndarray = nnet(*states_nnet_batch_tensors).cpu().data.numpy()
-            print("cost_to_go_batch", cost_to_go_batch.shape)
-            print("cost_to_go", cost_to_go.shape)
+            #print("cost_to_go_batch", cost_to_go_batch.shape)
+            #print("cost_to_go", cost_to_go.shape)
             cost_to_go: np.ndarray = np.concatenate((cost_to_go, cost_to_go_batch), axis=0)
 
             start_idx: int = end_idx
