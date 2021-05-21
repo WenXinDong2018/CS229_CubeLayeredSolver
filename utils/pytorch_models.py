@@ -1,5 +1,7 @@
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
+
 ##two idea
 #1. add three separate fully connected layers to the last shared layer
 #2. reduce the size of the network, spend more parameters on layer 3
@@ -182,4 +184,4 @@ class ResnetModel(nn.Module):
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)
 
-        return np.asarray([l1, l2, l3])
+        return torch.tensor([l1, l2, l3])

@@ -16,7 +16,8 @@ python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_s
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer3_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead Model Baseline [TODO]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
-
+### Multihead Model FullyConnected [TODO]
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_fullyconnected --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 
 
 ###--------------------------------------------Search Experiments (100 cubes, no options)-------------------------------------------###
