@@ -9,7 +9,7 @@ python ctg_approx/avi.py --env cube3_layer1 --states_per_update 500000 --batch_s
 ### Layer 2
 #1. training layer 2 with the default settings [DONE]
 python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer2_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
-#2. training layer 2 with dynamic difficulty, fixed length [TODO]
+#2. training layer 2 with dynamic difficulty, fixed length [DONE]
 python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer2_dynamic_difficulty_25_fixed --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30 --dynamic_back_max --dynamic_back_max_per 25 --fixed_difficulty
 ### Layer 3
 #1. training layer 3 with the default settings [TODO]
