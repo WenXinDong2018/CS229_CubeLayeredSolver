@@ -191,7 +191,7 @@ def load_nnet(nnet_dir: str, env: Environment) -> Tuple[nn.Module, int, int]:
         itr: int = pickle.load(open("%s/train_itr.pkl" % nnet_dir, "rb"))
         update_num: int = pickle.load(open("%s/update_num.pkl" % nnet_dir, "rb"))
     else:
-        nnet: nn.Module = env.get_nnet_model(nnet_type="multihead")
+        nnet: nn.Module = env[0].get_nnet_model()
         itr: int = 0
         update_num: int = 0
 
