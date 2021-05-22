@@ -46,7 +46,7 @@ class GBFS:
         self._record_solved()
 
         # take a step for unsolved states
-        self._move(heuristic_fn, idx = 0)
+        self._move(heuristic_fn, idx = idx)
 
     def get_trajs(self) -> List[List[Tuple[State, float]]]:
         trajs_all: List[List[Tuple[State, float]]] = []
@@ -95,7 +95,7 @@ class GBFS:
         ctg_backups: np.ndarray
         ctg_next_p_tcs: List[np.ndarray]
         states_exp: List[List[State]]
-        ctg_backups, ctg_next_p_tcs, states_exp = search_utils.bellman(states, heuristic_fn, self.env, idx = 0)
+        ctg_backups, ctg_next_p_tcs, states_exp = search_utils.bellman(states, heuristic_fn, self.env, idx = idx)
 
         # make move
         for idx in range(len(instances)):
