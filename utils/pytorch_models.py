@@ -115,7 +115,7 @@ class ResnetModel(nn.Module):
             self.bn2 = nn.BatchNorm1d(resnet_dim)
 
         # resnet blocks
-        for block_num in range(self.num_resnet_blocks):
+        for block_num in range(self.num_resnet_blocks-1): #one less block
             if self.batch_norm:
                 res_fc1 = nn.Linear(resnet_dim, resnet_dim)
                 res_bn1 = nn.BatchNorm1d(resnet_dim)
@@ -130,9 +130,13 @@ class ResnetModel(nn.Module):
         # output
 
         #wenxin: add one more layer
-        self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
-        self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
-        self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
+        # self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
+        # self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
+        # self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
+        self.fc_out1 = nn.ModuleList([nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim), nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim)])
+        self.fc_out2 = nn.ModuleList([nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim), nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim)])
+        self.fc_out3 = nn.ModuleList([nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim), nn.Linear(resnet_dim, resnet_dim), nn.BatchNorm1d(resnet_dim)])
+
         self.out_l1 = nn.Linear(resnet_dim, 1)
         self.out_l2 = nn.Linear(resnet_dim, 1)
         self.out_l3 = nn.Linear(resnet_dim, 1)
@@ -177,9 +181,29 @@ class ResnetModel(nn.Module):
             x = F.relu(x + res_inp)
 
         # output
-        l1 = self.fc_out1(x)
-        l2 = self.fc_out2(x)
-        l3 = self.fc_out3(x)
+        # l1 = self.fc_out1(x)
+        # l2 = self.fc_out2(x)
+        # l3 = self.fc_out3(x)
+
+        l1 = self.fc_out1[0](x)
+        l1 = self.fc_out1[1](l1)
+        l1 = F.relu(l1)
+        l1 = self.fc_out1[2](l1)
+        l1 = self.fc_out1[3](l1)
+
+        l2 = self.fc_out2[0](x)
+        l2 = self.fc_out2[1](l2)
+        l2 = F.relu(l2)
+        l2 = self.fc_out2[2](l2)
+        l2 = self.fc_out2[3](l2)
+
+        l3 = self.fc_out3[0](x)
+        l3 = self.fc_out3[1](l3)
+        l3 = F.relu(l3)
+        l3 = self.fc_out3[2](l3)
+        l3 = self.fc_out3[3](l3)
+
+
         l1 = self.out_l1(l1)
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)
