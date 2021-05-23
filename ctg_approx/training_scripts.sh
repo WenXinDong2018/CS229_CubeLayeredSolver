@@ -16,7 +16,7 @@ python ctg_approx/avi.py --env cube3_layer2 --states_per_update 500000 --batch_s
 python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3layer3_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead Model Baseline [TODO]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
-### Multihead Model FullyConnected [TODO]
+### Multihead Model FullyConnected [DONE]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_fullyconnected --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 
 
@@ -32,7 +32,10 @@ python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --mode
 
 ##Sequential Model [TODO]
 
-##Multihead Model Baseline [TODO]
+##Multihead Model Baseline [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/current --results_dir results/cube3_mteultihead_baseline/
+##Multihead Model Fully Connected [TODO]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/current --results_dir results/final_cube3multihead_fullyconnected/
 
 
 ###-------------------------------------------- Not Final Report  -------------------------------------------###
