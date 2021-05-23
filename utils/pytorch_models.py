@@ -165,7 +165,7 @@ class ResnetModel(nn.Module):
         x = F.relu(x)
 
         # resnet blocks
-        for block_num in range(self.num_resnet_blocks):
+        for block_num in range(self.num_resnet_blocks-1):
             res_inp = x
             if self.batch_norm:
                 x = self.blocks[block_num][0](x)
