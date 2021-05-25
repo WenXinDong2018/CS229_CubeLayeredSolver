@@ -2,3 +2,5 @@ solved 17 problems
 average time is 26.173755898195154 s
 average node generated is 639386.8235294118
 average solution length  is 30.176470588235293
+layer 1 solving rate 52
+layer 2 solving rate 46
