@@ -38,6 +38,8 @@ python search_methods/astar.py --states data/cube3_layer3/test/data_0.pkl --mode
 python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/current --results_dir results/cube3_mteultihead_baseline/
 ##Multihead Model Fully Connected [DONE]
 python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/current --results_dir results/final_cube3multihead_fullyconnected/
+##Multihead Model 1ResB [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB/
 
 
 ###-------------------------------------------- Not Final Report  -------------------------------------------###
