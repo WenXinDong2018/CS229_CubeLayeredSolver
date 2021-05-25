@@ -255,6 +255,9 @@ class ResnetModel(nn.Module):
         self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
         self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
         self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
+        self.out_l1 = nn.Linear(resnet_dim, 1)
+        self.out_l2 = nn.Linear(resnet_dim, 1)
+        self.out_l3 = nn.Linear(resnet_dim, 1)
 
     def forward(self, states_nnet):
         x = states_nnet
@@ -296,12 +299,12 @@ class ResnetModel(nn.Module):
             x = F.relu(x + res_inp)
 
         # output
-        self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
-        self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
-        self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
-        self.out_l1 = nn.Linear(resnet_dim, 1)
-        self.out_l2 = nn.Linear(resnet_dim, 1)
-        self.out_l3 = nn.Linear(resnet_dim, 1)
+        l1 = self.fc_out1(x)
+        l2 = self.fc_out2(x)
+        l3 = self.fc_out3(x)
+        l1 = self.out_l1(l1)
+        l2 = self.out_l2(l2)
+        l3 = self.out_l3(l3)
 
         final = torch.stack((l1, l2, l3)).squeeze().T
         return final
