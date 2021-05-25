@@ -24,7 +24,7 @@ python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batc
 ###--------------------------------------------Search Experiments (100 cubes, no options)-------------------------------------------###
 #1. A* search, layer 1 baseline model.[DONE]
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
-#2. A* search, layer 1 dynamic curriculum model.[TODO]
+#2. A* search, layer 1 dynamic curriculum model.[DONE]
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer1_dynamic_difficulty_25_fixed/ --language python --nnet_batch_size 10000 --start_idx 900
 #3. A* search, layer 2 baseline model.[TODO]
 python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/final_cube3layer2_baseline/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer2_baseline --language python --nnet_batch_size 10000 --start_idx 900
