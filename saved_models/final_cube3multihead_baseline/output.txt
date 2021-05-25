@@ -1,0 +1,193 @@
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 93.49)
+11.67% (Total time: 94.51)
+23.33% (Total time: 96.00)
+33.33% (Total time: 96.93)
+45.00% (Total time: 98.96)
+55.00% (Total time: 134.10)
+66.67% (Total time: 136.63)
+76.67% (Total time: 137.62)
+88.33% (Total time: 138.53)
+100.00% (Total time: 140.77)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 0, lr: 1.00E-03, loss: 0.61, targ_ctg: 0.95, nnet_ctg: 1.01, Time: 0.87
+Itr: 100, lr: 1.00E-03, loss: 0.01, targ_ctg: 0.96, nnet_ctg: 0.98, Time: 7.30
+Itr: 200, lr: 1.00E-03, loss: 0.01, targ_ctg: 0.96, nnet_ctg: 0.94, Time: 7.20
+Itr: 300, lr: 1.00E-03, loss: 0.01, targ_ctg: 0.96, nnet_ctg: 0.96, Time: 7.15
+Itr: 400, lr: 1.00E-03, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.94, Time: 7.18
+gbfs_test, random = False
+Solving 10000 states with GBFS with 1 steps
+cost_to_go_batch (10000, 1)
+cost_to_go (0, 3)
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 90.67)
+11.67% (Total time: 92.75)
+23.33% (Total time: 94.69)
+33.33% (Total time: 97.07)
+45.00% (Total time: 98.86)
+55.00% (Total time: 132.75)
+66.67% (Total time: 134.83)
+76.67% (Total time: 135.89)
+88.33% (Total time: 137.93)
+100.00% (Total time: 140.03)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.97/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 500, lr: 1.00E-03, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.95, Time: 0.19
+Itr: 600, lr: 1.00E-03, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.97, Time: 7.20
+Itr: 700, lr: 1.00E-03, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.97, Time: 7.18
+Itr: 800, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.96, Time: 7.20
+Itr: 900, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.97, Time: 7.20
+gbfs_test, random = False
+Solving 10000 states with GBFS with 1 steps
+cost_to_go_batch (10000, 1)
+cost_to_go (0, 3)
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 90.08)
+11.67% (Total time: 92.08)
+23.33% (Total time: 95.13)
+33.33% (Total time: 96.38)
+45.00% (Total time: 97.69)
+55.00% (Total time: 130.16)
+66.67% (Total time: 133.94)
+76.67% (Total time: 135.59)
+88.33% (Total time: 136.46)
+100.00% (Total time: 138.37)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 1000, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.95, Time: 0.18
+Itr: 1100, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.99, Time: 7.23
+Itr: 1200, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.90, Time: 7.19
+Itr: 1300, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.98, Time: 7.20
+Itr: 1400, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.98, Time: 7.20
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 89.86)
+11.67% (Total time: 91.59)
+23.33% (Total time: 94.25)
+33.33% (Total time: 96.91)
+45.00% (Total time: 97.95)
+55.00% (Total time: 130.82)
+66.67% (Total time: 133.51)
+76.67% (Total time: 134.79)
+88.33% (Total time: 137.05)
+100.00% (Total time: 138.31)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 1500, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.95, Time: 0.18
+Itr: 1600, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.98, Time: 7.23
+Itr: 1700, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.97, Time: 7.22
+Itr: 1800, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.97, Time: 7.19
+Itr: 1900, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.95, Time: 7.18
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 88.25)
+11.67% (Total time: 90.95)
+23.33% (Total time: 94.23)
+33.33% (Total time: 96.25)
+45.00% (Total time: 98.03)
+55.00% (Total time: 130.69)
+66.67% (Total time: 132.77)
+76.67% (Total time: 135.27)
+88.33% (Total time: 137.14)
+100.00% (Total time: 139.29)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 2000, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.98, Time: 0.19
+Itr: 2100, lr: 9.99E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.99, Time: 7.19
+Itr: 2200, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.97, Time: 7.18
+Itr: 2300, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.96, Time: 7.17
+Itr: 2400, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.96, Time: 7.18
+gbfs_test, random = False
+Solving 10000 states with GBFS with 1 steps
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 90.49)
+11.67% (Total time: 92.42)
+23.33% (Total time: 95.34)
+33.33% (Total time: 97.42)
+45.00% (Total time: 98.86)
+55.00% (Total time: 131.84)
+66.67% (Total time: 133.65)
+76.67% (Total time: 136.91)
+88.33% (Total time: 138.68)
+100.00% (Total time: 139.96)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 2500, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.95, Time: 0.18
+Itr: 2600, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.93, Time: 7.20
+Itr: 2700, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.97, nnet_ctg: 0.97, Time: 7.19
+Itr: 2800, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.96, Time: 7.19
+Itr: 2900, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.96, Time: 7.19
+gbfs_test, random = False
+Solving 10000 states with GBFS with 1 steps
+cost_to_go_batch (10000, 1)
+cost_to_go (0, 3)
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 89.22)
+11.67% (Total time: 93.67)
+23.33% (Total time: 95.69)
+33.33% (Total time: 96.89)
+45.00% (Total time: 99.16)
+55.00% (Total time: 132.15)
+66.67% (Total time: 135.73)
+76.67% (Total time: 136.44)
+88.33% (Total time: 138.47)
+100.00% (Total time: 140.48)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+Itr: 3000, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.95, Time: 0.18
+Itr: 3100, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.95, nnet_ctg: 0.96, Time: 7.18
+Itr: 3200, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.97, Time: 7.17
+Itr: 3300, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.96, Time: 7.17
+Itr: 3400, lr: 9.98E-04, loss: 0.00, targ_ctg: 0.96, nnet_ctg: 0.95, Time: 7.18
+gbfs_test, random = False
+Solving 10000 states with GBFS with 1 steps
+cost_to_go_batch (10000, 1)
+cost_to_go (0, 3)
+

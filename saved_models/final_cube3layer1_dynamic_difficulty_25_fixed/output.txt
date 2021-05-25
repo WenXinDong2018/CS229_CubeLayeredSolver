@@ -5609,3 +5609,11 @@ Test time: 43.68
 Last loss was 0.210882
 Done
 
+device: cuda:0, devices: [0], on_gpu: True
+
+Done
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Done
+

@@ -1,0 +1,40 @@
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 92.94)
+11.67% (Total time: 95.48)
+23.33% (Total time: 96.92)
+33.33% (Total time: 98.12)
+45.00% (Total time: 98.98)
+55.00% (Total time: 135.13)
+66.67% (Total time: 138.32)
+76.67% (Total time: 138.82)
+88.33% (Total time: 139.85)
+100.00% (Total time: 141.17)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+
+device: cuda:0, devices: [0], on_gpu: True
+
+Updating cost-to-go with value iteration
+1.67% (Total time: 92.01)
+11.67% (Total time: 94.08)
+23.33% (Total time: 95.67)
+33.33% (Total time: 97.13)
+45.00% (Total time: 99.29)
+55.00% (Total time: 133.09)
+66.67% (Total time: 134.05)
+76.67% (Total time: 136.03)
+88.33% (Total time: 137.99)
+100.00% (Total time: 139.79)
+_update 1 (500000, 3)
+output_update (500000, 3)
+Cost-to-go (mean/min/max) for layer 1: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 2: 0.96/0.00/1.00
+Cost-to-go (mean/min/max) for layer 3: 0.96/0.00/1.00
+Training model for update number 0 for 500 iterations
+
