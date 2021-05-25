@@ -296,9 +296,12 @@ class ResnetModel(nn.Module):
             x = F.relu(x + res_inp)
 
         # output
-        l1 = self.fc_out1(x)
-        l2 = self.fc_out2(x)
-        l3 = self.fc_out3(x)
+        self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
+        self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
+        self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
+        self.out_l1 = nn.Linear(resnet_dim, 1)
+        self.out_l2 = nn.Linear(resnet_dim, 1)
+        self.out_l3 = nn.Linear(resnet_dim, 1)
 
         final = torch.stack((l1, l2, l3)).squeeze().T
         return final
