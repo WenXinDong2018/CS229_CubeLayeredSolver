@@ -104,7 +104,7 @@ class Cube3Layer1(Environment):
         state_dim: int = (self.cube_len ** 2) * 6
         out_dim = None
         if nnet_type == "baseline":
-            out_dim = 3
+            out_dim = 1
         elif nnet_type == "multihead":
             out_dim = 3
         nnet = ResnetModel(state_dim, 6, 5000, 1000, 4, out_dim, True)
