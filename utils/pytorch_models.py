@@ -456,7 +456,7 @@ class ResnetModel(nn.Module):
         self.state_dim: int = state_dim
         print("state_dim", state_dim)
         self.pos_encoder = PositionalEncoding(one_hot_depth)
-        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads)
+        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
         self.transformer_encoder = TransformerEncoder(encoder_layers, 2)
 
         self.fc_out1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
