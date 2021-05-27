@@ -450,14 +450,14 @@ class PositionalEncoding(nn.Module):
 '''transformer based'''
 class ResnetModel(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
-                 out_dim: int, batch_norm: bool, num_heads:int = 2):
+                 out_dim: int, batch_norm: bool, num_heads:int = 1):
         super().__init__()
         self.one_hot_depth: int = one_hot_depth
         self.state_dim: int = state_dim
         print("state_dim", state_dim)
         self.pos_encoder = PositionalEncoding(one_hot_depth)
-        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads)
-        self.transformer_encoder = TransformerEncoder(encoder_layers, 3)
+        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
+        self.transformer_encoder = TransformerEncoder(encoder_layers, 2)
 
         self.fc_out1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
         self.fc_out2 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
