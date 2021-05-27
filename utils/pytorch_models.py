@@ -1,11 +1,12 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-
+from torch.nn import TransformerEncoder, TransformerEncoderLayer
+import math
 ##two idea
 #1. add three separate fully connected layers to the last shared layer
 #2. reduce the size of the network, spend more parameters on layer 3
-class ResnetModel(nn.Module):
+class ResnetModelBaseline(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool):
         super().__init__()
@@ -14,7 +15,6 @@ class ResnetModel(nn.Module):
         self.blocks = nn.ModuleList()
         self.num_resnet_blocks: int = num_resnet_blocks
         self.batch_norm = batch_norm
-
         # first two hidden layers
         if one_hot_depth > 0:
             self.fc1 = nn.Linear(self.state_dim * self.one_hot_depth, h1_dim)
@@ -425,6 +425,67 @@ class ResnetModel4_1(nn.Module):
         l1 = self.out_l1(l1)
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)
+        final = torch.stack((l1, l2, l3)).squeeze().T
+        return final
+
+class PositionalEncoding(nn.Module):
+
+    def __init__(self, d_model, dropout=0.1, max_len=5000):
+        super(PositionalEncoding, self).__init__()
+        # self.dropout = nn.Dropout(p=dropout)
+
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0).transpose(0, 1)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        x = x + self.pe[:x.size(0), :]
+        return x
+
+
+'''transformer based'''
+class ResnetModel(nn.Module):
+    def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
+                 out_dim: int, batch_norm: bool, num_heads:int = 6):
+        super().__init__()
+        self.one_hot_depth: int = one_hot_depth
+        self.state_dim: int = state_dim
+        print("state_dim", state_dim)
+        self.pos_encoder = PositionalEncoding(one_hot_depth)
+        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads)
+        self.transformer_encoder = TransformerEncoder(encoder_layers, 4)
+
+        self.fc_out1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+        self.fc_out2 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+        self.fc_out3 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+        self.out_l1 = nn.Linear(resnet_dim, 1)
+        self.out_l2 = nn.Linear(resnet_dim, 1)
+        self.out_l3 = nn.Linear(resnet_dim, 1)
+
+    def forward(self, states_nnet):
+        x = states_nnet
+        print("x", x.shape)
+        x = F.one_hot(x.long(), self.one_hot_depth)
+        x = x.float()
+
+        x = self.pos_encoder(x)
+        output = self.transformer_encoder(x)
+        print('output', output.shape)
+        output = output.view(-1, self.state_dim * self.one_hot_depth)
+
+        l1 = self.fc_out1(output)
+        l2 = self.fc_out2(output)
+        l3 = self.fc_out3(output)
+        l1 = self.out_l1(l1)
+        l2 = self.out_l2(l2)
+        l3 = self.out_l3(l3)
+
+
+
         final = torch.stack((l1, l2, l3)).squeeze().T
         return final
 
