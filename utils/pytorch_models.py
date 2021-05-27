@@ -5,7 +5,7 @@ import torch
 ##two idea
 #1. add three separate fully connected layers to the last shared layer
 #2. reduce the size of the network, spend more parameters on layer 3
-class ResnetModelBaseline(nn.Module):
+class ResnetModel(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool):
         super().__init__()
@@ -312,7 +312,7 @@ class ResnetModelFC(nn.Module):
 
 
 '''2 resnet block model'''
-class ResnetModel(nn.Module):
+class ResnetModel4_1(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool):
         super().__init__()

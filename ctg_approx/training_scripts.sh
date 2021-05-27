@@ -48,8 +48,9 @@ python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.p
 ##Multihead Model 3+1ResB [DONE]
 python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB/
 ##Multihead Model 4+1ResB [TODO]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB/
-
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB/
+##Deepcubea
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/final_cube3layer3_baseline/target/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/final_deepcubea_14k/ --language python --nnet_batch_size 10000 --start_idx 500 --max_nodes 1800000
 
 ###-------------------------------------------- Not Final Report  -------------------------------------------###
 ###-------------------------------------------- Training Experiments -------------------------------------------###

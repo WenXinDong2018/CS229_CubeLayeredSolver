@@ -372,7 +372,7 @@ def main():
     parser.add_argument('--verbose', action='store_true', default=False, help="Set for verbose")
     parser.add_argument('--debug', action='store_true', default=False, help="Set when debugging")
     parser.add_argument('--max_itrs', type=int, default=50, help="Set timeout for A* search.")
-    parser.add_argument('--max_nodes', type=int, default=600000, help="Set cap on number of nodes to explore.")
+    parser.add_argument('--max_nodes', type=int, default=600000, help="Set cap on number of nodes to explore.")  #1,800,000 for fairness
     parser.add_argument('--options', action='store_true', default=False, help="Use options when doing search")
     parser.add_argument('--option_name', type = str, help="Which layer options when doing search: layer2, layer3")
 
