@@ -1,7 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
-from torch.nn import TransformerEncoder, TransformerEncoderLayer
 import math
 ##two idea
 #1. add three separate fully connected layers to the last shared layer
@@ -456,8 +455,8 @@ class ResnetModel(nn.Module):
         self.state_dim: int = state_dim
         print("state_dim", state_dim)
         self.pos_encoder = PositionalEncoding(one_hot_depth)
-        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
-        self.transformer_encoder = TransformerEncoder(encoder_layers, 3)
+        encoder_layers = torch.nn.TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
+        self.transformer_encoder = torch.nn.TransformerEncoder(encoder_layers, 3)
 
         self.fc_out1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
         self.fc_out2 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
