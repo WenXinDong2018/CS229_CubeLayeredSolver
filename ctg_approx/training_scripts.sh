@@ -23,7 +23,7 @@ python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batc
 ### Multihead Model 4+1ResBlock [DONE]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_4+1ResB --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead transformer model [TODO]
-python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_transformer_6.0 --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_transformer_7 --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 
 ###--------------------------------------------Search Experiments (100 cubes, no options)-------------------------------------------###
 #1. A* search, layer 1 baseline model.[DONE]
