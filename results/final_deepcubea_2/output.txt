@@ -1,0 +1,202 @@
+solving # 100 problems
+device: cpu, devices: [], on_gpu: False
+Times - pop: 0.01, expand: 0.22, check: 0.16, heur: 5.12, add: 0.03, itr: 5.53, num_itrs: 43
+State: 0, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 49,356, Time: 5.54
+Times - pop: 0.01, expand: 0.31, check: 0.18, heur: 5.77, add: 0.10, itr: 6.36, num_itrs: 47
+State: 1, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 54,156, Time: 6.37
+Times - pop: 0.01, expand: 0.40, check: 0.17, heur: 5.28, add: 0.03, itr: 5.88, num_itrs: 41
+State: 2, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 46,956, Time: 5.89
+Times - pop: 0.00, expand: 0.32, check: 0.10, heur: 3.17, add: 0.02, itr: 3.61, num_itrs: 25
+State: 3, SolnCost: 24.00, # Moves: 24, # Nodes Gen: 27,756, Time: 3.62
+Times - pop: 0.01, expand: 0.33, check: 0.18, heur: 5.61, add: 0.09, itr: 6.21, num_itrs: 42
+State: 4, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 48,156, Time: 6.22
+Times - pop: 0.00, expand: 0.26, check: 0.12, heur: 3.75, add: 0.02, itr: 4.16, num_itrs: 27
+State: 5, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 30,156, Time: 4.17
+Times - pop: 0.01, expand: 0.75, check: 0.39, heur: 10.61, add: 0.06, itr: 11.83, num_itrs: 70
+State: 6, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 81,756, Time: 11.83
+Times - pop: 0.01, expand: 1.00, check: 0.40, heur: 11.93, add: 0.06, itr: 13.40, num_itrs: 75
+State: 7, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 87,756, Time: 13.42
+Times - pop: 0.01, expand: 0.59, check: 0.19, heur: 5.98, add: 0.03, itr: 6.80, num_itrs: 38
+State: 8, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 43,356, Time: 6.81
+Times - pop: 0.00, expand: 0.45, check: 0.14, heur: 4.16, add: 0.02, itr: 4.78, num_itrs: 27
+State: 9, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 30,156, Time: 4.78
+Times - pop: 0.02, expand: 1.01, check: 0.53, heur: 15.63, add: 0.15, itr: 17.34, num_itrs: 103
+State: 10, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 121,356, Time: 17.35
+Times - pop: 0.00, expand: 0.14, check: 0.12, heur: 3.72, add: 0.22, itr: 4.22, num_itrs: 26
+State: 11, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 28,956, Time: 4.23
+Times - pop: 0.01, expand: 0.71, check: 0.25, heur: 7.41, add: 0.11, itr: 8.48, num_itrs: 51
+State: 12, SolnCost: 32.00, # Moves: 32, # Nodes Gen: 58,956, Time: 8.49
+Times - pop: 0.01, expand: 0.48, check: 0.21, heur: 6.01, add: 0.03, itr: 6.73, num_itrs: 33
+State: 13, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 37,356, Time: 6.74
+Times - pop: 0.01, expand: 0.74, check: 0.31, heur: 9.85, add: 0.05, itr: 10.95, num_itrs: 56
+State: 14, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 64,956, Time: 10.97
+Times - pop: 0.01, expand: 0.47, check: 0.18, heur: 5.51, add: 0.03, itr: 6.19, num_itrs: 32
+State: 15, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 36,156, Time: 6.20
+Times - pop: 0.01, expand: 0.54, check: 0.20, heur: 6.34, add: 0.03, itr: 7.13, num_itrs: 36
+State: 16, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 40,956, Time: 7.13
+Times - pop: 0.01, expand: 0.71, check: 0.39, heur: 12.62, add: 0.33, itr: 14.08, num_itrs: 63
+State: 17, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 73,356, Time: 14.09
+Times - pop: 0.01, expand: 0.74, check: 0.30, heur: 9.87, add: 0.05, itr: 10.97, num_itrs: 52
+State: 18, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 60,156, Time: 10.99
+Times - pop: 0.00, expand: 0.13, check: 0.12, heur: 3.88, add: 0.02, itr: 4.16, num_itrs: 22
+State: 19, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 24,156, Time: 4.17
+Times - pop: 0.01, expand: 1.02, check: 0.32, heur: 10.28, add: 0.05, itr: 11.68, num_itrs: 55
+State: 20, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 63,756, Time: 11.68
+Times - pop: 0.01, expand: 0.54, check: 0.25, heur: 7.94, add: 0.04, itr: 8.78, num_itrs: 42
+State: 21, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 48,156, Time: 8.79
+Times - pop: 0.03, expand: 1.32, check: 0.57, heur: 18.35, add: 0.09, itr: 20.35, num_itrs: 101
+State: 22, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 118,956, Time: 20.38
+Times - pop: 0.04, expand: 2.01, check: 0.79, heur: 25.21, add: 0.11, itr: 28.16, num_itrs: 137
+State: 23, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 162,156, Time: 28.19
+Times - pop: 0.02, expand: 1.10, check: 0.38, heur: 12.47, add: 0.06, itr: 14.02, num_itrs: 71
+State: 24, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 82,956, Time: 14.05
+Times - pop: 0.00, expand: 0.84, check: 0.14, heur: 4.51, add: 0.02, itr: 5.51, num_itrs: 27
+State: 25, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 30,156, Time: 5.53
+Times - pop: 0.00, expand: 0.53, check: 0.14, heur: 4.45, add: 0.02, itr: 5.14, num_itrs: 26
+State: 26, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 28,956, Time: 5.15
+Times - pop: 0.01, expand: 0.64, check: 0.28, heur: 9.44, add: 0.05, itr: 10.42, num_itrs: 51
+State: 27, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 58,956, Time: 10.42
+Times - pop: 0.01, expand: 0.34, check: 0.16, heur: 5.16, add: 0.03, itr: 5.69, num_itrs: 30
+State: 28, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 33,756, Time: 5.70
+Times - pop: 0.01, expand: 0.73, check: 0.25, heur: 8.09, add: 0.04, itr: 9.12, num_itrs: 45
+State: 29, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 51,756, Time: 9.13
+Times - pop: 0.01, expand: 0.58, check: 0.25, heur: 8.12, add: 0.04, itr: 9.00, num_itrs: 45
+State: 30, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 51,756, Time: 9.01
+Times - pop: 0.01, expand: 0.58, check: 0.17, heur: 5.82, add: 0.03, itr: 6.61, num_itrs: 32
+State: 31, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 36,156, Time: 6.62
+Times - pop: 0.00, expand: 0.44, check: 0.15, heur: 4.88, add: 0.02, itr: 5.49, num_itrs: 28
+State: 32, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 31,356, Time: 5.50
+Times - pop: 0.00, expand: 0.35, check: 0.13, heur: 4.33, add: 0.02, itr: 4.84, num_itrs: 24
+State: 33, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 26,556, Time: 4.84
+Times - pop: 0.03, expand: 1.05, check: 0.59, heur: 18.65, add: 0.27, itr: 20.58, num_itrs: 101
+State: 34, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 118,956, Time: 20.59
+Times - pop: 0.04, expand: 1.93, check: 0.85, heur: 27.16, add: 0.12, itr: 30.11, num_itrs: 147
+State: 35, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 174,156, Time: 30.13
+Times - pop: 0.02, expand: 1.34, check: 0.39, heur: 12.88, add: 0.06, itr: 14.69, num_itrs: 71
+State: 36, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 82,956, Time: 14.71
+Times - pop: 0.02, expand: 1.27, check: 0.37, heur: 11.98, add: 0.06, itr: 13.70, num_itrs: 72
+State: 37, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 84,156, Time: 13.72
+Times - pop: 0.01, expand: 0.78, check: 0.25, heur: 8.10, add: 0.04, itr: 9.18, num_itrs: 44
+State: 38, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 50,556, Time: 9.19
+Times - pop: 0.00, expand: 0.67, check: 0.15, heur: 5.03, add: 0.03, itr: 5.88, num_itrs: 28
+State: 39, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 31,356, Time: 5.89
+Times - pop: 0.00, expand: 0.35, check: 0.13, heur: 4.26, add: 0.02, itr: 4.78, num_itrs: 25
+State: 40, SolnCost: 24.00, # Moves: 24, # Nodes Gen: 27,756, Time: 4.78
+Times - pop: 0.01, expand: 0.43, check: 0.18, heur: 5.91, add: 0.03, itr: 6.57, num_itrs: 33
+State: 41, SolnCost: 31.00, # Moves: 31, # Nodes Gen: 37,356, Time: 6.57
+Times - pop: 0.01, expand: 0.66, check: 0.35, heur: 10.35, add: 0.16, itr: 11.53, num_itrs: 63
+State: 42, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 73,356, Time: 11.54
+Times - pop: 0.00, expand: 0.32, check: 0.12, heur: 3.73, add: 0.02, itr: 4.19, num_itrs: 26
+State: 43, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 28,956, Time: 4.20
+Times - pop: 0.02, expand: 1.12, check: 0.58, heur: 18.13, add: 0.24, itr: 20.10, num_itrs: 105
+State: 44, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 123,756, Time: 20.11
+Times - pop: 0.01, expand: 0.81, check: 0.18, heur: 6.29, add: 0.03, itr: 7.32, num_itrs: 32
+State: 45, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 36,156, Time: 7.34
+Times - pop: 0.01, expand: 0.89, check: 0.30, heur: 9.90, add: 0.05, itr: 11.15, num_itrs: 51
+State: 46, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 58,956, Time: 11.16
+Times - pop: 0.01, expand: 0.43, check: 0.26, heur: 8.45, add: 0.23, itr: 9.38, num_itrs: 44
+State: 47, SolnCost: 31.00, # Moves: 31, # Nodes Gen: 50,556, Time: 9.40
+Times - pop: 0.01, expand: 0.74, check: 0.19, heur: 6.21, add: 0.03, itr: 7.19, num_itrs: 34
+State: 48, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 38,556, Time: 7.20
+Times - pop: 0.01, expand: 0.64, check: 0.24, heur: 7.87, add: 0.04, itr: 8.80, num_itrs: 43
+State: 49, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 49,356, Time: 8.81
+Times - pop: 0.03, expand: 1.44, check: 0.63, heur: 20.74, add: 0.09, itr: 22.94, num_itrs: 108
+State: 50, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 127,356, Time: 22.95
+Times - pop: 0.02, expand: 1.01, check: 0.40, heur: 12.81, add: 0.06, itr: 14.30, num_itrs: 66
+State: 51, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 76,956, Time: 14.32
+Times - pop: 0.01, expand: 1.01, check: 0.25, heur: 8.58, add: 0.04, itr: 9.90, num_itrs: 45
+State: 52, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 51,756, Time: 9.91
+Times - pop: 0.00, expand: 0.19, check: 0.15, heur: 5.18, add: 0.39, itr: 5.92, num_itrs: 28
+State: 53, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 31,356, Time: 5.93
+Times - pop: 0.02, expand: 1.17, check: 0.53, heur: 17.14, add: 0.08, itr: 18.93, num_itrs: 89
+State: 54, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 104,556, Time: 18.94
+Times - pop: 0.02, expand: 1.41, check: 0.60, heur: 18.55, add: 0.28, itr: 20.86, num_itrs: 113
+State: 55, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 133,356, Time: 20.88
+Times - pop: 0.00, expand: 0.19, check: 0.16, heur: 4.77, add: 0.03, itr: 5.15, num_itrs: 31
+State: 56, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 34,956, Time: 5.16
+Times - pop: 0.02, expand: 1.52, check: 0.54, heur: 17.07, add: 0.15, itr: 19.31, num_itrs: 100
+State: 57, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 117,756, Time: 19.32
+Times - pop: 0.01, expand: 0.66, check: 0.17, heur: 5.58, add: 0.03, itr: 6.45, num_itrs: 32
+State: 58, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 36,156, Time: 6.46
+Times - pop: 0.02, expand: 0.76, check: 0.42, heur: 13.68, add: 0.62, itr: 15.49, num_itrs: 74
+State: 59, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 86,556, Time: 15.51
+Times - pop: 0.01, expand: 0.25, check: 0.22, heur: 7.05, add: 0.28, itr: 7.81, num_itrs: 37
+State: 60, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 42,156, Time: 7.82
+Times - pop: 0.00, expand: 0.47, check: 0.15, heur: 4.57, add: 0.02, itr: 5.22, num_itrs: 24
+State: 61, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 26,556, Time: 5.23
+Times - pop: 0.01, expand: 0.49, check: 0.17, heur: 5.88, add: 0.03, itr: 6.58, num_itrs: 30
+State: 62, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 33,756, Time: 6.59
+Times - pop: 0.01, expand: 0.77, check: 0.31, heur: 10.15, add: 0.05, itr: 11.28, num_itrs: 52
+State: 63, SolnCost: 32.00, # Moves: 32, # Nodes Gen: 60,156, Time: 11.29
+Times - pop: 0.01, expand: 0.50, check: 0.20, heur: 6.40, add: 0.03, itr: 7.14, num_itrs: 35
+State: 64, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 39,756, Time: 7.16
+Times - pop: 0.01, expand: 0.70, check: 0.23, heur: 7.55, add: 0.04, itr: 8.52, num_itrs: 40
+State: 65, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 45,756, Time: 8.53
+Times - pop: 0.01, expand: 0.54, check: 0.25, heur: 7.38, add: 0.04, itr: 8.23, num_itrs: 41
+State: 66, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 46,956, Time: 8.24
+Times - pop: 0.01, expand: 0.71, check: 0.25, heur: 8.42, add: 0.04, itr: 9.43, num_itrs: 47
+State: 67, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 54,156, Time: 9.44
+Times - pop: 0.01, expand: 0.51, check: 0.18, heur: 5.83, add: 0.03, itr: 6.56, num_itrs: 34
+State: 68, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 38,556, Time: 6.58
+Times - pop: 0.00, expand: 0.40, check: 0.16, heur: 5.29, add: 0.14, itr: 5.99, num_itrs: 29
+State: 69, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 32,556, Time: 6.01
+Times - pop: 0.00, expand: 0.34, check: 0.14, heur: 4.20, add: 0.02, itr: 4.70, num_itrs: 24
+State: 70, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 26,556, Time: 4.70
+Times - pop: 0.01, expand: 0.59, check: 0.27, heur: 8.28, add: 0.04, itr: 9.19, num_itrs: 51
+State: 71, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 58,956, Time: 9.20
+Times - pop: 0.00, expand: 0.15, check: 0.13, heur: 4.18, add: 0.21, itr: 4.67, num_itrs: 27
+State: 72, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 30,156, Time: 4.68
+Times - pop: 0.00, expand: 0.41, check: 0.12, heur: 3.94, add: 0.02, itr: 4.49, num_itrs: 25
+State: 73, SolnCost: 24.00, # Moves: 24, # Nodes Gen: 27,756, Time: 4.50
+Times - pop: 0.01, expand: 0.59, check: 0.25, heur: 7.69, add: 0.04, itr: 8.58, num_itrs: 49
+State: 74, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 56,556, Time: 8.59
+Times - pop: 0.00, expand: 0.29, check: 0.13, heur: 4.23, add: 0.02, itr: 4.67, num_itrs: 28
+State: 75, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 31,356, Time: 4.68
+Times - pop: 0.01, expand: 0.62, check: 0.23, heur: 7.07, add: 0.03, itr: 7.96, num_itrs: 47
+State: 76, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 54,156, Time: 7.97
+Times - pop: 0.01, expand: 0.65, check: 0.37, heur: 11.69, add: 0.21, itr: 12.93, num_itrs: 77
+State: 77, SolnCost: 25.00, # Moves: 25, # Nodes Gen: 90,156, Time: 12.94
+Times - pop: 0.01, expand: 0.63, check: 0.19, heur: 6.09, add: 0.03, itr: 6.94, num_itrs: 38
+State: 78, SolnCost: 31.00, # Moves: 31, # Nodes Gen: 43,356, Time: 6.95
+Times - pop: 0.00, expand: 0.52, check: 0.15, heur: 4.68, add: 0.02, itr: 5.38, num_itrs: 30
+State: 79, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 33,756, Time: 5.39
+Times - pop: 0.01, expand: 0.42, check: 0.17, heur: 5.33, add: 0.03, itr: 5.96, num_itrs: 33
+State: 80, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 37,356, Time: 5.96
+Times - pop: 0.05, expand: 2.19, check: 1.06, heur: 32.94, add: 0.29, itr: 36.54, num_itrs: 193
+State: 81, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 229,356, Time: 36.55
+Times - pop: 0.01, expand: 0.28, check: 0.23, heur: 7.40, add: 0.04, itr: 7.96, num_itrs: 45
+State: 82, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 51,756, Time: 7.98
+Times - pop: 0.02, expand: 1.65, check: 0.54, heur: 16.70, add: 0.08, itr: 18.99, num_itrs: 101
+State: 83, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 118,956, Time: 19.00
+Times - pop: 0.02, expand: 1.13, check: 0.53, heur: 16.94, add: 0.09, itr: 18.72, num_itrs: 99
+State: 84, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 116,556, Time: 18.73
+Times - pop: 0.00, expand: 0.66, check: 0.13, heur: 4.36, add: 0.02, itr: 5.18, num_itrs: 27
+State: 85, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 30,156, Time: 5.19
+Times - pop: 0.00, expand: 0.56, check: 0.12, heur: 4.02, add: 0.02, itr: 4.73, num_itrs: 25
+State: 86, SolnCost: 24.00, # Moves: 24, # Nodes Gen: 27,756, Time: 4.74
+Times - pop: 0.02, expand: 1.02, check: 0.45, heur: 14.02, add: 0.07, itr: 15.58, num_itrs: 85
+State: 87, SolnCost: 31.00, # Moves: 31, # Nodes Gen: 99,756, Time: 15.58
+Times - pop: 0.02, expand: 1.14, check: 0.48, heur: 15.23, add: 0.07, itr: 16.95, num_itrs: 90
+State: 88, SolnCost: 30.00, # Moves: 30, # Nodes Gen: 105,756, Time: 16.96
+Times - pop: 0.01, expand: 0.69, check: 0.20, heur: 6.31, add: 0.03, itr: 7.25, num_itrs: 39
+State: 89, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 44,556, Time: 7.26
+Times - pop: 0.01, expand: 0.34, check: 0.28, heur: 8.83, add: 0.54, itr: 9.99, num_itrs: 55
+State: 90, SolnCost: 31.00, # Moves: 31, # Nodes Gen: 63,756, Time: 10.00
+Times - pop: 0.01, expand: 0.49, check: 0.16, heur: 5.13, add: 0.03, itr: 5.81, num_itrs: 32
+State: 91, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 36,156, Time: 5.82
+Times - pop: 0.01, expand: 0.68, check: 0.31, heur: 9.65, add: 0.14, itr: 10.79, num_itrs: 60
+State: 92, SolnCost: 27.00, # Moves: 27, # Nodes Gen: 69,756, Time: 10.80
+Times - pop: 0.01, expand: 0.59, check: 0.24, heur: 7.60, add: 0.04, itr: 8.48, num_itrs: 46
+State: 93, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 52,956, Time: 8.49
+Times - pop: 0.01, expand: 0.58, check: 0.17, heur: 5.51, add: 0.03, itr: 6.29, num_itrs: 34
+State: 94, SolnCost: 28.00, # Moves: 28, # Nodes Gen: 38,556, Time: 6.30
+Times - pop: 0.04, expand: 1.61, check: 0.77, heur: 24.09, add: 0.21, itr: 26.72, num_itrs: 150
+State: 95, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 177,756, Time: 26.73
+Times - pop: 0.00, expand: 0.48, check: 0.14, heur: 4.27, add: 0.02, itr: 4.92, num_itrs: 27
+State: 96, SolnCost: 26.00, # Moves: 26, # Nodes Gen: 30,156, Time: 4.94
+Times - pop: 0.00, expand: 0.71, check: 0.11, heur: 3.56, add: 0.02, itr: 4.41, num_itrs: 24
+State: 97, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 26,556, Time: 4.42
+Times - pop: 0.01, expand: 0.56, check: 0.24, heur: 7.49, add: 0.04, itr: 8.34, num_itrs: 46
+State: 98, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 52,956, Time: 8.35
+Times - pop: 0.01, expand: 0.48, check: 0.20, heur: 6.11, add: 0.03, itr: 6.83, num_itrs: 40
+State: 99, SolnCost: 29.00, # Moves: 29, # Nodes Gen: 45,756, Time: 6.84
