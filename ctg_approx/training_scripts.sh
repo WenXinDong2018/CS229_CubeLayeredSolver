@@ -42,11 +42,11 @@ python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight
 ##Multihead Model Baseline [DONE]
 python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/target --results_dir results/cube3_mteultihead_baseline_t/
 ##Multihead Model Fully Connected [DONE]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/target --results_dir results/final_cube3multihead_fullyconnected_t/
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/target --results_dir results/final_cube3multihead_fullyconnected_t_2/
 ##Multihead Model 3+1ResB [DONE]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB/
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB_2/ --max_nodes 1800000
 ##Multihead Model 4+1ResB [TODO]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB/
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB_2/ --max_nodes 1800000
 ##Deepcubea
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3/target/ --env cube3 --weight 0.2 --batch_size 1000 --results_dir results/final_deepcubea_2/ --language python --nnet_batch_size 10000 --start_idx 900 --max_nodes 1800000
 
@@ -95,13 +95,13 @@ python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batc
 
 ###Layer 1
 #1. A* search without options using saved checkpoint of the layer 1 baseline model. solve 100 cubes
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.2 --batch_size 100 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
 
 #2. A* search without options using saved checkpoint of the layer 1 dynamic difficulty uniform distribution model. solve 100 cubes
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_dynamic_difficulty_25/ --language python --nnet_batch_size 10000 --start_idx 900
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25/current/ --env cube3_layer1 --weight 0.2 --batch_size 100 --results_dir results/cube3layer1_dynamic_difficulty_25/ --language python --nnet_batch_size 10000 --start_idx 900
 
 #3. A* search without options using saved checkpoint of the layer 1 dynamic difficulty fixed length model. solve 100 cubes
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_dynamic_difficulty_25_fixed_length/ --language python --nnet_batch_size 10000 --start_idx 900
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --env cube3_layer1 --weight 0.2 --batch_size 100 --results_dir results/cube3layer1_dynamic_difficulty_25_fixed_length/ --language python --nnet_batch_size 10000 --start_idx 900
 
 #4. A* search without options using saved checkpoint of the layer 1 dynamic difficulty fixed length model. solve 1000 cubes
 python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_dynamic_difficulty_25_fixed_length/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_dynamic_difficulty_25_fixed_length/ --language python --nnet_batch_size 10000 --start_idx 0
