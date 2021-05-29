@@ -1,0 +1,122 @@
+solving # 100 problems
+device: cuda:0, devices: [0], on_gpu: True
+State: 0, Failed
+State: 1, Failed
+Times - pop: 0.15, expand: 8.33, check: 1.46, heur: 10.87, add: 0.42, itr: 21.23, num_itrs: 48
+State: 2, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 541,536, Time: 21.51
+State: 3, Failed
+State: 4, Failed
+State: 5, Failed
+Times - pop: 0.24, expand: 14.04, check: 2.09, heur: 15.42, add: 2.70, itr: 34.49, num_itrs: 68
+State: 6, SolnCost: 20.00, # Moves: 20, # Nodes Gen: 781,536, Time: 34.78
+Times - pop: 0.54, expand: 19.21, check: 4.31, heur: 31.59, add: 4.69, itr: 60.35, num_itrs: 136
+State: 7, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 1,597,536, Time: 60.49
+State: 8, Failed
+State: 9, Failed
+State: 10, Failed
+Times - pop: 0.09, expand: 9.98, check: 0.92, heur: 6.90, add: 0.29, itr: 18.17, num_itrs: 32
+State: 11, SolnCost: 19.00, # Moves: 19, # Nodes Gen: 349,536, Time: 18.45
+State: 12, Failed
+State: 13, Failed
+State: 14, Failed
+State: 15, Failed
+State: 16, Failed
+State: 17, Failed
+State: 18, Failed
+Times - pop: 0.60, expand: 22.99, check: 4.72, heur: 33.33, add: 1.33, itr: 62.97, num_itrs: 144
+State: 19, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 1,693,536, Time: 63.27
+State: 20, Failed
+State: 21, Failed
+State: 22, Failed
+State: 23, Failed
+State: 24, Failed
+State: 25, Failed
+State: 26, Failed
+State: 27, Failed
+State: 28, Failed
+State: 29, Failed
+State: 30, Failed
+State: 31, Failed
+Times - pop: 0.23, expand: 12.62, check: 1.98, heur: 14.30, add: 0.60, itr: 29.74, num_itrs: 63
+State: 32, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 721,536, Time: 30.03
+Times - pop: 0.48, expand: 27.39, check: 3.90, heur: 27.77, add: 3.02, itr: 62.56, num_itrs: 119
+State: 33, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 1,393,536, Time: 62.70
+State: 34, Failed
+State: 35, Failed
+Times - pop: 0.48, expand: 19.09, check: 3.74, heur: 27.30, add: 5.86, itr: 56.47, num_itrs: 118
+State: 36, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 1,381,536, Time: 56.87
+State: 37, Failed
+State: 38, Failed
+State: 39, Failed
+State: 40, Failed
+State: 41, Failed
+State: 42, Failed
+State: 43, Failed
+State: 44, Failed
+Times - pop: 0.25, expand: 16.69, check: 2.29, heur: 16.52, add: 0.70, itr: 36.45, num_itrs: 72
+State: 45, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 829,536, Time: 36.74
+State: 46, Failed
+State: 47, Failed
+State: 48, Failed
+State: 49, Failed
+Times - pop: 0.57, expand: 22.69, check: 4.41, heur: 31.52, add: 4.88, itr: 64.07, num_itrs: 135
+State: 50, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 1,585,536, Time: 64.38
+State: 51, Failed
+State: 52, Failed
+State: 53, Failed
+Times - pop: 0.47, expand: 20.75, check: 3.78, heur: 27.53, add: 1.14, itr: 53.67, num_itrs: 119
+State: 54, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 1,393,536, Time: 53.98
+Times - pop: 0.20, expand: 18.51, check: 1.83, heur: 13.55, add: 0.59, itr: 34.67, num_itrs: 60
+State: 55, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 685,536, Time: 34.90
+State: 56, Failed
+State: 57, Failed
+State: 58, Failed
+State: 59, Failed
+State: 60, Failed
+Times - pop: 0.54, expand: 19.79, check: 4.15, heur: 29.73, add: 4.58, itr: 58.79, num_itrs: 128
+State: 61, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 1,501,536, Time: 59.10
+State: 62, Failed
+State: 63, Failed
+State: 64, Failed
+State: 65, Failed
+State: 66, Failed
+Times - pop: 0.09, expand: 1.56, check: 0.93, heur: 7.17, add: 0.29, itr: 10.05, num_itrs: 33
+State: 67, SolnCost: 22.00, # Moves: 22, # Nodes Gen: 361,536, Time: 10.34
+Times - pop: 0.23, expand: 20.84, check: 1.98, heur: 14.65, add: 0.57, itr: 38.28, num_itrs: 64
+State: 68, SolnCost: 19.00, # Moves: 19, # Nodes Gen: 733,536, Time: 38.34
+State: 69, Failed
+State: 70, Failed
+State: 71, Failed
+State: 72, Failed
+State: 73, Failed
+State: 74, Failed
+Times - pop: 0.13, expand: 11.04, check: 1.21, heur: 9.14, add: 0.38, itr: 21.89, num_itrs: 41
+State: 75, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 457,536, Time: 22.17
+State: 76, Failed
+State: 77, Failed
+State: 78, Failed
+State: 79, Failed
+State: 80, Failed
+State: 81, Failed
+State: 82, Failed
+Times - pop: 0.12, expand: 12.27, check: 1.12, heur: 8.62, add: 0.35, itr: 22.48, num_itrs: 39
+State: 83, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 433,536, Time: 22.76
+State: 84, Failed
+State: 85, Failed
+State: 86, Failed
+State: 87, Failed
+State: 88, Failed
+Times - pop: 0.27, expand: 10.69, check: 2.29, heur: 17.33, add: 2.53, itr: 33.11, num_itrs: 76
+State: 89, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 877,536, Time: 33.40
+State: 90, Failed
+State: 91, Failed
+State: 92, Failed
+State: 93, Failed
+State: 94, Failed
+Times - pop: 0.32, expand: 18.06, check: 2.68, heur: 20.07, add: 0.82, itr: 41.95, num_itrs: 87
+State: 95, SolnCost: 21.00, # Moves: 21, # Nodes Gen: 1,009,536, Time: 42.24
+State: 96, Failed
+State: 97, Failed
+Times - pop: 0.20, expand: 2.94, check: 1.79, heur: 13.36, add: 8.76, itr: 27.05, num_itrs: 59
+State: 98, SolnCost: 23.00, # Moves: 23, # Nodes Gen: 673,536, Time: 27.34
+State: 99, Failed
