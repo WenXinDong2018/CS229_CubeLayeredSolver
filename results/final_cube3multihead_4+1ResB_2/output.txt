@@ -1,0 +1,2 @@
+solving # 100 problems
+device: cpu, devices: [], on_gpu: False
