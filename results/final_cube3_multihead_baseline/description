@@ -4,3 +4,6 @@ average node generated is 476319.5294117647
 average solution length  is 29.11764705882353
 layer 1 solving rate 69
 layer 2 solving rate 66
+
+batch size 1000
+weight 0.6

@@ -311,7 +311,7 @@ class ResnetModelFC(nn.Module):
 
 
 '''2 resnet block model'''
-class ResnetModel(nn.Module):
+class ResnetModel4_1(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool):
         super().__init__()
@@ -447,7 +447,7 @@ class PositionalEncoding(nn.Module):
 
 
 '''transformer based'''
-class ResnetModelTransformer(nn.Module):
+class ResnetModel(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool, num_heads:int = 6):
         super().__init__()

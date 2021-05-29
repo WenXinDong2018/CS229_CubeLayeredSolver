@@ -5,4 +5,7 @@ Uses DeepCube original cube3 solver to solve completely random cubes
 
 Stats:
 
-Solving rate: 7%
+1solved 7 problems
+average time is 14.820173229490008 s
+average node generated is 361536.0
+average solution length  is 20.285714285714285

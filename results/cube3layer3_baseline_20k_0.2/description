@@ -1,0 +1,9 @@
+deepcubea trained 20k iterations
+batch size 100
+weight 0.2
+
+solved 51 problems
+average time is 4.078420634363212 s
+average node generated is 93897.17647058824
+average solution length  is 18.15686274509804
+

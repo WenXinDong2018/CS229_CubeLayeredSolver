@@ -18,42 +18,52 @@ python ctg_approx/avi.py --env cube3 --states_per_update 500000 --batch_size 100
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_baseline --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead Model FullyConnected [DONE]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_fullyconnected --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
-### Multihead Model 1ResBlock [DONE]
+### Multihead Model 3+1 [DONE]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_1ResB --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead Model 4+1ResBlock [DONE]
 python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 1000 --nnet_name final_cube3multihead_4+1ResB --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 ### Multihead transformer model [TODO]
-python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 32 --nnet_name final_cube3multihead_transformer_8 --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
+python ctg_approx/avi_multihead.py --env cube3 --states_per_update 500000 --batch_size 4 --nnet_name final_cube3multihead_transformer_8 --max_itrs 46200 --loss_thresh 0.2 --back_max 30 --num_update_procs 30
 
 ###--------------------------------------------Search Experiments (100 cubes, no options)-------------------------------------------###
-#1. A* search, layer 1 baseline model.[DONE]
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/current/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/cube3layer1_baseline/ --language python --nnet_batch_size 10000 --start_idx 900
-#2. A* search, layer 1 dynamic curriculum model.[DONE]
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/ --env cube3_layer1 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer1_dynamic_difficulty_25_fixed/ --language python --nnet_batch_size 10000 --start_idx 900
-#3. A* search, layer 2 baseline model.[TODO]
+#1. A* search, layer 1 baseline model 0.2 [DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer1_baseline/target/ --env cube3_layer1 --weight 0.2 --batch_size 100 --results_dir results/final_cube3layer1_baseline_0.2/ --language python --nnet_batch_size 10000 --start_idx 900
+#2. A* search, layer 1 dynamic curriculum model 0.2.[DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/ --env cube3_layer1 --weight 0.2 --batch_size 100 --results_dir results/final_cube3layer1_dynamic_difficulty_25_fixed_0.2/ --language python --nnet_batch_size 10000 --start_idx 900
+#3. A* search, layer 2 baseline model.[NO NEED]
 python search_methods/astar.py --states data/cube3_layer2/test/data_0.pkl --model saved_models/final_cube3layer2_baseline/current/ --env cube3_layer2 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer2_baseline --language python --nnet_batch_size 10000 --start_idx 900
-#4. A* search, layer 3 baseline model. [TODO]
-python search_methods/astar.py --states data/cube3_layer3/test/data_0.pkl --model saved_models/final_cube3layer3_baseline/target/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/final_cube3layer3_baseline --language python --nnet_batch_size 10000 --start_idx 900
+#4. A* search, layer 3 baseline model 0.2. [DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer3_baseline/target/ --env cube3 --weight 0.2 --batch_size 100 --results_dir results/deepcubea_baseline_20k_0.2 --language python --nnet_batch_size 10000 --start_idx 900 --max_nodes 1800000
+#4. A* search, layer 3 baseline model 0.6. [DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3layer3_baseline/target/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/deepcubea_baseline_20k_0.6 --language python --nnet_batch_size 10000 --start_idx 900 --max_nodes 1800000
 
+#4. A* search, original deepcubea model 0.6. [DONE]
+python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3/target/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/double_check_deepcubea_original_0.6 --language python --nnet_batch_size 10000 --start_idx 900 --max_nodes 1800000
 
-##Sequential Model [DONE]
-python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000
---nnet_batch_size 10000 --start_idx 900
---model_dir_layer1 saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/
---model_dir_layer2 saved_models/final_cube3layer2_baseline/target/
---model_dir_layer3 saved_models/final_cube3layer3_baseline/target/
---results_dir results/final_cube3_sequential/
+##Sequential Model 0.2 [DONE]
+python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/ --model_dir_layer2 saved_models/final_cube3layer2_baseline/target/ --model_dir_layer3 saved_models/cube3layer3_baseline/target/ --results_dir results/final_cube3_sequential_0.2/
 
-##Multihead Model Baseline [DONE]
+##Sequential Model 0.6 [DONE]
+python search_methods/sequential.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir_layer1 saved_models/final_cube3layer1_dynamic_difficulty_25_fixed/target/ --model_dir_layer2 saved_models/final_cube3layer2_baseline/target/ --model_dir_layer3 saved_models/cube3layer3_baseline/target/ --results_dir results/final_cube3_sequential_0.6/
+
+##Multihead Model Baseline 0.6 [DONE]
 python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/target --results_dir results/cube3_mteultihead_baseline_t/
-##Multihead Model Fully Connected [DONE]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/target --results_dir results/final_cube3multihead_fullyconnected_t_2/
-##Multihead Model 3+1ResB [DONE]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/current --results_dir results/final_cube3multihead_1ResB_2/ --max_nodes 1800000
-##Multihead Model 4+1ResB [TODO]
-python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB_2/ --max_nodes 1800000
-##Deepcubea
-python search_methods/astar.py --states data/cube3/test/data_0.pkl --model saved_models/cube3/target/ --env cube3 --weight 0.6 --batch_size 1000 --results_dir results/final_deepcubea_14k/ --language python --nnet_batch_size 10000 --start_idx 900 --max_nodes 1800000
+##Multihead Model Baseline 0.2 [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/cube3multihead_baseline/target --results_dir results/cube3_mteultihead_baseline_0.2/
+
+##Multihead Model Fully Connected 0.6 [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/target --results_dir results/final_cube3multihead_fullyconnected_t_2/
+##Multihead Model Fully Connected 0.2 [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_fullyconnected/target --results_dir results/final_cube3multihead_fullyconnected_0.2/
+
+##Multihead Model 3+2ResB 0.2 [TODO]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/target --results_dir results/final_cube3multihead_1ResB_0.2/
+##Multihead Model 3+2ResB 0.6 [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_1ResB/target --results_dir results/final_cube3multihead_1ResB_2/
+##Multihead Model 4+2ResB 0.2 [DONE]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.2 --batch_size 100 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB_0.2/
+##Multihead Model 4+2ResB 0.6 [TODO]
+python search_methods/sequential_multi_head.py --states data/cube3/test/data_0.pkl --weight 0.6 --batch_size 1000 --nnet_batch_size 10000 --start_idx 900 --model_dir saved_models/final_cube3multihead_4+1ResB/target --results_dir results/final_cube3multihead_4+1ResB_0.6/
 
 ###-------------------------------------------- Not Final Report  -------------------------------------------###
 ###-------------------------------------------- Training Experiments -------------------------------------------###
