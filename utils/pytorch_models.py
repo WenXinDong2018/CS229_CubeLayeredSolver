@@ -89,7 +89,7 @@ class ResnetModelBaseline(nn.Module):
 
 
 '''1 resnet block model'''
-class ResnetModelRESB(nn.Module):
+class ResnetModelRES(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
                  out_dim: int, batch_norm: bool):
         super().__init__()
@@ -449,7 +449,7 @@ class PositionalEncoding(nn.Module):
 '''transformer based'''
 class ResnetModel(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
-                 out_dim: int, batch_norm: bool, num_heads:int = 6):
+                 out_dim: int, batch_norm: bool, num_heads:int = 2):
         super().__init__()
         try:
             from torch.nn import TransformerEncoder, TransformerEncoderLayer

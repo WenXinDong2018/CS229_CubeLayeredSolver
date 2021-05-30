@@ -6,7 +6,7 @@ env3 = env_utils.get_environment("cube3")
 
 moves= ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
 
-results = pickle.load(open("results/final_cube3multihead_1ResB_t/results.pkl", "rb"))
+results = pickle.load(open("results/final_cube3multihead_1ResB_0.2/results.pkl", "rb"))
 solved = 0
 averageTime = 0
 averageSolLen = 0
@@ -15,9 +15,9 @@ for solution, time, nodes, path in zip(results["solutions"], results["times"], r
 
     if solution and len(solution):
         assert(env1.is_solved([path[-1]])[0])
-        assert(env2.is_solved([path[-1]])[0])
-        assert(env3.is_solved([path[-1]])[0])
-        assert(search_utils.is_valid_soln(path[0], solution, env3))
+        # assert(env2.is_solved([path[-1]])[0])
+        # assert(env3.is_solved([path[-1]])[0])
+        # assert(search_utils.is_valid_soln(path[0], solution, env3))
         solved+=1
         averageNodes+= nodes
         averageSolLen += len(solution)
@@ -26,5 +26,5 @@ print("solved", solved, "problems")
 print("average time is", averageTime/solved, "s")
 print("average node generated is", averageNodes/solved)
 print("average solution length  is", averageSolLen/solved)
-print("layer 1 solving rate", len(results["layer2_states"]))
-print("layer 2 solving rate", len(results["layer3_states"]))
+# print("layer 1 solving rate", len(results["layer2_states"]))
+# print("layer 2 solving rate", len(results["layer3_states"]))
