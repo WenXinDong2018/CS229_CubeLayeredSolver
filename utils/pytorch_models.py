@@ -464,12 +464,13 @@ class ResnetModel(nn.Module):
         self.state_dim: int = state_dim
         print("state_dim", state_dim)
         self.pos_encoder = PositionalEncoding(one_hot_depth)
-        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
+        encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=h1_dim)
         self.transformer_encoder = TransformerEncoder(encoder_layers, 1)
-
+        self.fc1 = nn.Linear(self.state_dim * self.one_hot_depth, resnet_dim)
+        self.bn1 = nn.BatchNorm1d(resnet_dim)
         # resnet blocks
         for block_num in range(self.num_resnet_blocks):
-            res_fc1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+            res_fc1 = nn.Linear(resnet_dim, resnet_dim)
             res_bn1 = nn.BatchNorm1d(resnet_dim)
             res_fc2 = nn.Linear(resnet_dim, resnet_dim)
             res_bn2 = nn.BatchNorm1d(resnet_dim)
@@ -494,6 +495,8 @@ class ResnetModel(nn.Module):
         output = self.transformer_encoder(x)
         print('output', output.shape)
         x = output.view(-1, self.state_dim * self.one_hot_depth)
+        x=self.fc1(x)
+        x = self.bn1(x)
 
         for block_num in range(self.num_resnet_blocks):
             res_inp = x
