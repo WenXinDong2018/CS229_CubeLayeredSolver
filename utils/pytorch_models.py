@@ -447,25 +447,38 @@ class PositionalEncoding(nn.Module):
 
 
 '''transformer based'''
+#failed attempt 1 : 2heads + 2 encoder layers + 2 linear layers
 class ResnetModel(nn.Module):
     def __init__(self, state_dim: int, one_hot_depth: int, h1_dim: int, resnet_dim: int, num_resnet_blocks: int,
-                 out_dim: int, batch_norm: bool, num_heads:int = 2):
+                 out_dim: int, batch_norm: bool, num_heads:int = 1):
         super().__init__()
         try:
             from torch.nn import TransformerEncoder, TransformerEncoderLayer
         except:
             raise ImportError('TransformerEncoder module does not exist in PyTorch 1.1 or lower.')
+        self.blocks = nn.ModuleList()
+        self.num_resnet_blocks: int = num_resnet_blocks
 
         self.one_hot_depth: int = one_hot_depth
         self.state_dim: int = state_dim
         print("state_dim", state_dim)
         self.pos_encoder = PositionalEncoding(one_hot_depth)
         encoder_layers = TransformerEncoderLayer(one_hot_depth, num_heads, dim_feedforward=1024)
-        self.transformer_encoder = TransformerEncoder(encoder_layers, 2)
+        self.transformer_encoder = TransformerEncoder(encoder_layers, 1)
 
-        self.fc_out1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
-        self.fc_out2 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
-        self.fc_out3 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+        # resnet blocks
+        for block_num in range(self.num_resnet_blocks):
+            res_fc1 = nn.Linear(one_hot_depth*state_dim, resnet_dim)
+            res_bn1 = nn.BatchNorm1d(resnet_dim)
+            res_fc2 = nn.Linear(resnet_dim, resnet_dim)
+            res_bn2 = nn.BatchNorm1d(resnet_dim)
+            self.blocks.append(nn.ModuleList([res_fc1, res_bn1, res_fc2, res_bn2]))
+
+
+
+        self.fc_out1 = nn.Linear(resnet_dim, resnet_dim)
+        self.fc_out2 = nn.Linear(resnet_dim, resnet_dim)
+        self.fc_out3 = nn.Linear(resnet_dim, resnet_dim)
         self.out_l1 = nn.Linear(resnet_dim, 1)
         self.out_l2 = nn.Linear(resnet_dim, 1)
         self.out_l3 = nn.Linear(resnet_dim, 1)
@@ -479,11 +492,28 @@ class ResnetModel(nn.Module):
         x = self.pos_encoder(x)
         output = self.transformer_encoder(x)
         print('output', output.shape)
-        output = output.view(-1, self.state_dim * self.one_hot_depth)
+        x = output.view(-1, self.state_dim * self.one_hot_depth)
 
-        l1 = self.fc_out1(output)
-        l2 = self.fc_out2(output)
-        l3 = self.fc_out3(output)
+        for block_num in range(self.num_resnet_blocks):
+            res_inp = x
+            if self.batch_norm:
+                x = self.blocks[block_num][0](x)
+                x = self.blocks[block_num][1](x)
+                x = F.relu(x)
+                x = self.blocks[block_num][2](x)
+                x = self.blocks[block_num][3](x)
+            else:
+                x = self.blocks[block_num][0](x)
+                x = F.relu(x)
+                x = self.blocks[block_num][1](x)
+
+            x = F.relu(x + res_inp)
+
+
+
+        l1 = self.fc_out1(x)
+        l2 = self.fc_out2(x)
+        l3 = self.fc_out3(x)
         l1 = self.out_l1(l1)
         l2 = self.out_l2(l2)
         l3 = self.out_l3(l3)

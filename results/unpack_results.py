@@ -6,7 +6,7 @@ env3 = env_utils.get_environment("cube3")
 
 moves= ["%s%i" % (f, n) for f in ['U', 'D', 'L', 'R', 'B', 'F'] for n in [-1, 1]]
 
-results = pickle.load(open("results/final_cube3multihead_1ResB_0.2/results.pkl", "rb"))
+results = pickle.load(open("results/final_cube3multihead_4+1ResB_0.6/results.pkl", "rb"))
 solved = 0
 averageTime = 0
 averageSolLen = 0
