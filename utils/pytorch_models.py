@@ -458,6 +458,7 @@ class ResnetModel(nn.Module):
             raise ImportError('TransformerEncoder module does not exist in PyTorch 1.1 or lower.')
         self.blocks = nn.ModuleList()
         self.num_resnet_blocks: int = num_resnet_blocks
+        self.batch_norm = batch_norm
 
         self.one_hot_depth: int = one_hot_depth
         self.state_dim: int = state_dim
